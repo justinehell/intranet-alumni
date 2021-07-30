@@ -2,12 +2,12 @@
   <div class="mx-auto" style="width:50%">
     <v-alert
       class=""
-      :type="type"
+      :type="type.toLowerCase()"
       v-model="showError"
       dismissible
       elevation="2"
     >
-      {{ message }}
+      {{ $t(`${type}.${code}`) }}
     </v-alert>
   </div>
 </template>
@@ -16,22 +16,18 @@
 export default {
   name: 'Notification',
   props: {
-    alert: {
-      type: Boolean,
-      required: true,
-    },
     type: {
       type: String,
       required: true,
     },
-    message: {
+    code: {
       type: String,
       required: true,
     },
   },
   data() {
     return {
-      showError: this.alert,
+      showError: true,
       timeout: null,
     };
   },

@@ -1,15 +1,12 @@
 <template>
   <v-app>
     <v-main>
-      <!-- <router-link :to="{ name: 'Login' }">Login</router-link>
-      <router-link :to="{ name: 'Register' }">Register</router-link> -->
       <router-view />
     </v-main>
     <Notification
       v-if="notification"
       :type="notification.type"
-      :message="notification.message"
-      :alert="notification.alert"
+      :code="notification.code"
       :key="notification.message"
     />
   </v-app>

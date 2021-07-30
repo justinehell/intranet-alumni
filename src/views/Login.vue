@@ -1,15 +1,15 @@
 <template>
   <div>
-    <LoginCard />
+    <LoginForm />
   </div>
 </template>
 
 <script>
-import LoginCard from '../components/Login';
+import LoginForm from '../components/LoginForm';
 export default {
   name: 'Login',
   components: {
-    LoginCard,
+    LoginForm,
   },
 };
 </script>

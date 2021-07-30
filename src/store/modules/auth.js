@@ -1,12 +1,6 @@
-import {
-  setLocalStorage,
-  removeLocalStorage,
-} from '../../services/localStorage';
-import alumniApiClient, {
-  addBearerHeader,
-  deleteBearerHeader,
-} from '../../services/authApi';
+import alumniApiClient from '../../services/authApi';
 import router from '../../router';
+import { NOTIFICATION, SUCCESS } from '../../utils/notifications';
 
 const state = {
   accessToken: '',
@@ -22,34 +16,58 @@ const getters = {
 
 // actions
 export const actions = {
-  login({ commit }, data) {
-    return alumniApiClient.post('auth/jwt/create', data).then((r) => {
-      const tokens = {
-        accessToken: r.data.access,
-        refreshToken: r.data.refresh,
-      };
-      commit('SET_TOKENS', tokens);
-      // commit('SET_REFRESH_TOKEN', tokens.refreshToken);
-      addBearerHeader(tokens.accessToken);
-      setLocalStorage('accessToken', tokens.accessToken);
-      setLocalStorage('refreshToken', tokens.refreshToken);
-      router.push({ name: 'Home' });
-      // return r ??
+  login({ commit, dispatch }, data) {
+    return new Promise((resolve, reject) => {
+      alumniApiClient
+        .post('auth/jwt/create', data)
+        .then((r) => {
+          const tokens = {
+            accessToken: r.data.access,
+            refreshToken: r.data.refresh,
+          };
+          commit('SET_TOKENS', tokens);
+          dispatch(
+            'notifications/showNotification',
+            {
+              type: NOTIFICATION.SUCCESS,
+              code: SUCCESS.LOGGED_IN,
+            },
+            { root: true }
+          );
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
     });
   },
-  register({ commit }, data) {
-    return alumniApiClient.post('auth/users/', data).then((r) => {
-      commit('REGISTER', r);
-      // return r ??
+  register({ commit, dispatch }, data) {
+    return new Promise((resolve, reject) => {
+      alumniApiClient
+        .post('auth/users/', data)
+        .then((r) => {
+          commit('REGISTER', r);
+          dispatch(
+            'notifications/showNotification',
+            {
+              type: NOTIFICATION.SUCCESS,
+              code: SUCCESS.REGISTRATION,
+            },
+            { root: true }
+          );
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
     });
   },
   logout({ commit }) {
     commit('REMOVE_TOKENS');
-    // commit('REMOVE_REFRESH_TOKEN');
-    deleteBearerHeader();
-    removeLocalStorage('accessToken');
-    removeLocalStorage('refreshToken');
     router.push({ name: 'Login' });
+  },
+  setAuthTokens({ commit }, tokens) {
+    commit('SET_TOKENS', tokens);
   },
 };
 
@@ -59,9 +77,6 @@ const mutations = {
     state.accessToken = tokens.accessToken;
     state.refreshToken = tokens.refreshToken;
   },
-  //   SET_REFRESH_TOKEN(state, refreshToken) {
-  //     state.refreshToken = refreshToken;
-  //   },
   REMOVE_TOKENS(state) {
     state.accessToken = '';
     state.refreshToken = '';

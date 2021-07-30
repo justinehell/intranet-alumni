@@ -88,6 +88,7 @@ import { camelCase } from 'lodash';
 import { required, minLength, email, sameAs } from 'vuelidate/lib/validators';
 
 import { emailErrors } from '../../mixins/formFieldMixin';
+import { ERROR, NOTIFICATION } from '../../utils/notifications';
 
 export default {
   name: 'RegisterCard',
@@ -188,13 +189,7 @@ export default {
         };
         this.$store
           .dispatch('auth/register', userCredentials)
-          .then(() => {
-            this.$store.dispatch('notifications/showNotification', {
-              type: 'success',
-              message: this.$t(`SUCCESS.REGISTRATION`),
-              alert: true,
-            });
-          })
+          .then(() => this.$router.push({ name: 'Login' }))
           .catch((error) => {
             error?.response?.data?.errors?.forEach((err) => {
               if (err?.field) {
@@ -204,9 +199,8 @@ export default {
               } else {
                 // handle global error - not related to a specific field
                 this.$store.dispatch('notifications/showNotification', {
-                  type: 'error',
-                  message: this.$t(`ERROR.${err.code.toUpperCase()}`),
-                  alert: true,
+                  type: NOTIFICATION.ERROR,
+                  code: ERROR[err.code.toUpperCase()],
                 });
               }
             });

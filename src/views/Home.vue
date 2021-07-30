@@ -10,15 +10,15 @@
 </template>
 
 <script>
+import { INFO, NOTIFICATION } from '../utils/notifications';
 export default {
   name: 'Home',
   methods: {
     signOut() {
       this.$store.dispatch('auth/logout');
       this.$store.dispatch('notifications/showNotification', {
-        type: 'info',
-        message: this.$t(`WARNING.SIGN_OUT`),
-        alert: true,
+        type: NOTIFICATION.INFO,
+        code: INFO.SIGN_OUT,
       });
     },
   },

@@ -8,6 +8,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
+    meta: { requiresAuth: true },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -40,19 +41,24 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register'];
-  const authRequired = !publicPages.includes(to.path);
-  const loggedIn = !!getLocalStorage('accessToken');
-
-  // redirect to login page if not logged in and trying to access a restricted page
-  if (authRequired && !loggedIn) {
-    return next('/login');
+  const requiredAuthPath = to.matched.some(
+    (record) => record.meta.requiresAuth
+  );
+  const isLogged = !!getLocalStorage('accessToken');
+  if (to.meta.requiresAuth || requiredAuthPath) {
+    // when user is not logged in
+    if (!isLogged) {
+      next({ name: 'Login' });
+    }
+    // when user is logged in
+    else {
+      next();
+    }
   }
-  // redirect to current path page if logged in and trying to access /login or /register
-  if (!authRequired && loggedIn) {
-    return next(from.path);
+  // to pubic page (no credentials required)
+  else if (isLogged) {
+    next({ name: 'Home' });
   }
-  next();
 });
 
 export default router;

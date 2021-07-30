@@ -1,0 +1,23 @@
+export const NOTIFICATION = {
+  SUCCESS: 'SUCCESS',
+  WARNING: 'WARNING',
+  ERROR: 'ERROR',
+  INFO: 'INFO',
+};
+
+export const SUCCESS = {
+  LOGGED_IN: 'LOGGED_IN',
+  REGISTRATION: 'REGISTRATION',
+};
+
+export const WARNING = {};
+
+export const ERROR = {
+  NO_ACTIVE_ACCOUNT: 'NO_ACTIVE_ACCOUNT',
+  NO_STUDENT: 'NO_STUDENT',
+  STUDENT_NOT_AVAILABLE: 'STUDENT_NOT_AVAILABLE',
+};
+
+export const INFO = {
+  SIGN_OUT: 'SIGN_OUT',
+};

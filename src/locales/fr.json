@@ -60,12 +60,13 @@
     "REGISTRATION": "Inscription prise en compte.",
     "LOGGED_IN": "Tu es maintenant connecté(e)."
   },
-  "WARNING": {
+  "INFO": {
     "SIGN_OUT": "Tu as été déconnecté(e)."
   },
   "ERROR": {
     "NO_ACTIVE_ACCOUNT": "Pas de compte actif associé à ces identifiants.",
     "NO_STUDENT": "Il n'existe pas de diplômé(e) pour l'association du prénom, nom et promotion fournie.",
     "STUDENT_NOT_AVAILABLE": "Un compte a déjà crée pour ce diplômé."
-  }
+  },
+  "WARNING": {}
 }

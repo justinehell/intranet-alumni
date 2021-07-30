@@ -48,6 +48,7 @@ import { camelCase } from 'lodash';
 import { required, email } from 'vuelidate/lib/validators';
 
 import { emailErrors } from '../../mixins/formFieldMixin';
+import { NOTIFICATION, ERROR } from '../../utils/notifications';
 
 export default {
   name: 'LoginCard',
@@ -88,14 +89,9 @@ export default {
             email: this.email,
             password: this.password,
           })
-          .then(() => {
-            this.$store.dispatch('notifications/showNotification', {
-              type: 'success',
-              message: this.$t(`SUCCESS.LOGGED_IN`),
-              alert: true,
-            });
-          })
+          .then(() => this.$router.push({ name: 'Home' }))
           .catch((error) => {
+            console.log(error);
             error.response?.data?.errors?.forEach((err) => {
               if (err.field) {
                 this.serverErrors[err.field].push(
@@ -103,10 +99,10 @@ export default {
                 );
               } else {
                 // handle global error - not related to a specific field
+                console.log(ERROR[err.code.toUpperCase()]);
                 this.$store.dispatch('notifications/showNotification', {
-                  type: 'error',
-                  message: this.$t(`ERROR.${err.code.toUpperCase()}`),
-                  alert: true,
+                  type: NOTIFICATION.ERROR,
+                  code: ERROR[err.code.toUpperCase()],
                 });
               }
             });

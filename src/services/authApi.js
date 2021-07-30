@@ -19,14 +19,4 @@ alumniApiClient.interceptors.response.use(
   }
 );
 
-export function addBearerHeader(accessToken) {
-  alumniApiClient.defaults.headers.common[
-    'Authorization'
-  ] = `Bearer ${accessToken}`;
-}
-
-export function deleteBearerHeader() {
-  delete alumniApiClient.defaults.headers.common['Authorization'];
-}
-
 export default alumniApiClient;
