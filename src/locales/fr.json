@@ -1,3 +1,71 @@
 {
-  "message": "hello i18n !!"
+  "action": {
+    "signIn": "Se connecter",
+    "signOut": "Se déconnecter",
+    "signUp": "Se créer un compte",
+    "login": "Connexion",
+    "register": "Inscription",
+    "goToSignIn": "Déjà un compte ? Se connecter",
+    "goToSignUp": "Pas encore enregistré ? Se créer un compte"
+  },
+  "home": {},
+  "form": {
+    "email": {
+      "label": "Adresse e-mail",
+      "error": {
+        "required": "L'adresse e-mail est requise.",
+        "valid": "Veuillez renseigner une adresse e-mail valide.",
+        "unique": "Un utilisateur avec cette adresse e-mail existe déjà."
+      }
+    },
+    "firstName": {
+      "label": "Prénom",
+      "error": {
+        "required": "Le prénom est requis.",
+        "valid": "Veuillez renseigner un prénom valide."
+      }
+    },
+    "lastName": {
+      "label": "Nom",
+      "error": {
+        "required": "le nom est requis.",
+        "valid": "Veuillez renseigner un nom valide."
+      }
+    },
+    "promo": {
+      "label": "Promo",
+      "error": {
+        "required": "L'année de la promotion est obligatoire."
+      }
+    },
+    "password": {
+      "label": "Mot de passe",
+      "error": {
+        "required": "Le mot de passe est requis.",
+        "minLength": "Le mot de passe doit posséder au moins {count} caractères.",
+        "passwordTooCommon": "Le mot de passe est trop commun.",
+        "passwordEntirelyNumeric": "Le mot de passe ne peut pas contenir que des chiffres."
+      }
+    },
+    "passwordConfirmation": {
+      "label": "Confirmer mot de passe",
+      "error": {
+        "required": "Le mot de passe est requis.",
+        "minLength": "Le mot de passe doit posséder au moins {count} caractères.",
+        "sameAsPassword": "Doit être identique au mot de passe."
+      }
+    }
+  },
+  "SUCCESS": {
+    "REGISTRATION": "Inscription prise en compte.",
+    "LOGGED_IN": "Tu es maintenant connecté(e)."
+  },
+  "WARNING": {
+    "SIGN_OUT": "Tu as été déconnecté(e)."
+  },
+  "ERROR": {
+    "NO_ACTIVE_ACCOUNT": "Pas de compte actif associé à ces identifiants.",
+    "NO_STUDENT": "Il n'existe pas de diplômé(e) pour l'association du prénom, nom et promotion fournie.",
+    "STUDENT_NOT_AVAILABLE": "Un compte a déjà crée pour ce diplômé."
+  }
 }
