@@ -8,7 +8,16 @@
     "goToSignIn": "Déjà un compte ? Se connecter",
     "goToSignUp": "Pas encore enregistré ? Se créer un compte"
   },
-  "home": {},
+  "home": {
+    "title": "Accueil"
+  },
+  "profile": {
+    "title": "Mon espace personnel"
+  },
+  "notFound": {
+    "title": "Cette page n'existe pas",
+    "description": "Désolé, nous n'avons pas trouvé cette page. Retournez sur la page"
+  },
   "form": {
     "email": {
       "label": "Adresse e-mail",
@@ -58,7 +67,8 @@
   },
   "SUCCESS": {
     "REGISTRATION": "Inscription prise en compte.",
-    "LOGGED_IN": "Tu es maintenant connecté(e)."
+    "LOGGED_IN": "Tu es maintenant connecté(e).",
+    "GREETING": "Salut {name}! "
   },
   "INFO": {
     "SIGN_OUT": "Tu as été déconnecté(e)."

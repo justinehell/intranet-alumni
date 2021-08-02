@@ -15,4 +15,9 @@ export default new Vuex.Store({
     auth,
     notifications,
   },
+  actions: {
+    setInitialData({ dispatch }) {
+      dispatch('auth/me');
+    },
+  },
 });

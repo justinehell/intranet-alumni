@@ -1,0 +1,68 @@
+<script>
+export default {
+  data() {
+    return {
+      serverErrors: {
+        firstName: [],
+        lastName: [],
+        email: [],
+        password: [],
+        passwordConfirmation: [],
+      },
+    };
+  },
+  computed: {
+    firstNameErrors() {
+      const errors = [];
+      if (!this.$v.firstName.$dirty) return errors;
+      !this.$v.firstName.required &&
+        errors.push(this.$t('form.firstName.error.required'));
+      return errors;
+    },
+    lastNameErrors() {
+      const errors = [];
+      if (!this.$v.lastName.$dirty) return errors;
+      !this.$v.lastName.required &&
+        errors.push(this.$t('form.lastName.error.required'));
+      return errors;
+    },
+    emailErrors() {
+      const errors = [];
+      if (!this.$v.email.$dirty) return errors;
+      !this.$v.email.required &&
+        errors.push(this.$t('form.email.error.required'));
+      !this.$v.email.email && errors.push(this.$t('form.email.error.valid'));
+      return [...errors, ...this.serverErrors.email];
+    },
+    promoErrors() {
+      const errors = [];
+      if (!this.$v.promo.$dirty) return errors;
+      !this.$v.promo.required &&
+        errors.push(this.$t('form.promo.error.required'));
+      return errors;
+    },
+    passwordErrors() {
+      const errors = [];
+      if (!this.$v.password.$dirty) return errors;
+      !this.$v.password.required &&
+        errors.push(this.$t('form.password.error.required'));
+      !this.$v.password.minLength &&
+        errors.push(this.$t('form.password.error.minLength', { count: 8 }));
+      return [...errors, ...this.serverErrors.password];
+    },
+    passwordConfirmationErrors() {
+      const errors = [];
+      if (!this.$v.passwordConfirmation.$dirty) return errors;
+      !this.$v.passwordConfirmation.required &&
+        errors.push(this.$t('form.passwordConfirmation.error.required'));
+      !this.$v.passwordConfirmation.minLength &&
+        errors.push(
+          this.$t('form.passwordConfirmation.error.minLength', { count: 8 })
+        );
+      !this.$v.passwordConfirmation.sameAsPassword &&
+        errors.push(this.$t('form.passwordConfirmation.error.sameAsPassword'));
+      return errors;
+    },
+  },
+};
+</script>

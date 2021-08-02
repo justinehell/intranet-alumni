@@ -1,11 +1,17 @@
 <template>
-  <div>
-    <h1>Not Found</h1>
-    <p>
-      Oops we counld'nt find that page. Try going
-      <router-link :to="{ name: 'Home' }">home</router-link>
-    </p>
-  </div>
+  <v-container>
+    <v-row justify="center">
+      <v-col>
+        <h1>{{ $t('notFound.title') }}</h1>
+        <p>
+          {{ $t('notFound.description') }}
+          <router-link :to="{ name: 'Home' }">{{
+            $t('home.title')
+          }}</router-link>
+        </p>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

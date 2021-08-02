@@ -1,8 +1,8 @@
 import alumniApiClient from '../../services/authApi';
-import router from '../../router';
 import { NOTIFICATION, SUCCESS } from '../../utils/notifications';
 
 const state = {
+  user: {},
   accessToken: '',
   refreshToken: '',
 };
@@ -26,6 +26,7 @@ export const actions = {
             refreshToken: r.data.refresh,
           };
           commit('SET_TOKENS', tokens);
+          dispatch('me');
           dispatch(
             'notifications/showNotification',
             {
@@ -39,6 +40,11 @@ export const actions = {
         .catch((error) => {
           reject(error);
         });
+    });
+  },
+  me({ commit }) {
+    alumniApiClient.get('auth/users/me').then((r) => {
+      commit('SET_USER', r.data);
     });
   },
   register({ commit, dispatch }, data) {
@@ -64,7 +70,6 @@ export const actions = {
   },
   logout({ commit }) {
     commit('REMOVE_TOKENS');
-    router.push({ name: 'Login' });
   },
   setAuthTokens({ commit }, tokens) {
     commit('SET_TOKENS', tokens);
@@ -73,6 +78,9 @@ export const actions = {
 
 // mutations
 const mutations = {
+  SET_USER(state, data) {
+    state.user = data;
+  },
   SET_TOKENS(state, tokens) {
     state.accessToken = tokens.accessToken;
     state.refreshToken = tokens.refreshToken;

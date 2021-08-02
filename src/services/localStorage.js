@@ -1,11 +1,11 @@
-export function setLocalStorage(key, token) {
+export function setLocalStorageItem(key, token) {
   localStorage.setItem(key, token);
 }
 
-export function getLocalStorage(key) {
+export function getLocalStorageItem(key) {
   return localStorage.getItem(key);
 }
 
-export function removeLocalStorage(key) {
+export function removeLocalStorageItem(key) {
   localStorage.removeItem(key);
 }

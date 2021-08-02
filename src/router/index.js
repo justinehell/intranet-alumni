@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { getLocalStorage } from '../services/localStorage';
+import { getLocalStorageItem } from '../services/localStorage';
 
 Vue.use(VueRouter);
 
@@ -13,6 +13,13 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "Home" */ '../views/Home.vue'),
+  },
+  {
+    path: '/me',
+    name: 'Profile',
+    meta: { requiresAuth: true },
+    component: () =>
+      import(/* webpackChunkName: "Profile" */ '../views/Profile.vue'),
   },
   {
     path: '/login',
@@ -44,7 +51,7 @@ router.beforeEach((to, from, next) => {
   const requiredAuthPath = to.matched.some(
     (record) => record.meta.requiresAuth
   );
-  const isLogged = !!getLocalStorage('accessToken');
+  const isLogged = !!getLocalStorageItem('accessToken');
   if (to.meta.requiresAuth || requiredAuthPath) {
     // when user is not logged in
     if (!isLogged) {
@@ -59,6 +66,7 @@ router.beforeEach((to, from, next) => {
   else if (isLogged) {
     next({ name: 'Home' });
   }
+  next();
 });
 
 export default router;
