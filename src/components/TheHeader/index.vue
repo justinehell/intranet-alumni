@@ -16,17 +16,12 @@
 </template>
 
 <script>
-import { INFO, NOTIFICATION } from '../../utils/notifications';
 export default {
   name: 'TheHeader',
   methods: {
     signOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push({ name: 'Login' });
-      this.$store.dispatch('notifications/showNotification', {
-        type: NOTIFICATION.INFO,
-        code: INFO.SIGN_OUT,
-      });
     },
   },
 };

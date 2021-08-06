@@ -8,17 +8,22 @@
 
         {{ user }}
       </v-col>
+      <v-btn @click="me">Me</v-btn>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 export default {
   name: 'Profile',
 
   computed: {
     ...mapState('auth', ['user']),
+  },
+
+  methods: {
+    ...mapActions('auth', ['me']),
   },
 };
 </script>

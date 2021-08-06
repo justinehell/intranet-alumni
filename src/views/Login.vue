@@ -10,6 +10,7 @@
                 v-model="email"
                 :error-messages="emailErrors"
                 :label="$t('form.email.label')"
+                prepend-inner-icon="mdi-email"
                 type="email"
                 outlined
                 required
@@ -18,11 +19,13 @@
               ></v-text-field>
               <v-text-field
                 v-model="password"
+                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                 :error-messages="passwordErrors"
                 :label="$t('form.password.label')"
-                type="password"
+                :type="show ? 'text' : 'password'"
                 outlined
                 required
+                @click:append="show = !show"
                 @input="$v.password.$touch()"
                 @blur="$v.password.$touch()"
               ></v-text-field>
@@ -45,11 +48,9 @@
 </template>
 
 <script>
-import { camelCase } from 'lodash';
 import { required, email, minLength } from 'vuelidate/lib/validators';
 
 import formFieldMixin from '../mixins/formFieldMixin.vue';
-import { NOTIFICATION, ERROR } from '../utils/notifications';
 
 export default {
   name: 'Login',
@@ -63,6 +64,7 @@ export default {
   data() {
     return {
       loading: false,
+      show: false,
       email: '',
       password: '',
     };
@@ -83,19 +85,7 @@ export default {
             this.$router.push({ name: 'Home' });
           })
           .catch((error) => {
-            error.response?.data?.errors?.forEach((err) => {
-              if (err.field) {
-                this.serverErrors[err.field].push(
-                  this.$t(`form.${err.field}.error.${camelCase(err.code)}`)
-                );
-              } else {
-                // handle global error - not related to a specific field
-                this.$store.dispatch('notifications/showNotification', {
-                  type: NOTIFICATION.ERROR,
-                  code: ERROR[err.code.toUpperCase()],
-                });
-              }
-            });
+            this.setServerError(error);
           })
           .finally(() => {
             this.loading = false;

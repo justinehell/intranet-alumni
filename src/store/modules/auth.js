@@ -1,5 +1,5 @@
 import alumniApiClient from '../../services/authApi';
-import { NOTIFICATION, SUCCESS } from '../../utils/notifications';
+import { INFO, NOTIFICATION, SUCCESS } from '../../utils/notifications';
 
 const state = {
   user: {},
@@ -19,7 +19,7 @@ export const actions = {
   login({ commit, dispatch }, data) {
     return new Promise((resolve, reject) => {
       alumniApiClient
-        .post('auth/jwt/create', data)
+        .post('auth/jwt/create/', data)
         .then((r) => {
           const tokens = {
             accessToken: r.data.access,
@@ -43,7 +43,7 @@ export const actions = {
     });
   },
   me({ commit }) {
-    alumniApiClient.get('auth/users/me').then((r) => {
+    alumniApiClient.get('auth/users/me/').then((r) => {
       commit('SET_USER', r.data);
     });
   },
@@ -68,11 +68,34 @@ export const actions = {
         });
     });
   },
-  logout({ commit }) {
+  logout({ commit, dispatch }) {
     commit('REMOVE_TOKENS');
+    dispatch(
+      'notifications/showNotification',
+      {
+        type: NOTIFICATION.INFO,
+        code: INFO.SIGN_OUT,
+      },
+      { root: true }
+    );
   },
   setAuthTokens({ commit }, tokens) {
     commit('SET_TOKENS', tokens);
+  },
+  refreshToken({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      alumniApiClient
+        .post('auth/jwt/refresh/', { refresh: state.refreshToken })
+        .then((r) => {
+          commit('SET_TOKENS', {
+            accessToken: r.data.access,
+          });
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
   },
 };
 
@@ -82,8 +105,8 @@ const mutations = {
     state.user = data;
   },
   SET_TOKENS(state, tokens) {
-    state.accessToken = tokens.accessToken;
-    state.refreshToken = tokens.refreshToken;
+    state.accessToken = tokens.accessToken || state.accessToken;
+    state.refreshToken = tokens.refreshToken || state.refreshToken;
   },
   REMOVE_TOKENS(state) {
     state.accessToken = '';

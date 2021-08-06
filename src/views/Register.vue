@@ -10,6 +10,7 @@
                 v-model="firstName"
                 :error-messages="firstNameErrors"
                 :label="$t('form.firstName.label')"
+                prepend-inner-icon="mdi-account"
                 type="text"
                 outlined
                 required
@@ -20,6 +21,7 @@
                 v-model="lastName"
                 :error-messages="lastNameErrors"
                 :label="$t('form.lastName.label')"
+                prepend-inner-icon="mdi-account"
                 type="text"
                 outlined
                 required
@@ -31,6 +33,7 @@
                 :items="promoList"
                 :error-messages="promoErrors"
                 :label="$t('form.promo.label')"
+                prepend-inner-icon="mdi-school"
                 outlined
                 required
                 @change="touchInput('promo', true)"
@@ -40,6 +43,7 @@
                 v-model="email"
                 :error-messages="emailErrors"
                 :label="$t('form.email.label')"
+                prepend-inner-icon="mdi-email"
                 type="email"
                 outlined
                 required
@@ -48,21 +52,25 @@
               ></v-text-field>
               <v-text-field
                 v-model="password"
+                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                 :error-messages="passwordErrors"
                 :label="$t('form.password.label')"
-                type="password"
+                :type="show ? 'text' : 'password'"
                 outlined
                 required
+                @click:append="show = !show"
                 @input="touchInput('password', true)"
                 @blur="touchInput('password')"
               ></v-text-field>
               <v-text-field
                 v-model="passwordConfirmation"
+                :append-icon="showConfirmation ? 'mdi-eye' : 'mdi-eye-off'"
                 :error-messages="passwordConfirmationErrors"
                 :label="$t('form.passwordConfirmation.label')"
-                type="password"
+                :type="showConfirmation ? 'text' : 'password'"
                 outlined
                 required
+                @click:append="showConfirmation = !showConfirmation"
                 @input="touchInput('passwordConfirmation', true)"
                 @blur="touchInput('passwordConfirmation')"
               ></v-text-field>
@@ -85,11 +93,9 @@
 </template>
 
 <script>
-import { camelCase } from 'lodash';
 import { required, minLength, email, sameAs } from 'vuelidate/lib/validators';
 
 import formFieldMixin from '../mixins/formFieldMixin.vue';
-import { ERROR, NOTIFICATION } from '../utils/notifications';
 
 export default {
   name: 'Register',
@@ -111,6 +117,8 @@ export default {
   data() {
     return {
       loading: false,
+      show: false,
+      showConfirmation: false,
       firstName: '',
       lastName: '',
       promo: '',
@@ -141,19 +149,7 @@ export default {
           .dispatch('auth/register', userCredentials)
           .then(() => this.$router.push({ name: 'Login' }))
           .catch((error) => {
-            error?.response?.data?.errors?.forEach((err) => {
-              if (err?.field) {
-                this.serverErrors[err.field].push(
-                  this.$t(`form.${err.field}.error.${camelCase(err.code)}`)
-                );
-              } else {
-                // handle global error - not related to a specific field
-                this.$store.dispatch('notifications/showNotification', {
-                  type: NOTIFICATION.ERROR,
-                  code: ERROR[err.code.toUpperCase()],
-                });
-              }
-            });
+            this.setServerError(error);
           })
           .finally(() => {
             this.loading = false;

@@ -1,4 +1,5 @@
 <script>
+import { camelCase } from 'lodash';
 export default {
   data() {
     return {
@@ -62,6 +63,17 @@ export default {
       !this.$v.passwordConfirmation.sameAsPassword &&
         errors.push(this.$t('form.passwordConfirmation.error.sameAsPassword'));
       return errors;
+    },
+  },
+  methods: {
+    setServerError(error) {
+      error?.response?.data?.errors?.forEach((err) => {
+        if (err?.field) {
+          this.serverErrors[err.field].push(
+            this.$t(`form.${err.field}.error.${camelCase(err.code)}`)
+          );
+        }
+      });
     },
   },
 };
