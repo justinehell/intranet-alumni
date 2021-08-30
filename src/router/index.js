@@ -22,6 +22,20 @@ const routes = [
       import(/* webpackChunkName: "Profile" */ '../views/Profile.vue'),
   },
   {
+    path: '/alumni',
+    name: 'Alumni',
+    meta: { requiresAuth: true },
+    component: () =>
+      import(/* webpackChunkName: "Alumni" */ '../views/AlumniList.vue'),
+  },
+  {
+    path: '/alumni/:id',
+    name: 'AlumniDetail',
+    meta: { requiresAuth: true },
+    component: () =>
+      import(/* webpackChunkName: "Alumni" */ '../views/AlumniDetail.vue'),
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () =>

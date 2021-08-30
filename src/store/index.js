@@ -6,6 +6,7 @@ import handleTokenInLocalStorage from '../plugins/webStorage';
 // modules
 import auth from './modules/auth';
 import notifications from './modules/notifications';
+import students from './modules/students';
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
   modules: {
     auth,
     notifications,
+    students,
   },
   actions: {
     setInitialData({ dispatch }) {

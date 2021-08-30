@@ -3,15 +3,15 @@
     <v-app-bar-title>The Nuum Alumni</v-app-bar-title>
     <v-spacer></v-spacer>
 
-    <v-btn
-      class="mr-4"
-      color="primary"
-      depressed
-      @click="$router.push({ name: 'Profile' })"
-    >
-      Profile
+    <v-btn @click="$router.push({ name: 'Alumni' })" icon>
+      <v-icon>mdi-format-list-bulleted</v-icon>
     </v-btn>
-    <v-btn @click="signOut" outlined>{{ $t('action.signOut') }}</v-btn>
+    <v-btn @click="$router.push({ name: 'Profile' })" icon>
+      <v-icon>mdi-account</v-icon>
+    </v-btn>
+    <v-btn @click="signOut" icon>
+      <v-icon>mdi-logout</v-icon>
+    </v-btn>
   </v-app-bar>
 </template>
 
