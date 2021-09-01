@@ -1,4 +1,9 @@
-import alumniApiClient from '../../services/authApi';
+import {
+  createTokens,
+  getCurrentUser,
+  getRefreshToken,
+  registerUser,
+} from '../../services/auth';
 import { INFO, NOTIFICATION, SUCCESS } from '../../utils/notifications';
 
 const state = {
@@ -18,8 +23,7 @@ const getters = {
 export const actions = {
   login({ commit, dispatch }, data) {
     return new Promise((resolve, reject) => {
-      alumniApiClient
-        .post('auth/jwt/create/', data)
+      createTokens(data)
         .then((r) => {
           const tokens = {
             accessToken: r.data.access,
@@ -43,14 +47,13 @@ export const actions = {
     });
   },
   me({ commit }) {
-    alumniApiClient.get('auth/users/me/').then((r) => {
+    getCurrentUser().then((r) => {
       commit('SET_USER', r.data);
     });
   },
   register({ commit, dispatch }, data) {
     return new Promise((resolve, reject) => {
-      alumniApiClient
-        .post('auth/users/', data)
+      registerUser(data)
         .then((r) => {
           commit('REGISTER', r);
           dispatch(
@@ -84,8 +87,7 @@ export const actions = {
   },
   refreshToken({ commit, state }) {
     return new Promise((resolve, reject) => {
-      alumniApiClient
-        .post('auth/jwt/refresh/', { refresh: state.refreshToken })
+      getRefreshToken({ refresh: state.refreshToken })
         .then((r) => {
           commit('SET_TOKENS', {
             accessToken: r.data.access,

@@ -8,6 +8,7 @@ export const NOTIFICATION = {
 export const SUCCESS = {
   LOGGED_IN: 'LOGGED_IN',
   REGISTRATION: 'REGISTRATION',
+  USER_EDITION: 'USER_EDITION',
 };
 
 export const WARNING = {};

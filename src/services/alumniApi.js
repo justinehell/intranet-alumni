@@ -1,5 +1,6 @@
 import axios from 'axios';
 import camelcaseKeys from 'camelcase-keys';
+import snakecaseKeys from 'snakecase-keys';
 import store from '../store';
 import router from '../router';
 
@@ -10,6 +11,18 @@ const alumniApiClient = axios.create({
   baseURL: process.env.VUE_APP_ALUMNI_URL,
   timeout: 15000,
 });
+
+alumniApiClient.interceptors.request.use(
+  function(request) {
+    if (request.data) {
+      request.data = snakecaseKeys(request.data, { deep: true });
+    }
+    return request;
+  },
+  function(error) {
+    return Promise.reject(error);
+  }
+);
 
 alumniApiClient.interceptors.response.use(
   function(response) {
@@ -22,7 +35,7 @@ alumniApiClient.interceptors.response.use(
     // Any status codes that falls outside the range of 2xx cause this function to trigger
 
     if (
-      error.response.status === 401 &&
+      error.response?.status === 401 &&
       error.response?.data?.errors[0]?.code === 'token_not_valid'
     ) {
       if (error.config.url !== 'auth/jwt/refresh/') {

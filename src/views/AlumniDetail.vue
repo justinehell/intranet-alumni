@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import alumniApiClient from '../services/authApi';
+import alumniApiClient from '../services/alumniApi';
 import { mapState } from 'vuex';
 
 export default {
@@ -45,7 +45,7 @@ export default {
         },
         {
           text: `${this.alumni?.firstName} ${this.alumni?.lastName}`,
-          to: { name: 'alumni-detail', params: { id: this.alumni?.id } },
+          to: { name: 'AlumniDetail', params: { id: this.alumni?.id } },
           disabled: true,
           exact: true,
         },

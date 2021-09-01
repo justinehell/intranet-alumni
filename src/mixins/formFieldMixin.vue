@@ -64,6 +64,44 @@ export default {
         errors.push(this.$t('form.passwordConfirmation.error.sameAsPassword'));
       return errors;
     },
+    phoneNumberErrors() {
+      const errors = [];
+      if (!this.$v.phoneNumber.$dirty) return errors;
+      !this.$v.phoneNumber.maxLength &&
+        errors.push(this.$t('form.phoneNumber.error.maxLength', { count: 10 }));
+      !this.$v.phoneNumber.numeric &&
+        errors.push(this.$t('form.phoneNumber.error.numeric'));
+      return errors;
+    },
+    locationPostcodeErrors() {
+      const errors = [];
+      if (!this.$v.locationPostcode.$dirty) return errors;
+      !this.$v.locationPostcode.maxLength &&
+        errors.push(
+          this.$t('form.locationPostcode.error.maxLength', { count: 10 })
+        );
+      !this.$v.locationPostcode.numeric &&
+        errors.push(this.$t('form.locationPostcode.error.numeric'));
+      return errors;
+    },
+    locationAdressErrors() {
+      const errors = [];
+      if (!this.$v.locationAdress.$dirty) return errors;
+      !this.$v.locationAdress.maxLength &&
+        errors.push(
+          this.$t('form.locationAdress.error.maxLength', { count: 200 })
+        );
+      return errors;
+    },
+    locationCityErrors() {
+      const errors = [];
+      if (!this.$v.locationCity.$dirty) return errors;
+      !this.$v.locationCity.maxLength &&
+        errors.push(
+          this.$t('form.locationCity.error.maxLength', { count: 200 })
+        );
+      return errors;
+    },
   },
   methods: {
     setServerError(error) {

@@ -138,12 +138,12 @@ export default {
       if (!this.$v.$invalid) {
         this.loading = true;
         let userCredentials = {
-          first_name: this.firstName,
-          last_name: this.lastName,
+          firstName: this.firstName,
+          lastName: this.lastName,
           promo: this.promo,
           email: this.email,
           password: this.password,
-          re_password: this.passwordConfirmation,
+          rePassword: this.passwordConfirmation,
         };
         this.$store
           .dispatch('auth/register', userCredentials)

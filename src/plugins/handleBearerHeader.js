@@ -1,4 +1,4 @@
-import alumniApiClient from '../services/authApi';
+import alumniApiClient from '../services/alumniApi';
 
 export default function handleBearerHeader(store) {
   store.subscribe((mutation) => {
