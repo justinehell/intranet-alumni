@@ -2,6 +2,7 @@ import { convertArrayToObject } from '../../utils';
 import { NOTIFICATION, SUCCESS } from '../../utils/notifications';
 import {
   editStudent,
+  editStudentJob,
   getCurrentStudent,
   getStudents,
 } from '../../services/students';
@@ -67,6 +68,25 @@ export const actions = {
         .catch((error) => reject(error));
     });
   },
+
+  editJob({ commit, dispatch }, job) {
+    return new Promise((resolve, reject) => {
+      editStudentJob(job)
+        .then((r) => {
+          commit('UPDATE_STUDENT_JOB', r.data);
+          dispatch(
+            'notifications/showNotification',
+            {
+              type: NOTIFICATION.SUCCESS,
+              code: SUCCESS.USER_EDITION,
+            },
+            { root: true }
+          );
+          resolve();
+        })
+        .catch((error) => reject(error));
+    });
+  },
 };
 
 // mutations
@@ -76,6 +96,15 @@ const mutations = {
   },
   UPDATE_STUDENT(state, newStudent) {
     state.students[newStudent.id] = newStudent;
+  },
+  UPDATE_STUDENT_JOB(state, newJob) {
+    const studentId = newJob.student;
+    const oldJobIndex = state.students[studentId]?.jobs.findIndex(
+      (job) => job.id === newJob.id
+    );
+    oldJobIndex !== -1
+      ? (state.students[studentId].jobs[oldJobIndex] = newJob)
+      : null;
   },
 };
 

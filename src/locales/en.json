@@ -9,13 +9,14 @@
     "goToSignUp": "Pas encore enregistré ? Se créer un compte",
     "cancel": "Annuler",
     "save": "Enregistrer",
-    "edit": "Modifier"
+    "edit": "Modifier",
+    "add": "Ajouter"
   },
   "home": {
     "title": "Accueil"
   },
   "profile": {
-    "title": "Mon espace personnel",
+    "title": "Mon profil",
     "email": "Email",
     "edit": "Modifier mes informations"
   },
@@ -104,6 +105,24 @@
         "maxLength": "Le numéro de téléphone doit contenir {count} chiffres",
         "numeric": "Le numéro de téléphone doit contenir uniquement des chiffres"
       }
+    },
+    "function": {
+      "label": "Intitulé du poste"
+    },
+    "dateStart": {
+      "label": "Date de début"
+    },
+    "dateEnd": {
+      "label": "Date de fin"
+    },
+    "company": {
+      "label": "Nom de la Société"
+    },
+    "contractType": {
+      "label": "Type de Contrat"
+    },
+    "department": {
+      "label": "Département"
     }
   },
   "COUNTRY": {

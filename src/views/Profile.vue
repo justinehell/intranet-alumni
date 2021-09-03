@@ -6,75 +6,24 @@
           {{ $t('profile.title') }}
         </h1>
       </v-col>
-      <v-col cols="12">
-        <v-card v-if="user && userStudent">
-          <v-card-title class="text-h4">
-            {{ `${user.firstName} ${user.lastName}` }}
-          </v-card-title>
-          <v-card-text>
-            <v-row>
-              <v-col cols="12" md="6">
-                <div class="mb-4">
-                  <span>{{ $t('alumniList.promo') }} :</span>
-                  <span class="text--primary">
-                    {{ $t(`PROMO.${user.promo}`) }}
-                  </span>
-                </div>
-                <div class="mb-4">
-                  <span>{{ $t('form.email.label') }} :</span>
-                  <span class="text--primary">
-                    {{ user.email }}
-                  </span>
-                </div>
-
-                <div class="mb-4" v-if="userStudent.birthDate">
-                  <span>{{ $t('form.birthDate.label') }} :</span>
-                  <span class="text--primary">
-                    {{ formatDate(userStudent.birthDate) }}
-                  </span>
-                </div>
-
-                <div class="mb-4" v-if="userStudent.locationAdress">
-                  <span>{{ $t('form.locationAdress.label') }} :</span>
-                  <span class="text--primary">
-                    {{ userStudent.locationAdress }}
-                  </span>
-                </div>
-
-                <div class="mb-4" v-if="userStudent.locationPostcode">
-                  <span>{{ $t('form.locationPostcode.label') }} :</span>
-                  <span class="text--primary">
-                    {{ userStudent.locationPostcode }}
-                  </span>
-                </div>
-
-                <div class="mb-4" v-if="userStudent.locationCity">
-                  <span>{{ $t('form.locationCity.label') }} :</span>
-                  <span class="text--primary">
-                    {{ userStudent.locationCity }}
-                  </span>
-                </div>
-
-                <div class="mb-4" v-if="userStudent.locationCountry">
-                  <span>{{ $t('form.locationCountry.label') }} :</span>
-                  <span class="text--primary">
-                    {{ $t(`COUNTRY.${userStudent.locationCountry}`) }}
-                  </span>
-                </div>
-
-                <div class="mb-4" v-if="userStudent.phoneNumber">
-                  <span>{{ $t('form.phoneNumber.label') }} :</span>
-                  <span class="text--primary">
-                    {{ userStudent.phoneNumber }}
-                  </span>
-                </div>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
+      <v-col cols="12" v-if="user && userStudent">
+        <InfoProfile :user="user" :userStudent="userStudent" />
       </v-col>
-      <v-col v-if="userStudent" class="text-center">
+      <v-col cols="12" v-if="userStudent" class="text-center">
         <EditProfile :userStudent="userStudent" />
+      </v-col>
+      <v-col v-if="userStudent">
+        <div class="d-flex justify-space-between pa-4">
+          <h2>Mes expériences</h2>
+          <AddJob />
+        </div>
+        <JobCard
+          v-for="job in userStudent.jobs"
+          :key="job.id"
+          :job="job"
+          @edit="editingJob = job"
+        />
+        <EditJob :job="editingJob" @close="editingJob = null" />
       </v-col>
     </v-row>
   </v-container>
@@ -82,13 +31,26 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
-import { formatDate } from '../utils/index';
-import EditProfile from '../components/EditProfile';
+
+import InfoProfile from '../components/Profile/ProfileCard.vue';
+import EditProfile from '../components/Profile/ProfileDialogEditForm.vue';
+import JobCard from '../components/Profile/Jobs/JobCard.vue';
+import AddJob from '../components/Profile/Jobs/JobDialogAddForm.vue';
+import EditJob from '../components/Profile/Jobs/JobDialogEditForm.vue';
 
 export default {
   name: 'Profile',
   components: {
+    InfoProfile,
     EditProfile,
+    JobCard,
+    AddJob,
+    EditJob,
+  },
+  data() {
+    return {
+      editingJob: null,
+    };
   },
   async created() {
     this.userStudent ? null : await this.me();
@@ -99,7 +61,6 @@ export default {
   },
   methods: {
     ...mapActions('students', ['me']),
-    formatDate,
   },
 };
 </script>

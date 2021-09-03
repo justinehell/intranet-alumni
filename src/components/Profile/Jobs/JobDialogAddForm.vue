@@ -1,14 +1,25 @@
 <template>
   <v-dialog v-model="dialog" max-width="600px">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn color="primary" dark v-bind="attrs" v-on="on" @click="setFormData">
-        {{ $t('action.edit') }}
+      <v-btn
+        class="mx-2"
+        fab
+        small
+        dark
+        color="indigo"
+        v-bind="attrs"
+        v-on="on"
+      >
+        <v-icon dark>
+          mdi-plus
+        </v-icon>
       </v-btn>
     </template>
     <v-card>
       <v-card-title>
-        <span class="text-h5">{{ $t('profile.edit') }}</span>
+        <span class="text-h5">Add Job</span>
       </v-card-title>
+      <!-- 
       <v-card-text>
         <v-container>
           <v-row>
@@ -91,20 +102,14 @@
             </v-col>
           </v-row>
         </v-container>
-      </v-card-text>
+      </v-card-text>-->
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="dialog = false">
-          {{ $t('action.cancel') }}
-        </v-btn>
-        <v-btn
-          color="blue darken-1"
-          @click="submit"
-          depressed
-          :loading="loading"
-          :disabled="$v.$invalid"
-        >
-          {{ $t('action.save') }}
+        <v-btn color="blue darken-1" text @click="dialog = false">{{
+          $t('action.cancel')
+        }}</v-btn>
+        <v-btn color="blue darken-1" @click="submit" depressed>
+          {{ $t('action.add') }}
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -112,86 +117,65 @@
 </template>
 
 <script>
-import { numeric, maxLength } from 'vuelidate/lib/validators';
-import { mapActions } from 'vuex';
+// import { numeric, maxLength } from 'vuelidate/lib/validators';
+// import { mapActions } from 'vuex';
 
-import formFieldMixinVue from '../../mixins/formFieldMixin.vue';
-import { COUNTRIES } from '../../utils/countriesCode';
-import { formatDate } from '../../utils/index';
+// import formFieldMixinVue from '../../../mixins/formFieldMixin.vue';
+// import { COUNTRIES } from '../../../utils/countriesCode';
+// import { formatDate } from '../../../utils/index';
 
 export default {
-  name: 'EditProfile',
-  props: {
-    userStudent: {
-      type: Object,
-      required: true,
-    },
-  },
-  mixins: [formFieldMixinVue],
-  validations: {
-    phoneNumber: { numeric, maxLength: maxLength(10) },
-    locationPostcode: { numeric, maxLength: maxLength(10) },
-    locationAdress: { maxLength: maxLength(200) },
-    locationCity: { maxLength: maxLength(200) },
-  },
+  name: 'AddJob',
+  // mixins: [formFieldMixinVue],
+  // validations: {
+  //   phoneNumber: { numeric, maxLength: maxLength(10) },
+  //   locationPostcode: { numeric, maxLength: maxLength(10) },
+  //   locationAdress: { maxLength: maxLength(200) },
+  //   locationCity: { maxLength: maxLength(200) },
+  // },
   data() {
     return {
-      birthDate: '',
-      locationAdress: '',
-      locationPostcode: '',
-      locationCity: '',
-      locationCountry: '',
-      phoneNumber: '',
-      loading: false,
       dialog: false,
-      menu: false,
     };
   },
-  computed: {
-    countries() {
-      return COUNTRIES.map((countryCode) => {
-        return { value: countryCode, text: this.$t(`COUNTRY.${countryCode}`) };
-      }).sort((a, b) => a.text.localeCompare(b.text));
-    },
-    dateFormatted() {
-      return this.formatDate(this.birthDate);
-    },
-  },
+  // computed: {
+  //   countries() {
+  //     return COUNTRIES.map((countryCode) => {
+  //       return { value: countryCode, text: this.$t(`COUNTRY.${countryCode}`) };
+  //     }).sort((a, b) => a.text.localeCompare(b.text));
+  //   },
+  //   dateFormatted() {
+  //     return this.formatDate(this.birthDate);
+  //   },
+  // },
   methods: {
-    ...mapActions('students', ['edit']),
-    formatDate,
+    // ...mapActions('students', ['edit']),
+    // formatDate,
     submit() {
-      this.$v.$touch();
-      if (!this.$v.$invalid) {
-        this.loading = true;
-        let updatedStudent = {
-          birthDate: this.birthDate,
-          locationAdress: this.locationAdress,
-          locationPostcode: this.locationPostcode,
-          locationCity: this.locationCity,
-          locationCountry: this.locationCountry,
-          phoneNumber: this.phoneNumber,
-          id: this.userStudent.id,
-        };
-        this.edit(updatedStudent)
-          .then(() => {
-            this.dialog = false;
-          })
-          .catch((error) => {
-            this.setServerError(error);
-          })
-          .finally(() => {
-            this.loading = false;
-          });
-      }
-    },
-    setFormData() {
-      this.birthDate = this.userStudent.birthDate;
-      this.locationAdress = this.userStudent.locationAdress;
-      this.locationPostcode = this.userStudent.locationPostcode;
-      this.locationCity = this.userStudent.locationCity;
-      this.locationCountry = this.userStudent.locationCountry;
-      this.phoneNumber = this.userStudent.phoneNumber;
+      console.log('submit');
+      this.dialog = false;
+      //   this.$v.$touch();
+      //   if (!this.$v.$invalid) {
+      //     this.loading = true;
+      //     let updatedStudent = {
+      //       birthDate: this.birthDate,
+      //       locationAdress: this.locationAdress,
+      //       locationPostcode: this.locationPostcode,
+      //       locationCity: this.locationCity,
+      //       locationCountry: this.locationCountry,
+      //       phoneNumber: this.phoneNumber,
+      //       id: this.userStudent.id,
+      //     };
+      //     this.edit(updatedStudent)
+      //       .then(() => {
+      //         this.dialog = false;
+      //       })
+      //       .catch((error) => {
+      //         this.setServerError(error);
+      //       })
+      //       .finally(() => {
+      //         this.loading = false;
+      //       });
     },
   },
 };

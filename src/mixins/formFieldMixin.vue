@@ -73,6 +73,24 @@ export default {
         errors.push(this.$t('form.phoneNumber.error.numeric'));
       return errors;
     },
+    fixedPhoneNumberErrors() {
+      const errors = [];
+      if (!this.$v.fixedPhoneNumber.$dirty) return errors;
+      !this.$v.fixedPhoneNumber.maxLength &&
+        errors.push(this.$t('form.phoneNumber.error.maxLength', { count: 10 }));
+      !this.$v.fixedPhoneNumber.numeric &&
+        errors.push(this.$t('form.phoneNumber.error.numeric'));
+      return errors;
+    },
+    mobilePhoneNumberErrors() {
+      const errors = [];
+      if (!this.$v.mobilePhoneNumber.$dirty) return errors;
+      !this.$v.mobilePhoneNumber.maxLength &&
+        errors.push(this.$t('form.phoneNumber.error.maxLength', { count: 10 }));
+      !this.$v.mobilePhoneNumber.numeric &&
+        errors.push(this.$t('form.phoneNumber.error.numeric'));
+      return errors;
+    },
     locationPostcodeErrors() {
       const errors = [];
       if (!this.$v.locationPostcode.$dirty) return errors;
