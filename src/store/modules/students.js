@@ -1,6 +1,8 @@
 import { convertArrayToObject } from '../../utils';
 import { NOTIFICATION, SUCCESS } from '../../utils/notifications';
 import {
+  addStudentJob,
+  deleteStudentJob,
   editStudent,
   editStudentJob,
   getCurrentStudent,
@@ -87,6 +89,48 @@ export const actions = {
         .catch((error) => reject(error));
     });
   },
+
+  addJob({ commit, dispatch }, job) {
+    return new Promise((resolve, reject) => {
+      addStudentJob(job)
+        .then((r) => {
+          commit('ADD_STUDENT_JOB', r.data);
+          dispatch(
+            'notifications/showNotification',
+            {
+              type: NOTIFICATION.SUCCESS,
+              code: SUCCESS.USER_EDITION,
+            },
+            { root: true }
+          );
+          resolve();
+        })
+        .catch((error) => reject(error));
+    });
+  },
+
+  deleteJob({ commit, dispatch }, id) {
+    return new Promise((resolve, reject) => {
+      deleteStudentJob(id)
+        .then(() => {
+          getCurrentStudent()
+            .then((r) => {
+              commit('DELETE_STUDENT_JOB', { id, studentId: r.data.id });
+            })
+            .catch((error) => reject(error));
+          dispatch(
+            'notifications/showNotification',
+            {
+              type: NOTIFICATION.SUCCESS,
+              code: SUCCESS.USER_EDITION,
+            },
+            { root: true }
+          );
+          resolve();
+        })
+        .catch((error) => reject(error));
+    });
+  },
 };
 
 // mutations
@@ -104,6 +148,18 @@ const mutations = {
     );
     oldJobIndex !== -1
       ? (state.students[studentId].jobs[oldJobIndex] = newJob)
+      : null;
+  },
+  ADD_STUDENT_JOB(state, newJob) {
+    const studentId = newJob.student;
+    state.students[studentId].jobs.unshift(newJob);
+  },
+  DELETE_STUDENT_JOB(state, data) {
+    const deletingJobIndex = state.students[data.studentId]?.jobs.findIndex(
+      (job) => job.id === data.id
+    );
+    deletingJobIndex !== -1
+      ? state.students[data.studentId].jobs.splice(deletingJobIndex, 1)
       : null;
   },
 };

@@ -22,8 +22,10 @@
           :key="job.id"
           :job="job"
           @edit="editingJob = job"
+          @delete="deletingJob = job"
         />
         <EditJob :job="editingJob" @close="editingJob = null" />
+        <DeleteJob :job="deletingJob" @close="deletingJob = null" />
       </v-col>
     </v-row>
   </v-container>
@@ -37,6 +39,7 @@ import EditProfile from '../components/Profile/ProfileDialogEditForm.vue';
 import JobCard from '../components/Profile/Jobs/JobCard.vue';
 import AddJob from '../components/Profile/Jobs/JobDialogAddForm.vue';
 import EditJob from '../components/Profile/Jobs/JobDialogEditForm.vue';
+import DeleteJob from '../components/Profile/Jobs/JobDialogDeleteForm.vue';
 
 export default {
   name: 'Profile',
@@ -46,10 +49,12 @@ export default {
     JobCard,
     AddJob,
     EditJob,
+    DeleteJob,
   },
   data() {
     return {
       editingJob: null,
+      deletingJob: null,
     };
   },
   async created() {

@@ -10,7 +10,7 @@
         <v-card-subtitle v-if="job.contractType">{{
           job.contractType
         }}</v-card-subtitle>
-        <v-card-subtitle v-if="job.contractType">{{
+        <v-card-subtitle v-if="job.dateStart">{{
           formatDate(job.dateStart)
         }}</v-card-subtitle>
         <v-card-subtitle v-if="job.dateEnd">{{
@@ -54,6 +54,18 @@
             mdi-pencil
           </v-icon>
         </v-btn>
+        <v-btn
+          class="mx-2"
+          fab
+          small
+          dark
+          color="indigo"
+          @click="$emit('delete')"
+        >
+          <v-icon dark>
+            mdi-delete
+          </v-icon>
+        </v-btn>
       </div>
     </v-card-text>
   </v-card>
@@ -62,7 +74,7 @@
 <script>
 import { formatDate } from '../../../utils/index';
 export default {
-  name: 'Jobs',
+  name: 'JobCard',
   props: {
     job: {
       type: Object,

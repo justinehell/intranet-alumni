@@ -120,6 +120,13 @@ export default {
         );
       return errors;
     },
+    dateStartErrors() {
+      const errors = [];
+      if (!this.$v.dateStart.$dirty) return errors;
+      !this.$v.dateStart.required &&
+        errors.push(this.$t('form.dateStart.error.required'));
+      return errors;
+    },
   },
   methods: {
     setServerError(error) {

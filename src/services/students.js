@@ -17,3 +17,11 @@ export const editStudentJob = (job) => {
   const id = job.id;
   return alumniApiClient.patch(`jobs/${id}/`, job);
 };
+
+export const addStudentJob = (job) => {
+  return alumniApiClient.post(`jobs/`, job);
+};
+
+export const deleteStudentJob = (id) => {
+  return alumniApiClient.delete(`jobs/${id}`);
+};

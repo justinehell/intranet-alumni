@@ -110,7 +110,11 @@
       "label": "Intitulé du poste"
     },
     "dateStart": {
-      "label": "Date de début"
+      "label": "Date de début",
+      "error": {
+        "required": "La date de début est requise",
+        "numeric": "Le numéro de téléphone doit contenir uniquement des chiffres"
+      }
     },
     "dateEnd": {
       "label": "Date de fin"
