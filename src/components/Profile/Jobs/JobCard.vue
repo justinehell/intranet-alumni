@@ -8,7 +8,7 @@
 
         <v-card-subtitle v-if="job.company">{{ job.company }}</v-card-subtitle>
         <v-card-subtitle v-if="job.contractType">{{
-          job.contractType
+          $t(`CONTRACT.${job.contractType}`)
         }}</v-card-subtitle>
         <v-card-subtitle v-if="job.dateStart">{{
           formatDate(job.dateStart)
@@ -35,7 +35,7 @@
           job.locationCity
         }}</v-card-subtitle>
         <v-card-subtitle v-if="job.locationCountry">{{
-          job.locationCountry
+          $t(`COUNTRY.${job.locationCountry}`)
         }}</v-card-subtitle>
         <v-card-subtitle v-if="job.professionalEmail">{{
           job.professionalEmail

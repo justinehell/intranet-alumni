@@ -14,7 +14,7 @@
       </v-col>
       <v-col v-if="userStudent">
         <div class="d-flex justify-space-between pa-4">
-          <h2>Mes expériences</h2>
+          <h2>{{ $t('profile.jobs') }}</h2>
           <AddJob />
         </div>
         <JobCard

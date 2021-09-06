@@ -55,7 +55,7 @@
           </div>
 
           <div class="mb-4" v-if="userStudent.phoneNumber">
-            <span>{{ $t('form.phoneNumber.label') }} :</span>
+            <span>{{ $t('form.phoneNumber.label.phone') }} :</span>
             <span class="text--primary">
               {{ userStudent.phoneNumber }}
             </span>
@@ -69,7 +69,7 @@
 <script>
 import { formatDate } from '../../utils/index';
 export default {
-  name: 'InfoProfile',
+  name: 'ProfileCard',
   props: {
     user: {
       type: Object,

@@ -80,7 +80,7 @@ export const actions = {
             'notifications/showNotification',
             {
               type: NOTIFICATION.SUCCESS,
-              code: SUCCESS.USER_EDITION,
+              code: SUCCESS.USER_JOB_EDITION,
             },
             { root: true }
           );
@@ -99,7 +99,7 @@ export const actions = {
             'notifications/showNotification',
             {
               type: NOTIFICATION.SUCCESS,
-              code: SUCCESS.USER_EDITION,
+              code: SUCCESS.USER_JOB_ADD,
             },
             { root: true }
           );
@@ -109,20 +109,19 @@ export const actions = {
     });
   },
 
-  deleteJob({ commit, dispatch }, id) {
+  deleteJob({ commit, dispatch, getters }, id) {
     return new Promise((resolve, reject) => {
       deleteStudentJob(id)
         .then(() => {
-          getCurrentStudent()
-            .then((r) => {
-              commit('DELETE_STUDENT_JOB', { id, studentId: r.data.id });
-            })
-            .catch((error) => reject(error));
+          commit('DELETE_STUDENT_JOB', {
+            id,
+            studentId: getters.userStudent.id,
+          });
           dispatch(
             'notifications/showNotification',
             {
               type: NOTIFICATION.SUCCESS,
-              code: SUCCESS.USER_EDITION,
+              code: SUCCESS.USER_JOB_DELETE,
             },
             { root: true }
           );

@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-width="600px">
+  <v-dialog v-model="dialog" scrollable max-width="600px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="primary" dark v-bind="attrs" v-on="on" @click="setFormData">
         {{ $t('action.edit') }}
@@ -7,7 +7,7 @@
     </template>
     <v-card>
       <v-card-title>
-        <span class="text-h5">{{ $t('profile.edit') }}</span>
+        <span class="text-h5">{{ $t('profile.modal.edit') }}</span>
       </v-card-title>
       <v-card-text>
         <v-container>
@@ -83,7 +83,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="phoneNumber"
-                :label="$t('form.phoneNumber.label')"
+                :label="$t('form.phoneNumber.label.phone')"
                 append-icon="mdi-phone"
                 :error-messages="phoneNumberErrors"
                 @input="$v.phoneNumber.$touch()"
@@ -121,7 +121,7 @@ import { COUNTRIES } from '../../utils/countriesCode';
 import { formatDate } from '../../utils/index';
 
 export default {
-  name: 'EditProfile',
+  name: 'ProfileDialogEditForm',
   props: {
     userStudent: {
       type: Object,

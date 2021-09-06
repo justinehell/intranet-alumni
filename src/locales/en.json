@@ -10,15 +10,21 @@
     "cancel": "Annuler",
     "save": "Enregistrer",
     "edit": "Modifier",
-    "add": "Ajouter"
+    "add": "Ajouter",
+    "delete": "Supprimer"
   },
   "home": {
     "title": "Accueil"
   },
   "profile": {
     "title": "Mon profil",
-    "email": "Email",
-    "edit": "Modifier mes informations"
+    "jobs": "Mes expériences",
+    "modal": {
+      "edit": "Modifier mes informations",
+      "editJob": "Modifier mon expérience",
+      "addJob": "Ajouter une expérience",
+      "deleteJob": "Supprimer cette expérience"
+    }
   },
   "alumniList": {
     "title": "Liste des Alumni",
@@ -80,53 +86,70 @@
     "locationAdress": {
       "label": "Adresse",
       "error": {
-        "maxLength": "Ce champs ne doit pas dépasser {count} caractères"
+        "maxLength": "L'adresse ne doit pas dépasser {count} caractères"
       }
     },
     "locationPostcode": {
       "label": "Code Postal",
       "error": {
         "numeric": "Le code postal doit contenir uniquement des chiffres",
-        "maxLength": "Ce champs ne doit pas dépasser {count} caractères"
+        "maxLength": "Le code postal ne doit pas dépasser {count} caractères"
       }
     },
     "locationCity": {
       "label": "Ville",
       "error": {
-        "maxLength": "Ce champs ne doit pas dépasser {count} caractères"
+        "maxLength": "La ville ne doit pas dépasser {count} caractères"
       }
     },
     "locationCountry": {
       "label": "Pays"
     },
     "phoneNumber": {
-      "label": "Téléphone",
+      "label": {
+        "phone": "Téléphone",
+        "fixed": "Numéro de téléphone fixe",
+        "mobile": "Numéro de téléphone portable"
+      },
       "error": {
-        "maxLength": "Le numéro de téléphone doit contenir {count} chiffres",
+        "maxLength": "Le numéro de téléphone ne doit pas dépasser {count} chiffres",
         "numeric": "Le numéro de téléphone doit contenir uniquement des chiffres"
       }
     },
     "function": {
-      "label": "Intitulé du poste"
+      "label": "Intitulé du poste",
+      "error": {
+        "required": "L'intitulé du post est requis",
+        "maxLength": "L'intitulé du post ne doit pas dépasser {count} caractères"
+      }
     },
     "dateStart": {
       "label": "Date de début",
       "error": {
-        "required": "La date de début est requise",
-        "numeric": "Le numéro de téléphone doit contenir uniquement des chiffres"
+        "required": "La date de début est requise"
       }
     },
     "dateEnd": {
       "label": "Date de fin"
     },
     "company": {
-      "label": "Nom de la Société"
+      "label": "Nom de la Société",
+      "error": {
+        "required": "Le nom de la société est requis",
+        "maxLength": "Le nom de la société ne doit pas dépasser {count} caractères"
+      }
     },
     "contractType": {
-      "label": "Type de Contrat"
+      "label": "Type de Contrat",
+      "error": {
+        "required": "Le type de contract est requis"
+      }
     },
     "department": {
-      "label": "Département"
+      "label": "Département",
+      "error": {
+        "maxLength": "Le département ne doit pas dépasser {count} caractères"
+      }
     }
   },
   "COUNTRY": {
@@ -380,6 +403,14 @@
     "ZM": "Zambia",
     "ZW": "Zimbabwe"
   },
+  "CONTRACTS": {
+    "FIXED_TERM": "CDD",
+    "PERMANENT": "CDI",
+    "FREELANCE": "Freelance",
+    "TEMPORARY": "Intérim",
+    "APPRENTICESHIP": "Alternance",
+    "INTERNSHIP": "Stage"
+  },
   "PROMO": {
     "1": "Première (2018-2019)",
     "2": "Seconde (2019-2020)",
@@ -389,7 +420,10 @@
     "REGISTRATION": "Inscription prise en compte.",
     "LOGGED_IN": "Tu es maintenant connecté(e).",
     "GREETING": "Salut {name}! ",
-    "USER_EDITION": "Informations modifiées avec succès !"
+    "USER_EDITION": "Tes informations de profil ont bien été modifiées",
+    "USER_JOB_EDITION": "Ton expérience a bien été modifiée",
+    "USER_JOB_ADD": "Ta nouvelle expérience a bien été ajoutée",
+    "USER_JOB_DELETE": "Ton expérience a bien été supprimée"
   },
   "INFO": {
     "SIGN_OUT": "Tu as été déconnecté(e)."
