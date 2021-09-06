@@ -1,115 +1,95 @@
 <template>
-  <v-dialog v-model="dialog" scrollable max-width="600px">
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn color="primary" dark v-bind="attrs" v-on="on" @click="setFormData">
-        {{ $t('action.edit') }}
-      </v-btn>
-    </template>
-    <v-card>
-      <v-card-title>
-        <span class="text-h5">{{ $t('profile.modal.edit') }}</span>
-      </v-card-title>
-      <v-card-text>
-        <v-container>
-          <v-row>
-            <v-col cols="12">
-              <v-menu
-                ref="menu"
-                v-model="menu"
-                :close-on-content-click="false"
-                transition="scale-transition"
-                offset-y
-                max-width="290px"
-                min-width="auto"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                    :value="dateFormatted"
-                    :label="$t('form.birthDate.label')"
-                    append-icon="mdi-calendar"
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  v-model="birthDate"
-                  :active-picker="activePicker"
-                  :max="new Date().toISOString().substr(0, 10)"
-                  min="1950-01-01"
-                  @input="menu = false"
-                  @change="save"
-                ></v-date-picker>
-              </v-menu>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="locationAdress"
-                type="text"
-                :label="$t('form.locationAdress.label')"
-                append-icon="mdi-map-marker"
-                :error-messages="locationAdressErrors"
-                @input="$v.locationAdress.$touch()"
-                @blur="$v.locationAdress.$touch()"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="locationPostcode"
-                :label="$t('form.locationPostcode.label')"
-                append-icon="mdi-map-marker"
-                :error-messages="locationPostcodeErrors"
-                @input="$v.locationPostcode.$touch()"
-                @blur="$v.locationPostcode.$touch()"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="locationCity"
-                :label="$t('form.locationCity.label')"
-                append-icon="mdi-map-marker"
-                :error-messages="locationCityErrors"
-                @input="$v.locationCity.$touch()"
-                @blur="$v.locationCity.$touch()"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-select
-                v-model="locationCountry"
-                :label="$t('form.locationCountry.label')"
-                :items="countries"
-                menu-props="auto"
-              ></v-select>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="phoneNumber"
-                :label="$t('form.phoneNumber.label.phone')"
-                append-icon="mdi-phone"
-                :error-messages="phoneNumberErrors"
-                @input="$v.phoneNumber.$touch()"
-                @blur="$v.phoneNumber.$touch()"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="dialog = false">
-          {{ $t('action.cancel') }}
-        </v-btn>
-        <v-btn
-          color="blue darken-1"
-          @click="submit"
-          depressed
-          :loading="loading"
-          :disabled="$v.$invalid"
+  <BaseDialog
+    ref="dialog"
+    :title="$t('profile.modal.edit')"
+    :submitText="$t('action.save')"
+    :openDialogButtonText="$t('action.edit')"
+    :loading="loading"
+    :isSubmitButtonDisabled="isFormInvalid"
+    @submit="submit"
+    @dialog:open="dialogOpenHandler"
+  >
+    <v-row>
+      <v-col cols="12">
+        <v-menu
+          ref="menu"
+          v-model="menu"
+          :close-on-content-click="false"
+          transition="scale-transition"
+          offset-y
+          max-width="290px"
+          min-width="auto"
         >
-          {{ $t('action.save') }}
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              :value="dateFormatted"
+              :label="$t('form.birthDate.label')"
+              append-icon="mdi-calendar"
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="birthDate"
+            :active-picker="activePicker"
+            :max="new Date().toISOString().substr(0, 10)"
+            min="1950-01-01"
+            @input="menu = false"
+            @change="save"
+          ></v-date-picker>
+        </v-menu>
+      </v-col>
+      <v-col cols="12">
+        <v-text-field
+          v-model="locationAdress"
+          type="text"
+          :label="$t('form.locationAdress.label')"
+          append-icon="mdi-map-marker"
+          :error-messages="locationAdressErrors"
+          @input="$v.locationAdress.$touch()"
+          @blur="$v.locationAdress.$touch()"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12">
+        <v-text-field
+          v-model="locationPostcode"
+          :label="$t('form.locationPostcode.label')"
+          append-icon="mdi-map-marker"
+          :error-messages="locationPostcodeErrors"
+          @input="$v.locationPostcode.$touch()"
+          @blur="$v.locationPostcode.$touch()"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12">
+        <v-text-field
+          v-model="locationCity"
+          :label="$t('form.locationCity.label')"
+          append-icon="mdi-map-marker"
+          :error-messages="locationCityErrors"
+          @input="$v.locationCity.$touch()"
+          @blur="$v.locationCity.$touch()"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12">
+        <v-select
+          v-model="locationCountry"
+          :label="$t('form.locationCountry.label')"
+          :items="countries"
+          menu-props="auto"
+        ></v-select>
+      </v-col>
+      <v-col cols="12">
+        <v-text-field
+          v-model="phoneNumber"
+          :label="$t('form.phoneNumber.label.phone')"
+          append-icon="mdi-phone"
+          :error-messages="phoneNumberErrors"
+          @input="$v.phoneNumber.$touch()"
+          @blur="$v.phoneNumber.$touch()"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+  </BaseDialog>
 </template>
 
 <script>
@@ -120,8 +100,13 @@ import formFieldMixinVue from '../../mixins/formFieldMixin.vue';
 import { COUNTRIES } from '../../utils/countriesCode';
 import { formatDate } from '../../utils/index';
 
+import BaseDialog from '../Base/BaseDialog.vue';
+
 export default {
   name: 'ProfileDialogEditForm',
+  components: {
+    BaseDialog,
+  },
   props: {
     userStudent: {
       type: Object,
@@ -182,7 +167,7 @@ export default {
         };
         this.edit(updatedStudent)
           .then(() => {
-            this.dialog = false;
+            this.$refs.dialog.closeDialog();
           })
           .catch((error) => {
             this.setServerError(error);
@@ -194,6 +179,12 @@ export default {
     },
     save(birthDate) {
       this.$refs.menu.save(birthDate);
+    },
+    dialogOpenHandler() {
+      this.setFormData();
+    },
+    dialogCloseHandler() {
+      this.$emit('close');
     },
     setFormData() {
       this.birthDate = this.userStudent.birthDate;
