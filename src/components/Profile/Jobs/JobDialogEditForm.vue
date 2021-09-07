@@ -9,173 +9,174 @@
     @dialog:open="dialogOpenHandler"
     @dialog:close="dialogCloseHandler"
   >
-    <v-row>
-      <v-col cols="12">
-        <v-text-field
-          v-model="functionTitle"
-          :label="`${$t('form.function.label')} *`"
-          :error-messages="functionErrors"
-          @input="$v.functionTitle.$touch()"
-          @blur="$v.functionTitle.$touch()"
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12">
-        <v-select
-          v-model="contractType"
-          :label="`${$t('form.contractType.label')} *`"
-          :items="contracts"
-          menu-props="auto"
-          :error-messages="contractTypeErrors"
-          @input="$v.contractType.$touch()"
-          @blur="$v.contractType.$touch()"
-        ></v-select>
-      </v-col>
-      <v-col cols="12">
-        <v-menu
-          ref="menu1"
-          v-model="menu1"
-          :close-on-content-click="false"
-          transition="scale-transition"
-          offset-y
-          max-width="290px"
-          min-width="auto"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              :value="dateStartFormatted"
-              :label="`${$t('form.dateStart.label')} *`"
-              append-icon="mdi-calendar"
-              v-bind="attrs"
-              v-on="on"
-              :error-messages="dateStartErrors"
-              @input="$v.dateStart.$touch()"
-              @blur="$v.dateStart.$touch()"
-            ></v-text-field>
-          </template>
-          <v-date-picker
-            v-model="dateStart"
-            active-picker="YEAR"
-            min="1950-01-01"
-            @input="menu1 = false"
-          ></v-date-picker>
-        </v-menu>
-      </v-col>
-      <v-col cols="12">
-        <v-menu
-          ref="menu2"
-          v-model="menu2"
-          :close-on-content-click="false"
-          transition="scale-transition"
-          offset-y
-          max-width="290px"
-          min-width="auto"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              :value="dateEndFormatted"
-              :label="`${$t('form.dateEnd.label')} *`"
-              append-icon="mdi-calendar"
-              v-bind="attrs"
-              v-on="on"
-              :error-messages="dateEndErrors"
-              @input="$v.dateEnd.$touch()"
-              @blur="$v.dateEnd.$touch()"
-            ></v-text-field>
-          </template>
-          <v-date-picker
-            v-model="dateEnd"
-            active-picker="YEAR"
-            min="1950-01-01"
-            @input="menu2 = false"
-          ></v-date-picker>
-        </v-menu>
-      </v-col>
-      <v-col cols="12">
-        <v-text-field
-          v-model="company"
-          type="text"
-          :label="`${$t('form.company.label')} *`"
-          :error-messages="companyErrors"
-          @input="$v.company.$touch()"
-          @blur="$v.company.$touch()"
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12">
-        <v-text-field
-          v-model="department"
-          :label="$t('form.department.label')"
-          :error-messages="departmentErrors"
-          @input="$v.department.$touch()"
-          @blur="$v.department.$touch()"
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12">
-        <v-text-field
-          v-model="locationAdress"
-          type="text"
-          :label="$t('form.locationAdress.label')"
-          append-icon="mdi-map-marker"
-          :error-messages="locationAdressErrors"
-          @input="$v.locationAdress.$touch()"
-          @blur="$v.locationAdress.$touch()"
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12">
-        <v-text-field
-          v-model="locationPostcode"
-          :label="$t('form.locationPostcode.label')"
-          append-icon="mdi-map-marker"
-          :error-messages="locationPostcodeErrors"
-          @input="$v.locationPostcode.$touch()"
-          @blur="$v.locationPostcode.$touch()"
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12">
-        <v-text-field
-          v-model="locationCity"
-          :label="$t('form.locationCity.label')"
-          append-icon="mdi-map-marker"
-          :error-messages="locationCityErrors"
-          @input="$v.locationCity.$touch()"
-          @blur="$v.locationCity.$touch()"
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12">
-        <v-select
-          v-model="locationCountry"
-          :label="$t('form.locationCountry.label')"
-          :items="countries"
-          menu-props="auto"
-        ></v-select>
-      </v-col>
-      <v-col cols="12">
-        <v-text-field
-          v-model="fixedPhoneNumber"
-          :label="$t('form.phoneNumber.label.fixed')"
-          append-icon="mdi-phone"
-          :error-messages="fixedPhoneNumberErrors"
-          @input="$v.fixedPhoneNumber.$touch()"
-          @blur="$v.fixedPhoneNumber.$touch()"
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12">
-        <v-text-field
-          v-model="mobilePhoneNumber"
-          :label="$t('form.phoneNumber.label.mobile')"
-          append-icon="mdi-phone"
-          :error-messages="mobilePhoneNumberErrors"
-          @input="$v.mobilePhoneNumber.$touch()"
-          @blur="$v.mobilePhoneNumber.$touch()"
-        ></v-text-field>
-      </v-col>
+    <v-form>
+      <v-row no-gutters>
+        <v-col cols="12" class="px-2">
+          <v-text-field
+            v-model="functionTitle"
+            :label="`${$t('form.function.label')} *`"
+            :error-messages="functionErrors"
+            @input="$v.functionTitle.$touch()"
+            @blur="$v.functionTitle.$touch()"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" class="px-2">
+          <v-select
+            v-model="contractType"
+            :label="`${$t('form.contractType.label')} *`"
+            :items="contracts"
+            menu-props="auto"
+            :error-messages="contractTypeErrors"
+            @input="$v.contractType.$touch()"
+            @blur="$v.contractType.$touch()"
+          ></v-select>
+        </v-col>
+        <v-col cols="6" class="px-2">
+          <v-menu
+            ref="menu1"
+            v-model="menu1"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            max-width="290px"
+            min-width="auto"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                :value="dateStartFormatted"
+                :label="`${$t('form.dateStart.label')} *`"
+                append-icon="mdi-calendar"
+                v-bind="attrs"
+                v-on="on"
+                :error-messages="dateStartErrors"
+                @input="$v.dateStart.$touch()"
+                @blur="$v.dateStart.$touch()"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              v-model="dateStart"
+              min="1950-01-01"
+              :disabled="!dateStart"
+              @input="menu1 = false"
+            ></v-date-picker>
+          </v-menu>
+        </v-col>
+        <v-col cols="6" class="px-2">
+          <v-menu
+            ref="menu2"
+            v-model="menu2"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            max-width="290px"
+            min-width="auto"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                :value="dateEndFormatted"
+                :label="`${$t('form.dateEnd.label')} *`"
+                append-icon="mdi-calendar"
+                v-bind="attrs"
+                v-on="on"
+                :error-messages="dateEndErrors"
+                @input="$v.dateEnd.$touch()"
+                @blur="$v.dateEnd.$touch()"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              v-model="dateEnd"
+              :min="dateStart"
+              @input="menu2 = false"
+            ></v-date-picker>
+          </v-menu>
+        </v-col>
+        <v-col cols="12" class="px-2">
+          <v-text-field
+            v-model="company"
+            type="text"
+            :label="`${$t('form.company.label')} *`"
+            :error-messages="companyErrors"
+            @input="$v.company.$touch()"
+            @blur="$v.company.$touch()"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" class="px-2">
+          <v-text-field
+            v-model="department"
+            :label="$t('form.department.label')"
+            :error-messages="departmentErrors"
+            @input="$v.department.$touch()"
+            @blur="$v.department.$touch()"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" class="px-2">
+          <v-text-field
+            v-model="locationAdress"
+            type="text"
+            :label="$t('form.locationAdress.label')"
+            append-icon="mdi-map-marker"
+            :error-messages="locationAdressErrors"
+            @input="$v.locationAdress.$touch()"
+            @blur="$v.locationAdress.$touch()"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="6" class="px-2">
+          <v-text-field
+            v-model="locationPostcode"
+            :label="$t('form.locationPostcode.label')"
+            append-icon="mdi-map-marker"
+            :error-messages="locationPostcodeErrors"
+            @input="$v.locationPostcode.$touch()"
+            @blur="$v.locationPostcode.$touch()"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="6" class="px-2">
+          <v-text-field
+            v-model="locationCity"
+            :label="$t('form.locationCity.label')"
+            append-icon="mdi-map-marker"
+            :error-messages="locationCityErrors"
+            @input="$v.locationCity.$touch()"
+            @blur="$v.locationCity.$touch()"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" class="px-2">
+          <v-select
+            v-model="locationCountry"
+            :label="$t('form.locationCountry.label')"
+            :items="countries"
+            menu-props="auto"
+          ></v-select>
+        </v-col>
+        <v-col cols="12" class="px-2">
+          <v-text-field
+            v-model="fixedPhoneNumber"
+            :label="$t('form.phoneNumber.label.fixed')"
+            append-icon="mdi-phone"
+            :error-messages="fixedPhoneNumberErrors"
+            @input="$v.fixedPhoneNumber.$touch()"
+            @blur="$v.fixedPhoneNumber.$touch()"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" class="px-2">
+          <v-text-field
+            v-model="mobilePhoneNumber"
+            :label="$t('form.phoneNumber.label.mobile')"
+            append-icon="mdi-phone"
+            :error-messages="mobilePhoneNumberErrors"
+            @input="$v.mobilePhoneNumber.$touch()"
+            @blur="$v.mobilePhoneNumber.$touch()"
+          ></v-text-field>
+        </v-col>
 
-      <v-col>
-        <v-switch
-          v-model="isCurrentJob"
-          :label="$t('form.isCurrentJob.label')"
-        ></v-switch>
-      </v-col>
-    </v-row>
+        <v-col>
+          <v-switch
+            v-model="isCurrentJob"
+            :label="$t('form.isCurrentJob.label')"
+          ></v-switch>
+        </v-col>
+      </v-row>
+    </v-form>
   </BaseDialog>
 </template>
 

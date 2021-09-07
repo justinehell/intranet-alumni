@@ -30,7 +30,7 @@
       <v-card-title>
         <span class="text-h5">{{ title }}</span>
       </v-card-title>
-      <v-card-text>
+      <v-card-text style="max-height:500px">
         <slot></slot>
       </v-card-text>
       <v-card-actions>

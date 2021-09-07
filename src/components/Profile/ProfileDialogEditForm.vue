@@ -9,86 +9,88 @@
     @submit="submit"
     @dialog:open="dialogOpenHandler"
   >
-    <v-row>
-      <v-col cols="12">
-        <v-menu
-          ref="menu"
-          v-model="menu"
-          :close-on-content-click="false"
-          transition="scale-transition"
-          offset-y
-          max-width="290px"
-          min-width="auto"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              :value="dateFormatted"
-              :label="$t('form.birthDate.label')"
-              append-icon="mdi-calendar"
-              v-bind="attrs"
-              v-on="on"
-            ></v-text-field>
-          </template>
-          <v-date-picker
-            v-model="birthDate"
-            :active-picker="activePicker"
-            :max="new Date().toISOString().substr(0, 10)"
-            min="1950-01-01"
-            @input="menu = false"
-            @change="save"
-          ></v-date-picker>
-        </v-menu>
-      </v-col>
-      <v-col cols="12">
-        <v-text-field
-          v-model="locationAdress"
-          type="text"
-          :label="$t('form.locationAdress.label')"
-          append-icon="mdi-map-marker"
-          :error-messages="locationAdressErrors"
-          @input="$v.locationAdress.$touch()"
-          @blur="$v.locationAdress.$touch()"
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12">
-        <v-text-field
-          v-model="locationPostcode"
-          :label="$t('form.locationPostcode.label')"
-          append-icon="mdi-map-marker"
-          :error-messages="locationPostcodeErrors"
-          @input="$v.locationPostcode.$touch()"
-          @blur="$v.locationPostcode.$touch()"
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12">
-        <v-text-field
-          v-model="locationCity"
-          :label="$t('form.locationCity.label')"
-          append-icon="mdi-map-marker"
-          :error-messages="locationCityErrors"
-          @input="$v.locationCity.$touch()"
-          @blur="$v.locationCity.$touch()"
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12">
-        <v-select
-          v-model="locationCountry"
-          :label="$t('form.locationCountry.label')"
-          :items="countries"
-          menu-props="auto"
-        ></v-select>
-      </v-col>
-      <v-col cols="12">
-        <v-text-field
-          v-model="phoneNumber"
-          :label="$t('form.phoneNumber.label.phone')"
-          append-icon="mdi-phone"
-          :error-messages="phoneNumberErrors"
-          @input="$v.phoneNumber.$touch()"
-          @blur="$v.phoneNumber.$touch()"
-        ></v-text-field>
-      </v-col>
-    </v-row>
+    <v-form>
+      <v-row no-gutters>
+        <v-col cols="12">
+          <v-menu
+            ref="menu"
+            v-model="menu"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            max-width="290px"
+            min-width="auto"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                :value="dateFormatted"
+                :label="$t('form.birthDate.label')"
+                append-icon="mdi-calendar"
+                v-bind="attrs"
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              v-model="birthDate"
+              :active-picker="activePicker"
+              :max="new Date().toISOString().substr(0, 10)"
+              min="1950-01-01"
+              @input="menu = false"
+              @change="save"
+            ></v-date-picker>
+          </v-menu>
+        </v-col>
+        <v-col cols="12">
+          <v-text-field
+            v-model="locationAdress"
+            type="text"
+            :label="$t('form.locationAdress.label')"
+            append-icon="mdi-map-marker"
+            :error-messages="locationAdressErrors"
+            @input="$v.locationAdress.$touch()"
+            @blur="$v.locationAdress.$touch()"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="6">
+          <v-text-field
+            v-model="locationPostcode"
+            :label="$t('form.locationPostcode.label')"
+            append-icon="mdi-map-marker"
+            :error-messages="locationPostcodeErrors"
+            @input="$v.locationPostcode.$touch()"
+            @blur="$v.locationPostcode.$touch()"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="6">
+          <v-text-field
+            v-model="locationCity"
+            :label="$t('form.locationCity.label')"
+            append-icon="mdi-map-marker"
+            :error-messages="locationCityErrors"
+            @input="$v.locationCity.$touch()"
+            @blur="$v.locationCity.$touch()"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12">
+          <v-select
+            v-model="locationCountry"
+            :label="$t('form.locationCountry.label')"
+            :items="countries"
+            menu-props="auto"
+          ></v-select>
+        </v-col>
+        <v-col cols="12">
+          <v-text-field
+            v-model="phoneNumber"
+            :label="$t('form.phoneNumber.label.phone')"
+            append-icon="mdi-phone"
+            :error-messages="phoneNumberErrors"
+            @input="$v.phoneNumber.$touch()"
+            @blur="$v.phoneNumber.$touch()"
+          ></v-text-field>
+        </v-col>
+      </v-row>
+    </v-form>
   </BaseDialog>
 </template>
 
