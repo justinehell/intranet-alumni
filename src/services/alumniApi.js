@@ -75,7 +75,7 @@ alumniApiClient.interceptors.response.use(
 
     // handle global error - not related to a specific field
     const errors = error.response.data.errors;
-    const { code } = errors.find((err) => !err.field);
+    const { code } = errors.find((err) => !err.field) || {};
     if (code) {
       store.dispatch('notifications/showNotification', {
         type: NOTIFICATION.ERROR,

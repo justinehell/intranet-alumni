@@ -31,6 +31,12 @@
             @blur="$v.contractType.$touch()"
           ></v-select>
         </v-col>
+        <v-col cols="12" class="px-2">
+          <v-switch
+            v-model="isCurrentJob"
+            :label="$t('form.isCurrentJob.label')"
+          ></v-switch>
+        </v-col>
         <v-col cols="6" class="px-2">
           <v-menu
             ref="menu1"
@@ -74,13 +80,14 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 :value="dateEndFormatted"
-                :label="`${$t('form.dateEnd.label')} *`"
+                :label="`${$t('form.dateEnd.label')}`"
                 append-icon="mdi-calendar"
                 v-bind="attrs"
                 v-on="on"
                 :error-messages="dateEndErrors"
                 @input="$v.dateEnd.$touch()"
                 @blur="$v.dateEnd.$touch()"
+                :disabled="!dateStart || isCurrentJob"
               ></v-text-field>
             </template>
             <v-date-picker
@@ -89,6 +96,12 @@
               @input="menu2 = false"
             ></v-date-picker>
           </v-menu>
+        </v-col>
+        <v-col cols="12" class="px-2">
+          <v-textarea
+            v-model="description"
+            :label="$t('form.description.label')"
+          ></v-textarea>
         </v-col>
         <v-col cols="12" class="px-2">
           <v-text-field
@@ -168,13 +181,6 @@
             @blur="$v.mobilePhoneNumber.$touch()"
           ></v-text-field>
         </v-col>
-
-        <v-col>
-          <v-switch
-            v-model="isCurrentJob"
-            :label="$t('form.isCurrentJob.label')"
-          ></v-switch>
-        </v-col>
       </v-row>
     </v-form>
   </BaseDialog>
@@ -219,7 +225,7 @@ export default {
     dateStart: { required },
     dateEnd: {
       required: requiredIf(function() {
-        return !this.isCurrentJob;
+        return !this.isCurrentJob && !!this.dateStart;
       }),
     },
     company: { required, maxLength: maxLength(200) },
@@ -233,6 +239,7 @@ export default {
       dateStart: '',
       dateEnd: '',
       department: '',
+      description: '',
       fixedPhoneNumber: '',
       mobilePhoneNumber: '',
       locationAdress: '',
@@ -283,6 +290,7 @@ export default {
           dateStart: this.dateStart,
           dateEnd: this.dateEnd,
           department: this.department,
+          description: this.description,
           fixedPhoneNumber: this.fixedPhoneNumber,
           mobilePhoneNumber: this.mobilePhoneNumber,
           locationAdress: this.locationAdress,
@@ -316,6 +324,7 @@ export default {
       this.company = this.job.company;
       this.contractType = this.job.contractType;
       this.department = this.job.department;
+      this.description = this.job.description;
       this.isCurrentJob = this.job.isCurrentJob;
       this.dateStart = this.job.dateStart;
       this.dateEnd = this.job.dateEnd;

@@ -96,6 +96,8 @@
 import { required, minLength, email, sameAs } from 'vuelidate/lib/validators';
 
 import formFieldMixin from '../mixins/formFieldMixin.vue';
+import { registerUser } from '../services/auth';
+import { NOTIFICATION, SUCCESS } from '../utils/notifications';
 
 export default {
   name: 'Register',
@@ -129,10 +131,6 @@ export default {
     };
   },
   methods: {
-    touchInput(field, resetServerErrorMessage = false) {
-      this.$v[field].$touch();
-      resetServerErrorMessage ? (this.serverErrors[field] = []) : null;
-    },
     submit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
@@ -145,9 +143,21 @@ export default {
           password: this.password,
           rePassword: this.passwordConfirmation,
         };
-        this.$store
-          .dispatch('auth/register', userCredentials)
-          .then(() => this.$router.push({ name: 'Login' }))
+        registerUser(userCredentials)
+          .then(() => {
+            this.$store.dispatch(
+              'notifications/showNotification',
+              {
+                type: NOTIFICATION.SUCCESS,
+                code: SUCCESS.REGISTRATION,
+              },
+              { root: true }
+            );
+            this.$router.push({
+              name: 'AccountRegisterConfirmation',
+              params: { email: this.email },
+            });
+          })
           .catch((error) => {
             this.setServerError(error);
           })

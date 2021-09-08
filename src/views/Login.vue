@@ -35,9 +35,18 @@
 
               <router-link
                 :to="{ name: 'Register' }"
-                class="py-4"
+                class="pt-4"
                 style="display: block; textAlign: center"
                 >{{ $t('action.goToSignUp') }}</router-link
+              >
+              <router-link
+                :to="{
+                  name: 'ResetPassword',
+                  params: { emailPassed: this.email },
+                }"
+                class="pt-4"
+                style="display: block; textAlign: center"
+                >{{ $t('action.goToResetPassword') }}</router-link
               >
             </v-form>
           </v-card-text>

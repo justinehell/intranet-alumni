@@ -31,6 +31,12 @@
             @blur="$v.contractType.$touch()"
           ></v-select>
         </v-col>
+        <v-col cols="12" class="px-2">
+          <v-switch
+            v-model="isCurrentJob"
+            :label="$t('form.isCurrentJob.label')"
+          ></v-switch>
+        </v-col>
         <v-col cols="6" class="px-2">
           <v-menu
             ref="menu1"
@@ -83,7 +89,7 @@
                 :error-messages="dateEndErrors"
                 @input="$v.dateEnd.$touch()"
                 @blur="$v.dateEnd.$touch()"
-                :disabled="!dateStart"
+                :disabled="!dateStart || !!isCurrentJob"
               ></v-text-field>
             </template>
             <v-date-picker
@@ -94,6 +100,12 @@
               @change="save2"
             ></v-date-picker>
           </v-menu>
+        </v-col>
+        <v-col cols="12" class="px-2">
+          <v-textarea
+            v-model="description"
+            :label="$t('form.description.label')"
+          ></v-textarea>
         </v-col>
         <v-col cols="12" class="px-2">
           <v-text-field
@@ -173,13 +185,6 @@
             @blur="$v.mobilePhoneNumber.$touch()"
           ></v-text-field>
         </v-col>
-
-        <v-col>
-          <v-switch
-            v-model="isCurrentJob"
-            label="J’occupe actuellement ce poste"
-          ></v-switch>
-        </v-col>
       </v-row>
     </v-form>
   </BaseDialog>
@@ -217,7 +222,7 @@ export default {
     dateStart: { required },
     dateEnd: {
       required: requiredIf(function() {
-        return !this.isCurrentJob;
+        return !this.isCurrentJob && !!this.dateStart;
       }),
     },
     company: { required, maxLength: maxLength(200) },
@@ -231,6 +236,7 @@ export default {
       dateStart: '',
       dateEnd: null,
       department: '',
+      description: '',
       fixedPhoneNumber: '',
       mobilePhoneNumber: '',
       locationAdress: '',
@@ -291,6 +297,7 @@ export default {
           dateStart: this.dateStart,
           dateEnd: this.dateEnd,
           department: this.department,
+          description: this.description,
           fixedPhoneNumber: this.fixedPhoneNumber,
           mobilePhoneNumber: this.mobilePhoneNumber,
           locationAdress: this.locationAdress,
@@ -329,6 +336,7 @@ export default {
       this.dateStart = '';
       this.dateEnd = null;
       this.department = '';
+      this.description = '';
       this.fixedPhoneNumber = '';
       this.mobilePhoneNumber = '';
       this.locationAdress = '';

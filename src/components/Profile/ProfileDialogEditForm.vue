@@ -11,7 +11,7 @@
   >
     <v-form>
       <v-row no-gutters>
-        <v-col cols="12">
+        <v-col cols="12" class="px-2">
           <v-menu
             ref="menu"
             v-model="menu"
@@ -40,7 +40,7 @@
             ></v-date-picker>
           </v-menu>
         </v-col>
-        <v-col cols="12">
+        <v-col cols="12" class="px-2">
           <v-text-field
             v-model="locationAdress"
             type="text"
@@ -51,7 +51,7 @@
             @blur="$v.locationAdress.$touch()"
           ></v-text-field>
         </v-col>
-        <v-col cols="6">
+        <v-col cols="6" class="px-2">
           <v-text-field
             v-model="locationPostcode"
             :label="$t('form.locationPostcode.label')"
@@ -61,7 +61,7 @@
             @blur="$v.locationPostcode.$touch()"
           ></v-text-field>
         </v-col>
-        <v-col cols="6">
+        <v-col cols="6" class="px-2">
           <v-text-field
             v-model="locationCity"
             :label="$t('form.locationCity.label')"
@@ -71,7 +71,7 @@
             @blur="$v.locationCity.$touch()"
           ></v-text-field>
         </v-col>
-        <v-col cols="12">
+        <v-col cols="12" class="px-2">
           <v-select
             v-model="locationCountry"
             :label="$t('form.locationCountry.label')"
@@ -79,7 +79,7 @@
             menu-props="auto"
           ></v-select>
         </v-col>
-        <v-col cols="12">
+        <v-col cols="12" class="px-2">
           <v-text-field
             v-model="phoneNumber"
             :label="$t('form.phoneNumber.label.phone')"

@@ -9,6 +9,7 @@ export default {
         email: [],
         password: [],
         passwordConfirmation: [],
+        new_password: [],
         promo: [],
         phoneNumber: [],
         fixedPhoneNumber: [],
@@ -192,12 +193,19 @@ export default {
   methods: {
     setServerError(error) {
       error?.response?.data?.errors?.forEach((err) => {
-        if (err?.field) {
+        if (err?.field && this.serverErrors[err.field]) {
+          // HACK - JH - 08/09/2021 - renaming "new_password" to match ResetPasswordConfirmation's data (="password")
+          // to be able to get the error message corresponding to this "password" field
+          err.field == 'new_password' ? (err.field = 'password') : null;
           this.serverErrors[err.field].push(
             this.$t(`form.${err.field}.error.${camelCase(err.code)}`)
           );
         }
       });
+    },
+    touchInput(field, resetServerErrorMessage = false) {
+      this.$v[field].$touch();
+      resetServerErrorMessage ? (this.serverErrors[field] = []) : null;
     },
   },
 };

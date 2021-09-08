@@ -15,3 +15,15 @@ export const getRefreshToken = (token) => {
 export const registerUser = (data) => {
   return alumniApiClient.post('auth/users/', data);
 };
+
+export const activateUser = (data) => {
+  return alumniApiClient.post('/auth/users/activation/', data);
+};
+
+export const resetPassword = (data) => {
+  return alumniApiClient.post('/auth/users/reset_password/', data);
+};
+
+export const resetPasswordConfirmation = (data) => {
+  return alumniApiClient.post('/auth/users/reset_password_confirm/', data);
+};

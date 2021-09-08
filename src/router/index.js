@@ -48,6 +48,42 @@ const routes = [
       import(/* webpackChunkName: "Register" */ '../views/Register.vue'),
   },
   {
+    path: '/reset_password',
+    name: 'ResetPassword',
+    props: true,
+    component: () =>
+      import(
+        /* webpackChunkName: "ResetPassword" */ '../views/ResetPassword.vue'
+      ),
+  },
+  {
+    path: '/account/password/new/:uid/:token',
+    name: 'ResetPasswordConfirmation',
+    props: true,
+    component: () =>
+      import(
+        /* webpackChunkName: "ResetPasswordConfirmation" */ '../views/ResetPasswordConfirmation.vue'
+      ),
+  },
+  {
+    path: '/account/activate',
+    name: 'AccountRegisterConfirmation',
+    props: true,
+    component: () =>
+      import(
+        /* webpackChunkName: "AccountRegisterConfirmation" */ '../views/AccountRegisterConfirmation.vue'
+      ),
+  },
+  {
+    path: '/account/activate/:uid/:token',
+    name: 'AccountActivation',
+    props: true,
+    component: () =>
+      import(
+        /* webpackChunkName: "AccountActivation" */ '../views/AccountActivation.vue'
+      ),
+  },
+  {
     path: '/404',
     alias: '*',
     name: 'NotFound',

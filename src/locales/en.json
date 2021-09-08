@@ -7,11 +7,14 @@
     "register": "Inscription",
     "goToSignIn": "Déjà un compte ? Se connecter",
     "goToSignUp": "Pas encore enregistré ? Se créer un compte",
+    "goToResetPassword": "Mot de passe oublié ?",
+    "resetPassword": "Réinitialiser le mot de passe",
     "cancel": "Annuler",
     "save": "Enregistrer",
     "edit": "Modifier",
     "add": "Ajouter",
-    "delete": "Supprimer"
+    "delete": "Supprimer",
+    "send": "Envoyer"
   },
   "home": {
     "title": "Accueil"
@@ -69,7 +72,8 @@
         "required": "Le mot de passe est requis.",
         "minLength": "Le mot de passe doit posséder au moins {count} caractères.",
         "passwordTooCommon": "Le mot de passe est trop commun.",
-        "passwordEntirelyNumeric": "Le mot de passe ne peut pas contenir que des chiffres."
+        "passwordEntirelyNumeric": "Le mot de passe ne peut pas contenir que des chiffres.",
+        "invalid": "Le mot de passe est trop commun et/ou doit contenir des chiffres et des lettres."
       }
     },
     "passwordConfirmation": {
@@ -149,6 +153,12 @@
       "label": "Département",
       "error": {
         "maxLength": "Le département ne doit pas dépasser {count} caractères"
+      }
+    },
+    "description": {
+      "label": "Description",
+      "error": {
+        "maxLength": "La description ne doit pas dépasser {count} caractères"
       }
     }
   },
@@ -423,7 +433,8 @@
     "USER_EDITION": "Tes informations de profil ont bien été modifiées",
     "USER_JOB_EDITION": "Ton expérience a bien été modifiée",
     "USER_JOB_ADD": "Ta nouvelle expérience a bien été ajoutée",
-    "USER_JOB_DELETE": "Ton expérience a bien été supprimée"
+    "USER_JOB_DELETE": "Ton expérience a bien été supprimée",
+    "PASSWORD_RESET": "Mot de passe modifié avec succès"
   },
   "INFO": {
     "SIGN_OUT": "Tu as été déconnecté(e)."
@@ -431,7 +442,9 @@
   "ERROR": {
     "NO_ACTIVE_ACCOUNT": "Pas de compte actif associé à ces identifiants.",
     "NO_STUDENT": "Il n'existe pas de diplômé(e) pour l'association du prénom, nom et promotion fournie.",
-    "STUDENT_NOT_AVAILABLE": "Un compte a déjà crée pour ce diplômé."
+    "STUDENT_NOT_AVAILABLE": "Un compte a déjà crée pour ce diplômé.",
+    "PERMISSION_DENIED": "Le lien a déjà été utilisé",
+    "INVALID_TOKEN": "Le lien de réinitialisation du mot de passe n'est plus valide"
   },
   "WARNING": {}
 }

@@ -2,7 +2,6 @@ import {
   createTokens,
   getCurrentUser,
   getRefreshToken,
-  registerUser,
 } from '../../services/auth';
 import { INFO, NOTIFICATION, SUCCESS } from '../../utils/notifications';
 
@@ -46,31 +45,13 @@ export const actions = {
         });
     });
   },
+
   me({ commit }) {
     getCurrentUser().then((r) => {
       commit('SET_USER', r.data);
     });
   },
-  register({ commit, dispatch }, data) {
-    return new Promise((resolve, reject) => {
-      registerUser(data)
-        .then((r) => {
-          commit('REGISTER', r);
-          dispatch(
-            'notifications/showNotification',
-            {
-              type: NOTIFICATION.SUCCESS,
-              code: SUCCESS.REGISTRATION,
-            },
-            { root: true }
-          );
-          resolve();
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  },
+
   logout({ commit, dispatch }) {
     commit('REMOVE_TOKENS');
     dispatch(
@@ -82,9 +63,11 @@ export const actions = {
       { root: true }
     );
   },
+
   setAuthTokens({ commit }, tokens) {
     commit('SET_TOKENS', tokens);
   },
+
   refreshToken({ commit, state }) {
     return new Promise((resolve, reject) => {
       getRefreshToken({ refresh: state.refreshToken })
@@ -113,9 +96,6 @@ const mutations = {
   REMOVE_TOKENS(state) {
     state.accessToken = '';
     state.refreshToken = '';
-  },
-  REGISTER(state, data) {
-    console.log({ state }, { data });
   },
 };
 
