@@ -7,6 +7,11 @@ import vuetify from './plugins/vuetify';
 import Vuelidate from 'vuelidate';
 import { getLocalStorageItem } from './services/localStorage';
 import { mapActions } from 'vuex';
+import PublicLayout from './layouts/PublicLayout.vue';
+import AppLayout from './layouts/AppLayout.vue';
+
+Vue.component('public-layout', PublicLayout);
+Vue.component('app-layout', AppLayout);
 
 Vue.config.productionTip = false;
 Vue.use(Vuelidate);

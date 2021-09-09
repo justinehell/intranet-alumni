@@ -3,7 +3,7 @@
     ref="dialog"
     :title="$t('profile.modal.edit')"
     :submitText="$t('action.save')"
-    :openDialogButtonText="$t('action.edit')"
+    openDialogButtonIcon="mdi-pencil"
     :loading="loading"
     :isSubmitButtonDisabled="isFormInvalid"
     @submit="submit"

@@ -4,6 +4,7 @@
       <v-col>
         <v-card class="mx-auto" elevation="2" width="440px" :loading="loading">
           <v-card-title>{{ $t('action.signIn') }}</v-card-title>
+          <v-divider></v-divider>
           <v-card-text>
             <v-form>
               <v-text-field
@@ -41,7 +42,7 @@
               >
               <router-link
                 :to="{
-                  name: 'ResetPassword',
+                  name: 'PasswordForgotten',
                   params: { emailPassed: this.email },
                 }"
                 class="pt-4"
@@ -63,6 +64,7 @@ import formFieldMixin from '../mixins/formFieldMixin.vue';
 
 export default {
   name: 'Login',
+
   mixins: [formFieldMixin],
 
   validations: {

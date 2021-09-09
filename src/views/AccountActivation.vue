@@ -1,15 +1,23 @@
 <template>
   <v-container>
-    <h1>Activation du compte</h1>
-    <span
-      >Votre compte va être activé dans un instant. Vous allez être redirigé
-      vers la page de connexion</span
-    >
-    <v-progress-circular
-      v-if="loading"
-      indeterminate
-      color="purple"
-    ></v-progress-circular>
+    <v-row justify="center">
+      <v-col cols="12">
+        <v-card class="mx-auto" elevation="2" width="440px">
+          <v-card-title>{{ $t('action.activeAccount.title') }}</v-card-title>
+          <v-divider></v-divider>
+          <v-card-subtitle>
+            {{ $t('action.activeAccount.activation') }}
+          </v-card-subtitle>
+          <v-card-text class="text-center">
+            <v-progress-circular
+              v-if="loading"
+              indeterminate
+              color="purple"
+            ></v-progress-circular>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

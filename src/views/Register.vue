@@ -4,6 +4,7 @@
       <v-col>
         <v-card class="mx-auto" elevation="2" width="440px" :loading="loading">
           <v-card-title>{{ $t('action.signUp') }}</v-card-title>
+          <v-divider></v-divider>
           <v-card-text>
             <v-form>
               <v-text-field

@@ -1,26 +1,30 @@
 <template>
   <v-card>
-    <v-card-title class="text-h4">
-      {{ `${user.firstName} ${user.lastName}` }}
-    </v-card-title>
+    <div class="d-flex justify-space-between align-center">
+      <v-card-title class="text-h6">
+        {{ `${user.firstName} ${user.lastName}` }}
+      </v-card-title>
+      <ProfileCardEdit v-if="showEditDialog" :userStudent="userStudent" />
+    </div>
+    <v-divider></v-divider>
     <v-card-text>
       <v-row>
         <v-col cols="12" md="6">
           <div class="mb-4">
-            <span>{{ $t('alumniList.promo') }} :</span>
+            <v-icon class="mr-2">mdi-school</v-icon>
             <span class="text--primary">
               {{ $t(`PROMO.${user.promo}`) }}
             </span>
           </div>
           <div class="mb-4">
-            <span>{{ $t('form.email.label') }} :</span>
+            <v-icon class="mr-2">mdi-email</v-icon>
             <span class="text--primary">
               {{ user.email }}
             </span>
           </div>
 
           <div class="mb-4" v-if="userStudent.birthDate">
-            <span>{{ $t('form.birthDate.label') }} :</span>
+            <v-icon class="mr-2">mdi-calendar</v-icon>
             <span class="text--primary">
               {{ formatDate(userStudent.birthDate) }}
             </span>
@@ -55,7 +59,7 @@
           </div>
 
           <div class="mb-4" v-if="userStudent.phoneNumber">
-            <span>{{ $t('form.phoneNumber.label.phone') }} :</span>
+            <v-icon class="mr-2">mdi-phone</v-icon>
             <span class="text--primary">
               {{ userStudent.phoneNumber }}
             </span>
@@ -68,8 +72,13 @@
 
 <script>
 import { formatDate } from '../../utils/index';
+import ProfileCardEdit from './ProfileDialogEditForm.vue';
+
 export default {
   name: 'ProfileCard',
+  components: {
+    ProfileCardEdit,
+  },
   props: {
     user: {
       type: Object,
@@ -78,6 +87,9 @@ export default {
     userStudent: {
       type: Object,
       required: true,
+    },
+    showEditDialog: {
+      type: Boolean,
     },
   },
 

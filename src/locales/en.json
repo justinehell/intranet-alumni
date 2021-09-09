@@ -7,8 +7,20 @@
     "register": "Inscription",
     "goToSignIn": "Déjà un compte ? Se connecter",
     "goToSignUp": "Pas encore enregistré ? Se créer un compte",
-    "goToResetPassword": "Mot de passe oublié ?",
-    "resetPassword": "Réinitialiser le mot de passe",
+    "goToResetPassword": "Mot de passe oublié ? Réinitialiser ici",
+    "reset": {
+      "title": "Réinitialisation",
+      "description": "Si l'adresse email renseignée est présente dans notre base de données, un email de réinitialisation sera envoyé à l'adresse :"
+    },
+    "resetPassword": {
+      "title": "Réinitialiser le mot de passe",
+      "description": "Entre ton adresse e-mail pour rechercher ton compte"
+    },
+    "activeAccount": {
+      "title": "Activation du compte",
+      "activation": "Votre compte va être activé dans un instant. Vous allez être redirigé vers la page de connexion",
+      "confirmation": "Ton inscription a bien été prise en compte. Pour valider ton compte, cliques sur le lien dans le mail d'activation que nous venons de t'envoyer sur :"
+    },
     "cancel": "Annuler",
     "save": "Enregistrer",
     "edit": "Modifier",
@@ -21,7 +33,11 @@
   },
   "profile": {
     "title": "Mon profil",
-    "jobs": "Mes expériences",
+    "jobs": {
+      "title": "Mes expériences",
+      "currentJob": "{start} à maintenant",
+      "finishedJob": "{start} au {end}"
+    },
     "modal": {
       "edit": "Modifier mes informations",
       "editJob": "Modifier mon expérience",
@@ -30,7 +46,7 @@
     }
   },
   "alumniList": {
-    "title": "Liste des Alumni",
+    "title": "Alumni",
     "promo": "Promo"
   },
   "notFound": {

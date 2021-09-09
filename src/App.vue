@@ -1,31 +1,35 @@
 <template>
   <v-app>
-    <v-main>
-      <TheHeader v-if="isLogged" />
+    <component :is="layout">
       <router-view />
-      <Notification
-        v-if="notification"
-        :type="notification.type"
-        :code="notification.code"
-        :key="notification.message"
-      />
-    </v-main>
+      <!-- <router-view :layout.sync="layout"/> -->
+    </component>
+
+    <Notification
+      v-if="notification"
+      :type="notification.type"
+      :code="notification.code"
+      :key="notification.message"
+    />
   </v-app>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import Notification from './components/Notification';
-import TheHeader from './components/TheHeader';
+
+const DEFAULT_LAYOUT = 'app';
+
 export default {
   name: 'App',
   components: {
     Notification,
-    TheHeader,
   },
-
   computed: {
     ...mapGetters('auth', ['isLogged']),
+    layout() {
+      return (this.$route.meta.layout || DEFAULT_LAYOUT) + '-layout';
+    },
     notification() {
       return this.$store.state.notifications.notifications;
     },
@@ -38,3 +42,9 @@ export default {
   },
 };
 </script>
+<style>
+.public-bg {
+  background-image: url('~@/assets/images/public_bg.jpg');
+  background-size: cover;
+}
+</style>

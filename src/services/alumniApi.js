@@ -72,6 +72,14 @@ alumniApiClient.interceptors.response.use(
         return Promise.reject(error);
       }
     }
+    if (
+      error.response?.status === 401 &&
+      error.response?.data?.errors[0]?.code === 'authentication_failed'
+    ) {
+      store.dispatch('auth/logout');
+      router.push({ name: 'Login' });
+      return Promise.reject(error);
+    }
 
     // handle global error - not related to a specific field
     const errors = error.response.data.errors;

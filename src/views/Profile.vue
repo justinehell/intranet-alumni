@@ -1,31 +1,18 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12">
-        <h1>
-          {{ $t('profile.title') }}
-        </h1>
-      </v-col>
       <v-col cols="12" v-if="user && userStudent">
-        <InfoProfile :user="user" :userStudent="userStudent" />
+        <ProfileCard :user="user" :userStudent="userStudent" showEditDialog />
       </v-col>
-      <v-col cols="12" v-if="userStudent" class="text-center">
-        <EditProfile :userStudent="userStudent" />
+
+      <v-col cols="12" v-if="userStudent">
+        <Jobs :userStudent="userStudent" />
       </v-col>
-      <v-col v-if="userStudent">
-        <div class="d-flex justify-space-between pa-4">
-          <h2>{{ $t('profile.jobs') }}</h2>
-          <AddJob />
-        </div>
-        <JobCard
-          v-for="job in userStudent.jobs"
-          :key="job.id"
-          :job="job"
-          @edit="editingJob = job"
-          @delete="deletingJob = job"
-        />
-        <EditJob :job="editingJob" @close="editingJob = null" />
-        <DeleteJob :job="deletingJob" @close="deletingJob = null" />
+
+      <v-col cols="12" v-if="user && userStudent" class="text-center">
+        <v-btn @click="signOut" color="error" class="text-uppercase">
+          {{ $t('action.signOut') }}
+        </v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -34,22 +21,14 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
 
-import InfoProfile from '../components/Profile/ProfileCard.vue';
-import EditProfile from '../components/Profile/ProfileDialogEditForm.vue';
-import JobCard from '../components/Profile/Jobs/JobCard.vue';
-import AddJob from '../components/Profile/Jobs/JobDialogAddForm.vue';
-import EditJob from '../components/Profile/Jobs/JobDialogEditForm.vue';
-import DeleteJob from '../components/Profile/Jobs/JobDialogDeleteForm.vue';
+import ProfileCard from '../components/Profile/ProfileCard.vue';
+import Jobs from '../components/Profile/Jobs/Jobs.vue';
 
 export default {
   name: 'Profile',
   components: {
-    InfoProfile,
-    EditProfile,
-    JobCard,
-    AddJob,
-    EditJob,
-    DeleteJob,
+    ProfileCard,
+    Jobs,
   },
   data() {
     return {
@@ -66,6 +45,11 @@ export default {
   },
   methods: {
     ...mapActions('students', ['me']),
+
+    signOut() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push({ name: 'Login' });
+    },
   },
 };
 </script>

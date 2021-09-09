@@ -38,19 +38,32 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
+    meta: { layout: 'public' },
     component: () =>
       import(/* webpackChunkName: "Login" */ '../views/Login.vue'),
   },
   {
     path: '/register',
     name: 'Register',
+    meta: { layout: 'public' },
     component: () =>
       import(/* webpackChunkName: "Register" */ '../views/Register.vue'),
   },
   {
-    path: '/reset_password',
+    path: '/password/forgotten',
+    name: 'PasswordForgotten',
+    props: true,
+    meta: { layout: 'public' },
+    component: () =>
+      import(
+        /* webpackChunkName: "PasswordForgotten" */ '../views/PasswordForgotten.vue'
+      ),
+  },
+  {
+    path: '/password/reset',
     name: 'ResetPassword',
     props: true,
+    meta: { layout: 'public' },
     component: () =>
       import(
         /* webpackChunkName: "ResetPassword" */ '../views/ResetPassword.vue'
@@ -60,6 +73,7 @@ const routes = [
     path: '/account/password/new/:uid/:token',
     name: 'ResetPasswordConfirmation',
     props: true,
+    meta: { layout: 'public' },
     component: () =>
       import(
         /* webpackChunkName: "ResetPasswordConfirmation" */ '../views/ResetPasswordConfirmation.vue'
@@ -69,6 +83,7 @@ const routes = [
     path: '/account/activate',
     name: 'AccountRegisterConfirmation',
     props: true,
+    meta: { layout: 'public' },
     component: () =>
       import(
         /* webpackChunkName: "AccountRegisterConfirmation" */ '../views/AccountRegisterConfirmation.vue'
@@ -78,6 +93,7 @@ const routes = [
     path: '/account/activate/:uid/:token',
     name: 'AccountActivation',
     props: true,
+    meta: { layout: 'public' },
     component: () =>
       import(
         /* webpackChunkName: "AccountActivation" */ '../views/AccountActivation.vue'
