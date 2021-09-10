@@ -36,7 +36,8 @@
     "jobs": {
       "title": "Mes expériences",
       "currentJob": "{start} à maintenant",
-      "finishedJob": "{start} au {end}"
+      "finishedJob": "{start} au {end}",
+      "noJob": "Pas d'expériences renseignées à ce jour."
     },
     "modal": {
       "edit": "Modifier mes informations",

@@ -14,11 +14,11 @@
         {{
           $t('profile.jobs.currentJob', { start: formatDate(job.dateStart) })
         }}</span
-      >&nbsp;
+      >
       <span v-if="!job.isCurrentJob" class="text--disabled">{{
         $t('profile.jobs.finishedJob', {
-          start: formatDate(job.dateEnd),
-          end: formatDate(job.dateStart),
+          start: formatDate(job.dateStart),
+          end: formatDate(job.dateEnd),
         })
       }}</span
       ><br />

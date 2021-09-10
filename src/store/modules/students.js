@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import { convertArrayToObject } from '../../utils';
 import { NOTIFICATION, SUCCESS } from '../../utils/notifications';
 import {
@@ -10,7 +11,7 @@ import {
 } from '../../services/students';
 
 const state = {
-  students: [],
+  students: {},
 };
 
 // getters
@@ -45,7 +46,7 @@ export const actions = {
     return new Promise((resolve, reject) => {
       getCurrentStudent()
         .then((r) => {
-          commit('SET_STUDENTS', [r.data]);
+          commit('UPDATE_STUDENT', r.data);
           resolve();
         })
         .catch((error) => reject(error));
@@ -71,11 +72,11 @@ export const actions = {
     });
   },
 
-  editJob({ commit, dispatch }, job) {
+  editJob({ dispatch }, job) {
     return new Promise((resolve, reject) => {
       editStudentJob(job)
-        .then((r) => {
-          commit('UPDATE_STUDENT_JOB', r.data);
+        .then(() => {
+          dispatch('me');
           dispatch(
             'notifications/showNotification',
             {
@@ -90,11 +91,11 @@ export const actions = {
     });
   },
 
-  addJob({ commit, dispatch }, job) {
+  addJob({ dispatch }, job) {
     return new Promise((resolve, reject) => {
       addStudentJob(job)
-        .then((r) => {
-          commit('ADD_STUDENT_JOB', r.data);
+        .then(() => {
+          dispatch('me');
           dispatch(
             'notifications/showNotification',
             {
@@ -138,20 +139,8 @@ const mutations = {
     state.students = convertArrayToObject(students, 'id');
   },
   UPDATE_STUDENT(state, newStudent) {
-    state.students[newStudent.id] = newStudent;
-  },
-  UPDATE_STUDENT_JOB(state, newJob) {
-    const studentId = newJob.student;
-    const oldJobIndex = state.students[studentId]?.jobs.findIndex(
-      (job) => job.id === newJob.id
-    );
-    oldJobIndex !== -1
-      ? (state.students[studentId].jobs[oldJobIndex] = newJob)
-      : null;
-  },
-  ADD_STUDENT_JOB(state, newJob) {
-    const studentId = newJob.student;
-    state.students[studentId].jobs.unshift(newJob);
+    // Use Vue.set() when we neet to update a nested data - this way it'll be reactive
+    Vue.set(state.students, newStudent.id, newStudent);
   },
   DELETE_STUDENT_JOB(state, data) {
     const deletingJobIndex = state.students[data.studentId]?.jobs.findIndex(

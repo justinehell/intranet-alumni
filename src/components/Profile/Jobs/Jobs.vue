@@ -7,6 +7,12 @@
       <JobCardAdd />
     </div>
     <v-divider></v-divider>
+    <div
+      v-if="!userStudent.jobs.length"
+      class="text--disabled font-italic pa-4 text-center"
+    >
+      {{ $t('profile.jobs.noJob') }}
+    </div>
     <JobCard
       v-for="job in userStudent.jobs"
       :key="job.id"
