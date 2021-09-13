@@ -4,7 +4,7 @@
       <v-card-title class="text-h6">
         {{ $t('profile.jobs.title') }}
       </v-card-title>
-      <JobCardAdd />
+      <JobCardAdd v-if="showDialogButton" />
     </div>
     <v-divider></v-divider>
     <div
@@ -17,6 +17,7 @@
       v-for="job in userStudent.jobs"
       :key="job.id"
       :job="job"
+      :showDialogButton="showDialogButton"
       @edit="editingJob = job"
       @delete="deletingJob = job"
     />
@@ -43,6 +44,9 @@ export default {
     userStudent: {
       type: Object,
       required: true,
+    },
+    showDialogButton: {
+      type: Boolean,
     },
   },
   data() {

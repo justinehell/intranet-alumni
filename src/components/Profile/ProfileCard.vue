@@ -2,7 +2,7 @@
   <v-card>
     <div class="d-flex justify-space-between align-center">
       <v-card-title class="text-h6">
-        {{ `${user.firstName} ${user.lastName}` }}
+        {{ userStudent.fullName }}
       </v-card-title>
       <ProfileCardEdit v-if="showEditDialog" :userStudent="userStudent" />
     </div>
@@ -13,13 +13,13 @@
           <div class="mb-4">
             <v-icon class="mr-2">mdi-school</v-icon>
             <span class="text--primary">
-              {{ $t(`PROMO.${user.promo}`) }}
+              {{ $t(`PROMO.${userStudent.promo}`) }}
             </span>
           </div>
-          <div class="mb-4">
+          <div class="mb-4" v-if="userStudent.email">
             <v-icon class="mr-2">mdi-email</v-icon>
             <span class="text--primary">
-              {{ user.email }}
+              {{ userStudent.email }}
             </span>
           </div>
 
@@ -30,31 +30,21 @@
             </span>
           </div>
 
-          <div class="mb-4" v-if="userStudent.locationAdress">
-            <span>{{ $t('form.locationAdress.label') }} :</span>
+          <div
+            class="mb-4"
+            v-if="
+              userStudent.locationAdress ||
+                userStudent.locationPostcode ||
+                userStudent.locationCity ||
+                userStudent.locationCountry
+            "
+          >
+            <v-icon class="mr-2">mdi-map-marker</v-icon>
             <span class="text--primary">
-              {{ userStudent.locationAdress }}
-            </span>
-          </div>
-
-          <div class="mb-4" v-if="userStudent.locationPostcode">
-            <span>{{ $t('form.locationPostcode.label') }} :</span>
-            <span class="text--primary">
-              {{ userStudent.locationPostcode }}
-            </span>
-          </div>
-
-          <div class="mb-4" v-if="userStudent.locationCity">
-            <span>{{ $t('form.locationCity.label') }} :</span>
-            <span class="text--primary">
-              {{ userStudent.locationCity }}
-            </span>
-          </div>
-
-          <div class="mb-4" v-if="userStudent.locationCountry">
-            <span>{{ $t('form.locationCountry.label') }} :</span>
-            <span class="text--primary">
-              {{ $t(`COUNTRY.${userStudent.locationCountry}`) }}
+              {{ displayAdress(userStudent.locationAdress) }}
+              {{ displayAdress(userStudent.locationPostcode) }}
+              {{ displayAdress(userStudent.locationCity) }}
+              {{ displayCountry(displayAdress(userStudent.locationCountry)) }}
             </span>
           </div>
 
@@ -80,10 +70,6 @@ export default {
     ProfileCardEdit,
   },
   props: {
-    user: {
-      type: Object,
-      required: true,
-    },
     userStudent: {
       type: Object,
       required: true,
@@ -99,6 +85,12 @@ export default {
   computed: {},
   methods: {
     formatDate,
+    displayAdress(string) {
+      return string ? string : '';
+    },
+    displayCountry(country) {
+      return country ? `(${this.$t(`COUNTRY.${country}`)})` : '';
+    },
   },
 };
 </script>

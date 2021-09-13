@@ -34,7 +34,7 @@
   "profile": {
     "title": "Mon profil",
     "jobs": {
-      "title": "Mes expériences",
+      "title": "Expériences",
       "currentJob": "{start} à maintenant",
       "finishedJob": "{start} au {end}",
       "noJob": "Pas d'expériences renseignées à ce jour."

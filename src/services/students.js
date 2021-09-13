@@ -1,7 +1,7 @@
 import alumniApiClient from './alumniApi';
 
 export const getStudents = () => {
-  return alumniApiClient.get('students?limit=100');
+  return alumniApiClient.get('students/');
 };
 
 export const getCurrentStudent = () => {

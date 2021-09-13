@@ -1,15 +1,15 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" v-if="user && userStudent">
-        <ProfileCard :user="user" :userStudent="userStudent" showEditDialog />
+      <v-col cols="12" v-if="userStudent">
+        <ProfileCard :userStudent="userStudent" showEditDialog />
       </v-col>
 
       <v-col cols="12" v-if="userStudent">
-        <Jobs :userStudent="userStudent" />
+        <Jobs :userStudent="userStudent" showDialogButton />
       </v-col>
 
-      <v-col cols="12" v-if="user && userStudent" class="text-center">
+      <v-col cols="12" v-if="userStudent" class="text-center">
         <v-btn @click="signOut" color="error" class="text-uppercase">
           {{ $t('action.signOut') }}
         </v-btn>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 import ProfileCard from '../components/Profile/ProfileCard.vue';
 import Jobs from '../components/Profile/Jobs/Jobs.vue';
@@ -40,7 +40,6 @@ export default {
     this.userStudent ? null : await this.me();
   },
   computed: {
-    ...mapState('auth', ['user']),
     ...mapGetters('students', ['userStudent']),
   },
   methods: {

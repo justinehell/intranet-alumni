@@ -40,7 +40,7 @@
       <span v-if="job.professionalEmail">{{ job.professionalEmail }}</span
       >&nbsp;
     </div>
-    <div>
+    <div v-if="showDialogButton">
       <v-btn icon small color="indigo" @click="$emit('edit')">
         <v-icon small>
           mdi-pencil
@@ -63,6 +63,9 @@ export default {
     job: {
       type: Object,
       required: true,
+    },
+    showDialogButton: {
+      type: Boolean,
     },
   },
   methods: {
