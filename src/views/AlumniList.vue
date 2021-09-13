@@ -8,7 +8,7 @@
       </v-col>
     </v-row>
 
-    <v-row v-if="students">
+    <v-row v-if="students" class="mb-4">
       <v-col
         cols="12"
         md="6"
@@ -36,21 +36,41 @@
           </v-card-text>
         </v-card>
       </v-col>
+      <v-btn
+        @click="loadMore"
+        class="ma-4"
+        :disabled="areAllStudentsDisplayed"
+        >{{ $t('action.loadMore') }}</v-btn
+      >
     </v-row>
   </v-container>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 export default {
   name: 'AlumniList',
+  data() {
+    return {
+      page: 1,
+    };
+  },
   computed: {
-    ...mapState('students', ['students']),
+    ...mapState('students', ['students', 'totalStudents']),
+    ...mapGetters('students', ['studentsNumber']),
+    areAllStudentsDisplayed() {
+      return this.studentsNumber == this.totalStudents;
+    },
   },
   created() {
-    this.$store.dispatch('students/getStudents');
+    this.getStudents();
+  },
+  methods: {
+    ...mapActions('students', ['getStudents']),
+    loadMore() {
+      this.page += 1;
+      this.getStudents(this.page);
+    },
   },
 };
 </script>
-
-<style lang="scss" scoped></style>

@@ -15,7 +15,9 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapState } from 'vuex';
+import { getOneStudent } from '../services/students';
+
 import ProfileCard from '../components/Profile/ProfileCard.vue';
 import Jobs from '../components/Profile/Jobs/Jobs.vue';
 
@@ -56,14 +58,17 @@ export default {
       : this.getAlumni();
   },
   methods: {
-    ...mapActions('students', ['getStudents']),
     setAlumni() {
       this.alumni = this.students[this.$route.params.id];
     },
     async getAlumni() {
-      await this.getStudents().then(() => {
-        this.setAlumni();
-      });
+      await getOneStudent(this.$route.params.id)
+        .then((r) => {
+          this.alumni = r.data;
+        })
+        .catch((error) => {
+          this.setServerError(error);
+        });
     },
   },
 };

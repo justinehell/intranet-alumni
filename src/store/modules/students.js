@@ -12,6 +12,7 @@ import {
 
 const state = {
   students: {},
+  totalStudents: 0,
 };
 
 // getters
@@ -25,15 +26,20 @@ const getters = {
       (student) => student.user === rootState.auth.user?.id
     );
   },
+
+  studentsNumber: (state) => {
+    return Object.keys(state.students).length;
+  },
 };
 
 // actions
 export const actions = {
-  getStudents({ commit }) {
+  getStudents({ commit }, page) {
     return new Promise((resolve, reject) => {
-      getStudents()
+      getStudents(page)
         .then((r) => {
           commit('SET_STUDENTS', r.data.results);
+          commit('SET_MAX_STUDENTS', r.data.count);
           resolve();
         })
         .catch((error) => {
@@ -136,7 +142,11 @@ export const actions = {
 // mutations
 const mutations = {
   SET_STUDENTS(state, students) {
-    state.students = convertArrayToObject(students, 'id');
+    let studentsObject = convertArrayToObject(students, 'id');
+    state.students = { ...state.students, ...studentsObject };
+  },
+  SET_MAX_STUDENTS(state, totalStudents) {
+    state.totalStudents = totalStudents;
   },
   UPDATE_STUDENT(state, newStudent) {
     // Use Vue.set() when we neet to update a nested data - this way it'll be reactive

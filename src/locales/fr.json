@@ -26,7 +26,8 @@
     "edit": "Modifier",
     "add": "Ajouter",
     "delete": "Supprimer",
-    "send": "Envoyer"
+    "send": "Envoyer",
+    "loadMore": "Voir plus"
   },
   "home": {
     "title": "Accueil"
@@ -467,7 +468,8 @@
     "NO_STUDENT": "Il n'existe pas de diplômé(e) pour l'association du prénom, nom et promotion fournie.",
     "STUDENT_NOT_AVAILABLE": "Un compte a déjà crée pour ce diplômé.",
     "PERMISSION_DENIED": "Le lien a déjà été utilisé",
-    "INVALID_TOKEN": "Le lien de réinitialisation du mot de passe n'est plus valide"
+    "INVALID_TOKEN": "Le lien de réinitialisation du mot de passe n'est plus valide",
+    "NOT_FOUND": "La page demandée n'existe pas"
   },
   "WARNING": {}
 }
