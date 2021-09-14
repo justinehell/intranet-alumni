@@ -15,8 +15,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { getOneStudent } from '../services/students';
+import { mapActions, mapGetters } from 'vuex';
 
 import ProfileCard from '../components/Profile/ProfileCard.vue';
 import Jobs from '../components/Profile/Jobs/Jobs.vue';
@@ -27,13 +26,17 @@ export default {
     ProfileCard,
     Jobs,
   },
-  data() {
-    return {
-      alumni: null,
-    };
+  props: {
+    id: {
+      type: String,
+      required: true,
+    },
   },
   computed: {
-    ...mapState('students', ['students']),
+    ...mapGetters('students', ['getStudentById']),
+    alumni() {
+      return this.getStudentById(this.id);
+    },
     breadcrumbsItems() {
       return [
         {
@@ -44,7 +47,6 @@ export default {
         },
         {
           text: `${this.alumni?.fullName || ''}`,
-          to: { name: 'AlumniDetail', params: { id: this.alumni?.id } },
           disabled: true,
           exact: true,
         },
@@ -53,23 +55,10 @@ export default {
   },
 
   created() {
-    Object.keys(this.students).length !== 0
-      ? this.setAlumni()
-      : this.getAlumni();
+    this.alumni ? null : this.getStudent(this.id);
   },
   methods: {
-    setAlumni() {
-      this.alumni = this.students[this.$route.params.id];
-    },
-    async getAlumni() {
-      await getOneStudent(this.$route.params.id)
-        .then((r) => {
-          this.alumni = r.data;
-        })
-        .catch((error) => {
-          this.setServerError(error);
-        });
-    },
+    ...mapActions('students', ['getStudent']),
   },
 };
 </script>

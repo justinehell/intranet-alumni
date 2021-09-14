@@ -8,6 +8,7 @@ import {
   editStudentJob,
   getCurrentStudent,
   getStudents,
+  getStudent,
 } from '../../services/students';
 
 const state = {
@@ -27,6 +28,10 @@ const getters = {
     );
   },
 
+  getStudentById: (state) => (id) => {
+    return state.students[id];
+  },
+
   studentsNumber: (state) => {
     return Object.keys(state.students).length;
   },
@@ -40,6 +45,19 @@ export const actions = {
         .then((r) => {
           commit('SET_STUDENTS', r.data.results);
           commit('SET_MAX_STUDENTS', r.data.count);
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
+
+  getStudent({ commit }, id) {
+    return new Promise((resolve, reject) => {
+      getStudent(id)
+        .then((r) => {
+          commit('UPDATE_STUDENT', r.data);
           resolve();
         })
         .catch((error) => {

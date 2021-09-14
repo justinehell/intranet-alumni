@@ -4,7 +4,7 @@ export const getStudents = (page = 1) => {
   return alumniApiClient.get(`students/?page=${page}`);
 };
 
-export const getOneStudent = (id) => {
+export const getStudent = (id) => {
   return alumniApiClient.get(`students/${id}`);
 };
 

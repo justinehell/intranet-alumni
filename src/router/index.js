@@ -32,6 +32,7 @@ const routes = [
     path: '/alumni/:id',
     name: 'AlumniDetail',
     meta: { requiresAuth: true },
+    props: true,
     component: () =>
       import(/* webpackChunkName: "Alumni" */ '../views/AlumniDetail.vue'),
   },
