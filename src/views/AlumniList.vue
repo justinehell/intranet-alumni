@@ -8,12 +8,36 @@
       </v-col>
     </v-row>
 
+    <v-row justify="center">
+      <v-col cols="12" md="6">
+        <v-text-field
+          v-model="search"
+          type="text"
+          clearable
+          :placeholder="$t('alumniList.student')"
+          prepend-inner-icon="mdi-account"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+
+    <v-row justify="center">
+      <v-col cols="12" md="6">
+        <v-select
+          v-model="promo"
+          :items="promoListItems"
+          clearable
+          :label="$t('form.promo.label')"
+          prepend-inner-icon="mdi-school"
+        ></v-select>
+      </v-col>
+    </v-row>
+
     <v-row v-if="students" class="mb-4">
       <v-col
         cols="12"
         md="6"
         lg="4"
-        v-for="student in students"
+        v-for="student in filteredStudents"
         :key="student.id"
       >
         <v-card
@@ -48,18 +72,40 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
+import { PROMOLIST } from '../utils/promoList';
+
 export default {
   name: 'AlumniList',
   data() {
     return {
       page: 1,
+      search: '',
+      promo: '',
     };
   },
   computed: {
     ...mapState('students', ['students', 'totalStudents']),
-    ...mapGetters('students', ['studentsNumber']),
+    ...mapGetters('students', ['studentsNumber', 'studentsList']),
+    promoListItems() {
+      return PROMOLIST.map((promo) => {
+        return { value: promo, text: this.$t(`PROMO.${promo}`) };
+      });
+    },
     areAllStudentsDisplayed() {
       return this.studentsNumber == this.totalStudents;
+    },
+    filteredStudents() {
+      return this.studentsList
+        .filter((item) => {
+          return (
+            !this.search ||
+            item.fullName.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+          );
+        })
+        .filter((item) => {
+          return !this.promo || item.promo === this.promo;
+          // return !this.promo || !item.promo.indexOf(this.promo))
+        });
     },
   },
   created() {

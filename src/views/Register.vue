@@ -31,7 +31,7 @@
               ></v-text-field>
               <v-select
                 v-model="promo"
-                :items="promoList"
+                :items="promoListItems"
                 :error-messages="promoErrors"
                 :label="$t('form.promo.label')"
                 prepend-inner-icon="mdi-school"
@@ -99,6 +99,7 @@ import { required, minLength, email, sameAs } from 'vuelidate/lib/validators';
 import formFieldMixin from '../mixins/formFieldMixin.vue';
 import { registerUser } from '../services/auth';
 import { NOTIFICATION, SUCCESS } from '../utils/notifications';
+import { PROMOLIST } from '../utils/promoList';
 
 export default {
   name: 'Register',
@@ -128,8 +129,14 @@ export default {
       email: '',
       password: '',
       passwordConfirmation: '',
-      promoList: ['1', '2', '3', '4'],
     };
+  },
+  computed: {
+    promoListItems() {
+      return PROMOLIST.map((promo) => {
+        return { value: promo, text: this.$t(`PROMO.${promo}`) };
+      });
+    },
   },
   methods: {
     submit() {

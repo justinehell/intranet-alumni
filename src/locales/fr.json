@@ -49,7 +49,8 @@
   },
   "alumniList": {
     "title": "Alumni",
-    "promo": "Promo"
+    "promo": "Promo",
+    "student": "Rechercher un élève"
   },
   "notFound": {
     "title": "Cette page n'existe pas",
