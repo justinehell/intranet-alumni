@@ -62,8 +62,9 @@
             <v-date-picker
               v-model="dateStart"
               :active-picker="activePicker1"
+              no-title
               min="1950-01-01"
-              :max="oneYearFromNowDate"
+              :max="yearsFromNowDate(5)"
               @input="menu1 = false"
               @change="save1"
             ></v-date-picker>
@@ -95,7 +96,9 @@
             <v-date-picker
               v-model="dateEnd"
               :active-picker="activePicker2"
+              no-title
               :min="dateStart"
+              :max="yearsFromNowDate(5)"
               @input="menu2 = false"
               @change="save2"
             ></v-date-picker>
@@ -259,6 +262,9 @@ export default {
     menu2(val) {
       val && setTimeout(() => (this.activePicker2 = 'YEAR'));
     },
+    isCurrentJob(val) {
+      val && (this.dateEnd = null);
+    },
   },
   computed: {
     dateStartFormatted() {
@@ -276,11 +282,6 @@ export default {
       return CONTRACTS.map((contract) => {
         return { value: contract, text: this.$t(`CONTRACT.${contract}`) };
       });
-    },
-    oneYearFromNowDate() {
-      return new Date(new Date().setFullYear(new Date().getFullYear() + 1))
-        .toISOString()
-        .substr(0, 10);
     },
   },
   methods: {

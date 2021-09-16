@@ -61,7 +61,9 @@
             </template>
             <v-date-picker
               v-model="dateStart"
+              no-title
               min="1950-01-01"
+              :max="yearsFromNowDate(5)"
               :disabled="!dateStart"
               @input="menu1 = false"
             ></v-date-picker>
@@ -92,7 +94,9 @@
             </template>
             <v-date-picker
               v-model="dateEnd"
+              no-title
               :min="dateStart"
+              :max="yearsFromNowDate(5)"
               @input="menu2 = false"
             ></v-date-picker>
           </v-menu>
@@ -274,6 +278,9 @@ export default {
   watch: {
     job(val) {
       val && (this.setFormData(), this.$refs.dialog.openDialog());
+    },
+    isCurrentJob(val) {
+      val && (this.dateEnd = null);
     },
   },
   methods: {

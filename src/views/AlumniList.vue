@@ -60,12 +60,9 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-btn
-        @click="loadMore"
-        class="ma-4"
-        :disabled="areAllStudentsDisplayed"
-        >{{ $t('action.loadMore') }}</v-btn
-      >
+      <v-btn @click="loadMore" class="ma-4" v-if="!areAllStudentsDisplayed">{{
+        $t('action.loadMore')
+      }}</v-btn>
     </v-row>
   </v-container>
 </template>

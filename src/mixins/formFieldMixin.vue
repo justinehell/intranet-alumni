@@ -207,6 +207,11 @@ export default {
       this.$v[field].$touch();
       resetServerErrorMessage ? (this.serverErrors[field] = []) : null;
     },
+    yearsFromNowDate(years) {
+      return new Date(new Date().setFullYear(new Date().getFullYear() + years))
+        .toISOString()
+        .substr(0, 10);
+    },
   },
 };
 </script>
