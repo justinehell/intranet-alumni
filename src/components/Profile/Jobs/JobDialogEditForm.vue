@@ -282,6 +282,9 @@ export default {
     isCurrentJob(val) {
       val && (this.dateEnd = null);
     },
+    dateStart(val) {
+      val && new Date(val) > new Date(this.dateEnd) && (this.dateEnd = null);
+    },
   },
   methods: {
     ...mapActions('students', ['editJob']),

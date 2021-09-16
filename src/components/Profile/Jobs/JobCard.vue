@@ -1,10 +1,12 @@
 <template>
   <div class="d-flex justify-space-between">
     <div class="ma-4">
-      <span class="font-weight-medium"> {{ job.function }} </span><br />
+      <span class="font-weight-medium secondary--text">
+        {{ job.function }} </span
+      ><br />
 
-      <span v-if="job.company" class="font-weight-medium">
-        <v-icon color="indigo" small>
+      <span v-if="job.company" class="text--secondary">
+        <v-icon color="secondary" small>
           mdi-domain
         </v-icon>
         {{ job.company }}</span
@@ -22,7 +24,7 @@
         })
       }}</span
       ><br />
-      <span v-if="job.contractType">{{
+      <span v-if="job.contractType" class="text--secondary">{{
         $t(`CONTRACT.${job.contractType}`)
       }}</span
       >&nbsp; <span v-if="job.department">{{ job.department }}</span
@@ -41,7 +43,7 @@
       >&nbsp;
     </div>
     <div v-if="showDialogButton">
-      <v-btn icon small color="indigo" @click="$emit('edit')">
+      <v-btn icon small color="secondary" @click="$emit('edit')">
         <v-icon small>
           mdi-pencil
         </v-icon>

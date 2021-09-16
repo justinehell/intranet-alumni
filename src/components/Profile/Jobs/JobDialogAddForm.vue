@@ -3,7 +3,7 @@
     ref="dialog"
     :title="$t('profile.modal.addJob')"
     :submitText="$t('action.add')"
-    openDialogButtonIcon="mdi-plus"
+    openDialogButtonIcon="mdi-briefcase-plus"
     :loading="loading"
     :isSubmitButtonDisabled="isFormInvalid"
     @submit="submit"
@@ -264,6 +264,9 @@ export default {
     },
     isCurrentJob(val) {
       val && (this.dateEnd = null);
+    },
+    dateStart(val) {
+      val && new Date(val) > new Date(this.dateEnd) && (this.dateEnd = null);
     },
   },
   computed: {

@@ -12,11 +12,11 @@
           :fab="!!openDialogButtonIcon"
           small
           dark
-          color="indigo"
+          color="secondary"
           v-bind="attrs"
           v-on="on"
         >
-          <v-icon v-if="openDialogButtonIcon" dark>
+          <v-icon v-if="openDialogButtonIcon" small dark>
             {{ openDialogButtonIcon }}
           </v-icon>
           <template v-if="openDialogButtonText">

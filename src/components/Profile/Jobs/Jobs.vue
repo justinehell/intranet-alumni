@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <div class="d-flex justify-space-between align-center">
-      <v-card-title class="text-h6">
+      <v-card-title class="text-h6 primary--text">
         {{ $t('profile.jobs.title') }}
       </v-card-title>
       <JobCardAdd v-if="showDialogButton" />

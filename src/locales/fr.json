@@ -29,6 +29,9 @@
     "send": "Envoyer",
     "loadMore": "Voir plus"
   },
+  "header": {
+    "title": "[APP] TNFA - Alumni"
+  },
   "home": {
     "title": "Accueil"
   },
