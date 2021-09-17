@@ -1,6 +1,6 @@
 import alumniApiClient from './alumniApi';
 
-export const getStudents = (page = 1) => {
+export const getStudents = (page) => {
   return alumniApiClient.get(`students/?page=${page}`);
 };
 

@@ -39,12 +39,13 @@ const getters = {
 
 // actions
 export const actions = {
-  getStudents({ commit }, page) {
+  getStudents({ commit, dispatch }, page = 1) {
     return new Promise((resolve, reject) => {
       getStudents(page)
         .then((r) => {
           commit('SET_STUDENTS', r.data.results);
           commit('SET_MAX_STUDENTS', r.data.count);
+          r.data.next && dispatch('getStudents', page + 1);
           resolve();
         })
         .catch((error) => {
