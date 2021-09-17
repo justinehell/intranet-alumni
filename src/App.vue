@@ -18,7 +18,7 @@
 import { mapActions, mapGetters } from 'vuex';
 import Notification from './components/Notification';
 
-const DEFAULT_LAYOUT = 'app';
+const DEFAULT_LAYOUT = 'public';
 
 export default {
   name: 'App',
