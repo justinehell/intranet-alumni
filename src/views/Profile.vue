@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 
 import ProfileCard from '../components/Profile/ProfileCard.vue';
 import Jobs from '../components/Profile/Jobs/Jobs.vue';
@@ -36,15 +36,10 @@ export default {
       deletingJob: null,
     };
   },
-  async created() {
-    this.userStudent ? null : await this.me();
-  },
   computed: {
     ...mapGetters('students', ['userStudent']),
   },
   methods: {
-    ...mapActions('students', ['me']),
-
     signOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push({ name: 'Login' });

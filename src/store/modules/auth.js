@@ -29,7 +29,6 @@ export const actions = {
             refreshToken: r.data.refresh,
           };
           commit('SET_TOKENS', tokens);
-          dispatch('me');
           dispatch(
             'notifications/showNotification',
             {

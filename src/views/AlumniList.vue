@@ -1,14 +1,6 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col>
-        <h1>
-          {{ $t('alumniList.title') }}
-        </h1>
-      </v-col>
-    </v-row>
-
-    <v-row justify="center">
       <v-col cols="12" md="6">
         <v-text-field
           v-model="search"
@@ -32,7 +24,7 @@
       </v-col>
     </v-row>
 
-    <v-row v-if="students" class="mb-4">
+    <v-row v-if="studentsList" class="mb-4">
       <v-col
         cols="12"
         md="6"
@@ -42,12 +34,10 @@
       >
         <v-card
           class="pa-2"
-          @click="
-            $router.push({
-              name: 'AlumniDetail',
-              params: { id: student.id },
-            })
-          "
+          :to="{
+            name: 'AlumniDetail',
+            params: { id: student.id },
+          }"
         >
           <v-card-title>
             {{ `${student.firstName} ${student.lastName}` }}
@@ -60,20 +50,12 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-btn
-        @click="loadMore"
-        class="ma-4"
-        v-if="!areAllStudentsDisplayed"
-        dark
-        color="tertiary"
-        >{{ $t('action.loadMore') }}</v-btn
-      >
     </v-row>
   </v-container>
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import { PROMOLIST } from '../utils/promoList';
 
 export default {
@@ -86,15 +68,11 @@ export default {
     };
   },
   computed: {
-    ...mapState('students', ['students', 'totalStudents']),
-    ...mapGetters('students', ['studentsNumber', 'studentsList']),
+    ...mapGetters('students', ['studentsList']),
     promoListItems() {
       return PROMOLIST.map((promo) => {
         return { value: promo, text: this.$t(`PROMO.${promo}`) };
       });
-    },
-    areAllStudentsDisplayed() {
-      return this.studentsNumber == this.totalStudents;
     },
     filteredStudents() {
       return this.studentsList
@@ -108,16 +86,6 @@ export default {
           return !this.promo || item.promo === this.promo;
           // return !this.promo || !item.promo.indexOf(this.promo))
         });
-    },
-  },
-  created() {
-    this.getStudents();
-  },
-  methods: {
-    ...mapActions('students', ['getStudents']),
-    loadMore() {
-      this.page += 1;
-      this.getStudents(this.page);
     },
   },
 };

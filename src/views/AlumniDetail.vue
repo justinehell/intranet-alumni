@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 
 import ProfileCard from '../components/Profile/ProfileCard.vue';
 import Jobs from '../components/Profile/Jobs/Jobs.vue';
@@ -52,13 +52,6 @@ export default {
         },
       ];
     },
-  },
-
-  created() {
-    this.alumni ? null : this.getStudent(this.id);
-  },
-  methods: {
-    ...mapActions('students', ['getStudent']),
   },
 };
 </script>
