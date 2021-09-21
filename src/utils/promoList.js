@@ -1,1 +1,1 @@
-export const PROMOLIST = ['1', '2', '3'];
+export const PROMOLIST = [1, 2];

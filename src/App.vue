@@ -34,8 +34,13 @@ export default {
       return this.$store.state.notifications.notifications;
     },
   },
-  created() {
-    this.isLogged ? this.setInitialData() : null;
+  watch: {
+    isLogged: {
+      handler() {
+        this.isLogged && this.setInitialData();
+      },
+      immediate: true,
+    },
   },
   methods: {
     ...mapActions(['setInitialData']),

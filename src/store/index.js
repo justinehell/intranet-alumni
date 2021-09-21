@@ -20,7 +20,6 @@ export default new Vuex.Store({
   actions: {
     setInitialData({ dispatch }) {
       dispatch('auth/me');
-      dispatch('students/getStudents');
     },
   },
 });

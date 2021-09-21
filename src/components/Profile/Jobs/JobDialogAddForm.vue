@@ -309,7 +309,7 @@ export default {
           locationCity: this.locationCity,
           locationCountry: this.locationCountry,
           professionalEmail: this.professionalEmail,
-          isCurrentJob: this.isCurrentJob,
+          isCurrentJob: !!this.isCurrentJob,
         };
         this.addJob(newJob)
           .then(() => {

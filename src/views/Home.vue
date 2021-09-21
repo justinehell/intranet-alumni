@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'Home',
   data() {
@@ -56,6 +56,12 @@ export default {
         { text: 'Contributeur.rice', align: 'center', value: 'isContributor' },
       ],
     };
+  },
+  created() {
+    this.getStudents();
+  },
+  methods: {
+    ...mapActions('students', ['getStudents']),
   },
   computed: {
     ...mapGetters('students', ['studentsList']),
