@@ -14,6 +14,8 @@ import {
 const state = {
   students: {},
   totalStudents: 0,
+  hasNext: false,
+  hasPrevious: false,
 };
 
 // getters
@@ -21,17 +23,14 @@ const getters = {
   studentsList: (state) => {
     return Object.values(state.students);
   },
-
   userStudent: (state, getters, rootState) => {
     return getters.studentsList.find(
       (student) => student.user === rootState.auth.user?.id
     );
   },
-
   getStudentById: (state) => (id) => {
     return state.students[id];
   },
-
   studentsNumber: (state) => {
     return Object.keys(state.students).length;
   },
@@ -39,13 +38,15 @@ const getters = {
 
 // actions
 export const actions = {
-  getStudents({ commit, dispatch }, page = 1) {
+  getStudents({ commit }, query = { page: 1 }) {
     return new Promise((resolve, reject) => {
-      getStudents(page)
+      getStudents(query)
         .then((r) => {
           commit('SET_STUDENTS', r.data.results);
           commit('SET_MAX_STUDENTS', r.data.count);
-          r.data.next && dispatch('getStudents', page + 1);
+          commit('SET_NEXT', r.data.next);
+          commit('SET_PREVIOUS', r.data.previous);
+          //r.data.next && dispatch('getStudents', query);
           resolve();
         })
         .catch((error) => {
@@ -53,6 +54,21 @@ export const actions = {
         });
     });
   },
+
+  // getStudents({ commit, dispatch }, page = 1) {
+  //   return new Promise((resolve, reject) => {
+  //     getStudents(page)
+  //       .then((r) => {
+  //         commit('SET_STUDENTS', r.data.results);
+  //         commit('SET_MAX_STUDENTS', r.data.count);
+  //         r.data.next && dispatch('getStudents', page + 1);
+  //         resolve();
+  //       })
+  //       .catch((error) => {
+  //         reject(error);
+  //       });
+  //   });
+  // },
 
   getStudent({ commit }, id) {
     return new Promise((resolve, reject) => {
@@ -162,7 +178,8 @@ export const actions = {
 const mutations = {
   SET_STUDENTS(state, students) {
     let studentsObject = convertArrayToObject(students, 'id');
-    state.students = { ...state.students, ...studentsObject };
+    //state.students = { ...state.students, ...studentsObject };
+    state.students = studentsObject;
   },
   SET_MAX_STUDENTS(state, totalStudents) {
     state.totalStudents = totalStudents;
@@ -178,6 +195,14 @@ const mutations = {
     deletingJobIndex !== -1
       ? state.students[data.studentId].jobs.splice(deletingJobIndex, 1)
       : null;
+  },
+
+  SET_NEXT(state, data) {
+    state.hasNext = !!data;
+  },
+
+  SET_PREVIOUS(state, data) {
+    state.hasPrevious = !!data;
   },
 };
 
