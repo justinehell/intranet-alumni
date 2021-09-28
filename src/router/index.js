@@ -37,6 +37,13 @@ const routes = [
       import(/* webpackChunkName: "Alumni" */ '../views/AlumniDetail.vue'),
   },
   {
+    path: '/dashboard',
+    name: 'Dashboard',
+    meta: { requiresAuth: true, layout: 'app' },
+    component: () =>
+      import(/* webpackChunkName: "Dashboard" */ '../views/Dashboard.vue'),
+  },
+  {
     path: '/login',
     name: 'Login',
 
@@ -129,7 +136,7 @@ router.beforeEach((to, from, next) => {
     }
   }
   // to pubic page (no credentials required)
-  else if (isLogged) {
+  else if (isLogged && to.name !== 'NotFound') {
     next({ name: 'Home' });
   }
   next();
