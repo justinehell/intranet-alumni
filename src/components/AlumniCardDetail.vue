@@ -3,6 +3,33 @@
     <div class="d-flex justify-space-between align-center">
       <v-card-title class="text-h6 primary--text">
         {{ userAlumni.fullName }}
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              v-if="userAlumni.isCaMember"
+              right
+              color="primary"
+              v-bind="attrs"
+              v-on="on"
+              >mdi-account-tie</v-icon
+            >
+          </template>
+          <span>{{ $t('isCaMember') }}</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              v-if="userAlumni.isContributor"
+              right
+              color="primary"
+              v-bind="attrs"
+              v-on="on"
+              >mdi-seal-variant</v-icon
+            >
+          </template>
+          <span>{{ $t('isContributor') }}</span>
+        </v-tooltip>
       </v-card-title>
       <AlumniFormEdit v-if="showEditDialog" :userAlumni="userAlumni" />
     </div>

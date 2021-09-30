@@ -1,9 +1,7 @@
 <template>
   <v-app-bar app color="primary">
     <router-link class="text-decoration-none" :to="{ name: 'Home' }">
-      <v-toolbar-title class="white--text">{{
-        $t('header.title')
-      }}</v-toolbar-title>
+      <v-toolbar-title class="white--text">{{ $t('title') }}</v-toolbar-title>
     </router-link>
     <v-spacer></v-spacer>
 
