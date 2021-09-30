@@ -34,24 +34,26 @@
       <AlumniFormEdit v-if="showEditDialog" :userAlumni="userAlumni" />
     </div>
     <v-divider></v-divider>
+    <v-img contain height="200px" src="@/assets/images/alumni/alumni-2.png">
+    </v-img>
     <v-card-text>
       <v-row>
         <v-col cols="12" md="6">
           <div class="mb-4">
-            <v-icon class="mr-2" color="primary">mdi-school</v-icon>
+            <v-icon class="mr-2" color="secondary">mdi-school</v-icon>
             <span class="text--primary">
               {{ $t(`PROMO.${userAlumni.promo}`) }}
             </span>
           </div>
           <div class="mb-4" v-if="userAlumni.email">
-            <v-icon class="mr-2" color="primary">mdi-email</v-icon>
+            <v-icon class="mr-2" color="secondary">mdi-email</v-icon>
             <span class="text--primary">
               {{ userAlumni.email }}
             </span>
           </div>
 
           <div class="mb-4" v-if="userAlumni.birthDate">
-            <v-icon class="mr-2" color="primary">mdi-calendar</v-icon>
+            <v-icon class="mr-2" color="secondary">mdi-calendar</v-icon>
             <span class="text--primary">
               {{ formatDate(userAlumni.birthDate) }}
             </span>
@@ -66,7 +68,7 @@
                 userAlumni.locationCountry
             "
           >
-            <v-icon class="mr-2" color="primary">mdi-map-marker</v-icon>
+            <v-icon class="mr-2" color="secondary">mdi-map-marker</v-icon>
             <span class="text--primary">
               {{ displayAdress(userAlumni.locationAdress) }}
               {{ displayAdress(userAlumni.locationPostcode) }}
@@ -76,7 +78,7 @@
           </div>
 
           <div class="mb-4" v-if="userAlumni.phoneNumber">
-            <v-icon class="mr-2" color="primary">mdi-phone</v-icon>
+            <v-icon class="mr-2" color="secondary">mdi-phone</v-icon>
             <span class="text--primary">
               {{ userAlumni.phoneNumber }}
             </span>

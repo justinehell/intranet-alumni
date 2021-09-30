@@ -2,12 +2,12 @@
   <v-container>
     <v-breadcrumbs :items="breadcrumbsItems" large />
 
-    <v-row v-if="alumni">
-      <v-col cols="12">
+    <v-row v-if="alumni" class="justify-center">
+      <v-col cols="12" md="7">
         <AlumniCardDetail :userAlumni="alumni" />
       </v-col>
 
-      <v-col cols="12">
+      <v-col cols="12" md="7">
         <AlumniJobs :userAlumni="alumni" />
       </v-col>
     </v-row>
