@@ -4,11 +4,11 @@
 
     <v-row v-if="alumni">
       <v-col cols="12">
-        <ProfileCard :userStudent="alumni" />
+        <AlumniCardDetail :userAlumni="alumni" />
       </v-col>
 
       <v-col cols="12">
-        <Jobs :userStudent="alumni" />
+        <AlumniJobs :userAlumni="alumni" />
       </v-col>
     </v-row>
   </v-container>
@@ -17,14 +17,14 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-import ProfileCard from '../components/Profile/ProfileCard.vue';
-import Jobs from '../components/Profile/Jobs/Jobs.vue';
+import AlumniCardDetail from '../components/AlumniCardDetail.vue';
+import AlumniJobs from '../components/AlumniJobs.vue';
 
 export default {
   name: 'AlumniDetail',
   components: {
-    ProfileCard,
-    Jobs,
+    AlumniCardDetail,
+    AlumniJobs,
   },
   props: {
     id: {
@@ -33,15 +33,15 @@ export default {
     },
   },
   created() {
-    this.alumni ? null : this.getStudent(this.id);
+    this.alumni ? null : this.getAlumni(this.id);
   },
   methods: {
-    ...mapActions('students', ['getStudent']),
+    ...mapActions('alumnis', ['getAlumni']),
   },
   computed: {
-    ...mapGetters('students', ['getStudentById']),
+    ...mapGetters('alumnis', ['getAlumniById']),
     alumni() {
-      return this.getStudentById(this.id);
+      return this.getAlumniById(this.id);
     },
     breadcrumbsItems() {
       return [

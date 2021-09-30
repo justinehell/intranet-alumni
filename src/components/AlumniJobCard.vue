@@ -58,9 +58,9 @@
 </template>
 
 <script>
-import { formatDate } from '../../../utils/index';
+import { formatDate } from '../utils/index';
 export default {
-  name: 'JobCard',
+  name: 'AlumniJobCard',
   props: {
     job: {
       type: Object,

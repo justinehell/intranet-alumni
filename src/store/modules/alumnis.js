@@ -2,50 +2,50 @@ import Vue from 'vue';
 import { convertArrayToObject } from '../../utils';
 import { NOTIFICATION, SUCCESS } from '../../utils/notifications';
 import {
-  addStudentJob,
-  deleteStudentJob,
-  editStudent,
-  editStudentJob,
-  getCurrentStudent,
-  getStudents,
-  getStudent,
-} from '../../services/students';
+  addAlumniJob,
+  deleteAlumniJob,
+  editAlumni,
+  editAlumniJob,
+  getCurrentAlumni,
+  getAlumnis,
+  getAlumni,
+} from '../../services/alumnis';
 
 const state = {
-  students: {},
-  totalStudents: 0,
-  caMemberStudents: null,
-  contributorStudents: null,
+  alumnis: {},
+  totalAlumnis: 0,
+  caMemberAlumnis: null,
+  contributorAlumnis: null,
   hasNext: false,
   hasPrevious: false,
 };
 
 // getters
 const getters = {
-  studentsList: (state) => {
-    return Object.values(state.students);
+  alumniList: (state) => {
+    return Object.values(state.alumnis);
   },
-  userStudent: (state, getters, rootState) => {
-    return getters.studentsList.find(
-      (student) => student.user === rootState.auth.user?.id
+  userAlumni: (state, getters, rootState) => {
+    return getters.alumniList.find(
+      (alumni) => alumni.user === rootState.auth.user?.id
     );
   },
-  getStudentById: (state) => (id) => {
-    return state.students[id];
+  getAlumniById: (state) => (id) => {
+    return state.alumnis[id];
   },
-  studentsNumber: (state) => {
-    return Object.keys(state.students).length;
+  alumnisNumber: (state) => {
+    return Object.keys(state.alumnis).length;
   },
 };
 
 // actions
 export const actions = {
-  getStudents({ commit }, query = { page: 1 }) {
+  getAlumnis({ commit }, query = { page: 1 }) {
     return new Promise((resolve, reject) => {
-      getStudents(query)
+      getAlumnis(query)
         .then((r) => {
-          commit('SET_STUDENTS', r.data.results);
-          commit('SET_MAX_STUDENTS', r.data.count);
+          commit('SET_ALUMNIS', r.data.results);
+          commit('SET_MAX_ALUMNIS', r.data.count);
           commit('SET_NEXT', r.data.next);
           commit('SET_PREVIOUS', r.data.previous);
           resolve();
@@ -56,11 +56,11 @@ export const actions = {
     });
   },
 
-  getCaMemberStudents({ commit }, query = { isCaMember: true }) {
+  getCaMemberAlumnis({ commit }, query = { isCaMember: true }) {
     return new Promise((resolve, reject) => {
-      getStudents(query)
+      getAlumnis(query)
         .then((r) => {
-          commit('SET_CA_MEMBER_STUDENTS', r.data.results);
+          commit('SET_CA_MEMBER_ALUMNIS', r.data.results);
           resolve();
         })
         .catch((error) => {
@@ -69,16 +69,16 @@ export const actions = {
     });
   },
 
-  getContributorStudents(
+  getContributorAlumnis(
     { commit, dispatch },
     query = { isContributor: true, page: 1 }
   ) {
     return new Promise((resolve, reject) => {
-      getStudents(query)
+      getAlumnis(query)
         .then((r) => {
-          commit('SET_CONTRIBUTOR_STUDENTS', r.data.results);
+          commit('SET_CONTRIBUTOR_ALUMNIS', r.data.results);
           r.data.next &&
-            dispatch('getContributorStudents', {
+            dispatch('getContributorAlumnis', {
               ...query,
               page: query.page + 1,
             });
@@ -90,11 +90,11 @@ export const actions = {
     });
   },
 
-  getStudent({ commit }, id) {
+  getAlumni({ commit }, id) {
     return new Promise((resolve, reject) => {
-      getStudent(id)
+      getAlumni(id)
         .then((r) => {
-          commit('UPDATE_STUDENT', r.data);
+          commit('UPDATE_ALUMNI', r.data);
           resolve();
         })
         .catch((error) => {
@@ -105,20 +105,20 @@ export const actions = {
 
   me({ commit }) {
     return new Promise((resolve, reject) => {
-      getCurrentStudent()
+      getCurrentAlumni()
         .then((r) => {
-          commit('UPDATE_STUDENT', r.data);
+          commit('UPDATE_ALUMNI', r.data);
           resolve();
         })
         .catch((error) => reject(error));
     });
   },
 
-  edit({ commit, dispatch }, student) {
+  edit({ commit, dispatch }, alumni) {
     return new Promise((resolve, reject) => {
-      editStudent(student)
+      editAlumni(alumni)
         .then((r) => {
-          commit('UPDATE_STUDENT', r.data);
+          commit('UPDATE_ALUMNI', r.data);
           dispatch(
             'notifications/showNotification',
             {
@@ -135,7 +135,7 @@ export const actions = {
 
   editJob({ dispatch }, job) {
     return new Promise((resolve, reject) => {
-      editStudentJob(job)
+      editAlumniJob(job)
         .then(() => {
           dispatch('me');
           dispatch(
@@ -154,7 +154,7 @@ export const actions = {
 
   addJob({ dispatch }, job) {
     return new Promise((resolve, reject) => {
-      addStudentJob(job)
+      addAlumniJob(job)
         .then(() => {
           dispatch('me');
           dispatch(
@@ -173,11 +173,11 @@ export const actions = {
 
   deleteJob({ commit, dispatch, getters }, id) {
     return new Promise((resolve, reject) => {
-      deleteStudentJob(id)
+      deleteAlumniJob(id)
         .then(() => {
-          commit('DELETE_STUDENT_JOB', {
+          commit('DELETE_ALUMNI_JOB', {
             id,
-            studentId: getters.userStudent.id,
+            alumniId: getters.userAlumni.id,
           });
           dispatch(
             'notifications/showNotification',
@@ -196,35 +196,35 @@ export const actions = {
 
 // mutations
 const mutations = {
-  SET_STUDENTS(state, students) {
-    let studentsObject = convertArrayToObject(students, 'id');
-    state.students = studentsObject;
+  SET_ALUMNIS(state, alumnis) {
+    let alumnisObject = convertArrayToObject(alumnis, 'id');
+    state.alumnis = alumnisObject;
   },
-  SET_MAX_STUDENTS(state, totalStudents) {
-    state.totalStudents = totalStudents;
+  SET_MAX_ALUMNIS(state, totalAlumnis) {
+    state.totalAlumnis = totalAlumnis;
   },
-  UPDATE_STUDENT(state, newStudent) {
+  UPDATE_ALUMNI(state, newAlumni) {
     // Use Vue.set() when we neet to update a nested data - this way it'll be reactive
-    Vue.set(state.students, newStudent.id, newStudent);
+    Vue.set(state.alumnis, newAlumni.id, newAlumni);
   },
-  DELETE_STUDENT_JOB(state, data) {
-    const deletingJobIndex = state.students[data.studentId]?.jobs.findIndex(
+  DELETE_ALUMNI_JOB(state, data) {
+    const deletingJobIndex = state.alumnis[data.alumniId]?.jobs.findIndex(
       (job) => job.id === data.id
     );
     deletingJobIndex !== -1
-      ? state.students[data.studentId].jobs.splice(deletingJobIndex, 1)
+      ? state.alumnis[data.alumniId].jobs.splice(deletingJobIndex, 1)
       : null;
   },
 
-  SET_CA_MEMBER_STUDENTS(state, data) {
-    state.caMemberStudents = data;
+  SET_CA_MEMBER_ALUMNIS(state, data) {
+    state.caMemberAlumnis = data;
   },
 
-  SET_CONTRIBUTOR_STUDENTS(state, data) {
-    if (state.contributorStudents) {
-      state.contributorStudents = [...state.contributorStudents, ...data];
+  SET_CONTRIBUTOR_ALUMNIS(state, data) {
+    if (state.contributorAlumnis) {
+      state.contributorAlumnis = [...state.contributorAlumnis, ...data];
     } else {
-      state.contributorStudents = data;
+      state.contributorAlumnis = data;
     }
   },
 

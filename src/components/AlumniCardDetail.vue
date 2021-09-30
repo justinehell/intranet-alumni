@@ -2,9 +2,9 @@
   <v-card>
     <div class="d-flex justify-space-between align-center">
       <v-card-title class="text-h6 primary--text">
-        {{ userStudent.fullName }}
+        {{ userAlumni.fullName }}
       </v-card-title>
-      <ProfileCardEdit v-if="showEditDialog" :userStudent="userStudent" />
+      <AlumniFormEdit v-if="showEditDialog" :userAlumni="userAlumni" />
     </div>
     <v-divider></v-divider>
     <v-card-text>
@@ -13,45 +13,45 @@
           <div class="mb-4">
             <v-icon class="mr-2" color="primary">mdi-school</v-icon>
             <span class="text--primary">
-              {{ $t(`PROMO.${userStudent.promo}`) }}
+              {{ $t(`PROMO.${userAlumni.promo}`) }}
             </span>
           </div>
-          <div class="mb-4" v-if="userStudent.email">
+          <div class="mb-4" v-if="userAlumni.email">
             <v-icon class="mr-2" color="primary">mdi-email</v-icon>
             <span class="text--primary">
-              {{ userStudent.email }}
+              {{ userAlumni.email }}
             </span>
           </div>
 
-          <div class="mb-4" v-if="userStudent.birthDate">
+          <div class="mb-4" v-if="userAlumni.birthDate">
             <v-icon class="mr-2" color="primary">mdi-calendar</v-icon>
             <span class="text--primary">
-              {{ formatDate(userStudent.birthDate) }}
+              {{ formatDate(userAlumni.birthDate) }}
             </span>
           </div>
 
           <div
             class="mb-4"
             v-if="
-              userStudent.locationAdress ||
-                userStudent.locationPostcode ||
-                userStudent.locationCity ||
-                userStudent.locationCountry
+              userAlumni.locationAdress ||
+                userAlumni.locationPostcode ||
+                userAlumni.locationCity ||
+                userAlumni.locationCountry
             "
           >
             <v-icon class="mr-2" color="primary">mdi-map-marker</v-icon>
             <span class="text--primary">
-              {{ displayAdress(userStudent.locationAdress) }}
-              {{ displayAdress(userStudent.locationPostcode) }}
-              {{ displayAdress(userStudent.locationCity) }}
-              {{ displayCountry(displayAdress(userStudent.locationCountry)) }}
+              {{ displayAdress(userAlumni.locationAdress) }}
+              {{ displayAdress(userAlumni.locationPostcode) }}
+              {{ displayAdress(userAlumni.locationCity) }}
+              {{ displayCountry(displayAdress(userAlumni.locationCountry)) }}
             </span>
           </div>
 
-          <div class="mb-4" v-if="userStudent.phoneNumber">
+          <div class="mb-4" v-if="userAlumni.phoneNumber">
             <v-icon class="mr-2" color="primary">mdi-phone</v-icon>
             <span class="text--primary">
-              {{ userStudent.phoneNumber }}
+              {{ userAlumni.phoneNumber }}
             </span>
           </div>
         </v-col>
@@ -61,16 +61,16 @@
 </template>
 
 <script>
-import { formatDate } from '../../utils/index';
-import ProfileCardEdit from './ProfileDialogEditForm.vue';
+import { formatDate } from '../utils/index';
+import AlumniFormEdit from './AlumniFormEdit.vue';
 
 export default {
-  name: 'ProfileCard',
+  name: 'AlumniCardDetail',
   components: {
-    ProfileCardEdit,
+    AlumniFormEdit,
   },
   props: {
-    userStudent: {
+    userAlumni: {
       type: Object,
       required: true,
     },
@@ -78,11 +78,6 @@ export default {
       type: Boolean,
     },
   },
-
-  data() {
-    return {};
-  },
-  computed: {},
   methods: {
     formatDate,
     displayAdress(string) {

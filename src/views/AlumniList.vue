@@ -7,7 +7,7 @@
           type="text"
           clearable
           outlined
-          :placeholder="$t('alumniList.student')"
+          :placeholder="$t('alumniList.search')"
           prepend-inner-icon="mdi-account"
           @input="
             $router.push({
@@ -79,15 +79,15 @@
     </v-row>
 
     <v-progress-linear v-if="loading" indeterminate></v-progress-linear>
-    <v-row v-if="studentsList" class="mb-4">
+    <v-row v-if="alumniList" class="mb-4">
       <v-col
         cols="12"
         md="6"
         lg="4"
-        v-for="student in studentsList"
-        :key="student.id"
+        v-for="alumni in alumniList"
+        :key="alumni.id"
       >
-        <AlumniCard :alumni="student" />
+        <AlumniCard :alumni="alumni" />
       </v-col>
     </v-row>
 
@@ -149,23 +149,23 @@ export default {
     };
   },
   created() {
-    this.studentsList.length < 1 && this.fetchStudents();
+    this.alumniList.length < 2 && this.fetchAlumnis();
   },
   methods: {
-    ...mapActions('students', ['getStudents']),
-    fetchStudents(query = this.routeQuery) {
+    ...mapActions('alumnis', ['getAlumnis']),
+    fetchAlumnis(query = this.routeQuery) {
       this.loading = true;
-      this.getStudents(query).finally(() => (this.loading = false));
+      this.getAlumnis(query).finally(() => (this.loading = false));
     },
   },
   // faire appel API lors de la modification de l'url (par query ou params)
   beforeRouteUpdate(to, from, next) {
-    this.fetchStudents(to.query);
+    this.fetchAlumnis(to.query);
     next();
   },
   computed: {
-    ...mapGetters('students', ['studentsList']),
-    ...mapState('students', ['hasNext', 'hasPrevious']),
+    ...mapGetters('alumnis', ['alumniList']),
+    ...mapState('alumnis', ['hasNext', 'hasPrevious']),
     routeQuery() {
       return this.$route.query;
     },

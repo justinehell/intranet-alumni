@@ -22,10 +22,10 @@
 
 <script>
 import { mapActions } from 'vuex';
-import BaseDialog from '../../Base/BaseDialog.vue';
+import BaseDialog from './Base/BaseDialog.vue';
 
 export default {
-  name: 'JobDialogDeleteForm',
+  name: 'AlumniJobFormDelete',
   components: {
     BaseDialog,
   },
@@ -46,7 +46,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('students', ['deleteJob']),
+    ...mapActions('alumnis', ['deleteJob']),
     submit() {
       this.loading = true;
       this.deleteJob(this.job.id)

@@ -1,13 +1,13 @@
 <template>
   <BaseDialog
     ref="dialog"
-    :title="$t('profile.modal.editJob')"
-    :submitText="$t('action.edit')"
+    :title="$t('profile.modal.addJob')"
+    :submitText="$t('action.add')"
+    openDialogButtonIcon="mdi-briefcase-plus"
     :loading="loading"
     :isSubmitButtonDisabled="isFormInvalid"
     @submit="submit"
-    @dialog:open="dialogOpenHandler"
-    @dialog:close="dialogCloseHandler"
+    @dialog:open="dialogOpenerHandler"
   >
     <v-form>
       <v-row no-gutters>
@@ -61,11 +61,12 @@
             </template>
             <v-date-picker
               v-model="dateStart"
+              :active-picker="activePicker1"
               no-title
               min="1950-01-01"
               :max="yearsFromNowDate(5)"
-              :disabled="!dateStart"
               @input="menu1 = false"
+              @change="save1"
             ></v-date-picker>
           </v-menu>
         </v-col>
@@ -82,22 +83,24 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 :value="dateEndFormatted"
-                :label="`${$t('form.dateEnd.label')}`"
+                :label="$t('form.dateEnd.label')"
                 append-icon="mdi-calendar"
                 v-bind="attrs"
                 v-on="on"
                 :error-messages="dateEndErrors"
                 @input="$v.dateEnd.$touch()"
                 @blur="$v.dateEnd.$touch()"
-                :disabled="!dateStart || isCurrentJob"
+                :disabled="!dateStart || !!isCurrentJob"
               ></v-text-field>
             </template>
             <v-date-picker
               v-model="dateEnd"
+              :active-picker="activePicker2"
               no-title
               :min="dateStart"
               :max="yearsFromNowDate(5)"
               @input="menu2 = false"
+              @change="save2"
             ></v-date-picker>
           </v-menu>
         </v-col>
@@ -193,29 +196,22 @@
 <script>
 import { mapActions } from 'vuex';
 import {
-  required,
-  requiredIf,
   numeric,
   maxLength,
+  required,
+  requiredIf,
 } from 'vuelidate/lib/validators';
 
-import formFieldMixinVue from '../../../mixins/formFieldMixin.vue';
-import { formatDate } from '../../../utils/index';
-import { COUNTRIES } from '../../../utils/countriesCode';
-import { CONTRACTS } from '../../../utils/contractsType';
-
-import BaseDialog from '../../Base/BaseDialog.vue';
+import formFieldMixinVue from '../mixins/formFieldMixin.vue';
+import { formatDate } from '../utils/index';
+import { COUNTRIES } from '../utils/countriesCode';
+import { CONTRACTS } from '../utils/contractsType';
+import BaseDialog from './Base/BaseDialog.vue';
 
 export default {
-  name: 'JobDialogEditForm',
+  name: 'AlumniJobFormAdd',
   components: {
     BaseDialog,
-  },
-  props: {
-    job: {
-      type: Object,
-      required: false,
-    },
   },
   mixins: [formFieldMixinVue],
   validations: {
@@ -241,7 +237,7 @@ export default {
       company: '',
       contractType: '',
       dateStart: '',
-      dateEnd: '',
+      dateEnd: null,
       department: '',
       description: '',
       fixedPhoneNumber: '',
@@ -252,10 +248,26 @@ export default {
       locationCountry: '',
       professionalEmail: '',
       isCurrentJob: '',
+      activePicker1: '',
+      activePicker2: '',
       menu1: false,
       menu2: false,
       loading: false,
     };
+  },
+  watch: {
+    menu1(val) {
+      val && setTimeout(() => (this.activePicker1 = 'YEAR'));
+    },
+    menu2(val) {
+      val && setTimeout(() => (this.activePicker2 = 'YEAR'));
+    },
+    isCurrentJob(val) {
+      val && (this.dateEnd = null);
+    },
+    dateStart(val) {
+      val && new Date(val) > new Date(this.dateEnd) && (this.dateEnd = null);
+    },
   },
   computed: {
     dateStartFormatted() {
@@ -275,25 +287,14 @@ export default {
       });
     },
   },
-  watch: {
-    job(val) {
-      val && (this.setFormData(), this.$refs.dialog.openDialog());
-    },
-    isCurrentJob(val) {
-      val && (this.dateEnd = null);
-    },
-    dateStart(val) {
-      val && new Date(val) > new Date(this.dateEnd) && (this.dateEnd = null);
-    },
-  },
   methods: {
-    ...mapActions('students', ['editJob']),
+    ...mapActions('alumnis', ['addJob']),
     formatDate,
     submit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         this.loading = true;
-        let updatedStudentJob = {
+        let newJob = {
           function: this.functionTitle,
           company: this.company,
           contractType: this.contractType,
@@ -308,10 +309,9 @@ export default {
           locationCity: this.locationCity,
           locationCountry: this.locationCountry,
           professionalEmail: this.professionalEmail,
-          isCurrentJob: this.isCurrentJob,
-          id: this.job.id,
+          isCurrentJob: !!this.isCurrentJob,
         };
-        this.editJob(updatedStudentJob)
+        this.addJob(newJob)
           .then(() => {
             this.$refs.dialog.closeDialog();
           })
@@ -323,21 +323,32 @@ export default {
           });
       }
     },
-    dialogOpenHandler() {
-      this.setFormData();
+    save1(date) {
+      this.$refs.menu1.save(date);
     },
-    dialogCloseHandler() {
-      this.$emit('close');
+    save2(date) {
+      this.$refs.menu2.save(date);
     },
-    setFormData() {
-      this.functionTitle = this.job.function;
-      this.company = this.job.company;
-      this.contractType = this.job.contractType;
-      this.department = this.job.department;
-      this.description = this.job.description;
-      this.isCurrentJob = this.job.isCurrentJob;
-      this.dateStart = this.job.dateStart;
-      this.dateEnd = this.job.dateEnd;
+    dialogOpenerHandler() {
+      this.resetData();
+    },
+    resetData() {
+      this.$v.$reset();
+      this.functionTitle = '';
+      this.company = '';
+      this.contractType = '';
+      this.dateStart = '';
+      this.dateEnd = null;
+      this.department = '';
+      this.description = '';
+      this.fixedPhoneNumber = '';
+      this.mobilePhoneNumber = '';
+      this.locationAdress = '';
+      this.locationPostcode = '';
+      this.locationCity = '';
+      this.locationCountry = '';
+      this.professionalEmail = '';
+      this.isCurrentJob = '';
     },
   },
 };

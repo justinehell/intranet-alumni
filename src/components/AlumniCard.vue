@@ -14,12 +14,7 @@
         >mdi-seal-variant</v-icon
       >
     </v-card-title>
-    <v-img
-      class=""
-      contain
-      height="200px"
-      src="@/assets/images/alumni/alumni-2.png"
-    >
+    <v-img contain height="200px" src="@/assets/images/alumni/alumni-2.png">
     </v-img>
     <v-card-actions>
       <v-spacer></v-spacer>
@@ -37,11 +32,5 @@ export default {
       required: true,
     },
   },
-
-  data() {
-    return {};
-  },
-  computed: {},
-  methods: {},
 };
 </script>

@@ -98,19 +98,19 @@
 import { numeric, maxLength } from 'vuelidate/lib/validators';
 import { mapActions } from 'vuex';
 
-import formFieldMixinVue from '../../mixins/formFieldMixin.vue';
-import { COUNTRIES } from '../../utils/countriesCode';
-import { formatDate } from '../../utils/index';
+import formFieldMixinVue from '../mixins/formFieldMixin.vue';
+import { COUNTRIES } from '../utils/countriesCode';
+import { formatDate } from '../utils/index';
 
-import BaseDialog from '../Base/BaseDialog.vue';
+import BaseDialog from './Base/BaseDialog.vue';
 
 export default {
-  name: 'ProfileDialogEditForm',
+  name: 'AlumniFormEdit',
   components: {
     BaseDialog,
   },
   props: {
-    userStudent: {
+    userAlumni: {
       type: Object,
       required: true,
     },
@@ -152,22 +152,22 @@ export default {
     },
   },
   methods: {
-    ...mapActions('students', ['edit']),
+    ...mapActions('alumnis', ['edit']),
     formatDate,
     submit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         this.loading = true;
-        let updatedStudent = {
+        let updatedAlumni = {
           birthDate: this.birthDate,
           locationAdress: this.locationAdress,
           locationPostcode: this.locationPostcode,
           locationCity: this.locationCity,
           locationCountry: this.locationCountry,
           phoneNumber: this.phoneNumber,
-          id: this.userStudent.id,
+          id: this.userAlumni.id,
         };
-        this.edit(updatedStudent)
+        this.edit(updatedAlumni)
           .then(() => {
             this.$refs.dialog.closeDialog();
           })
@@ -189,12 +189,12 @@ export default {
       this.$emit('close');
     },
     setFormData() {
-      this.birthDate = this.userStudent.birthDate;
-      this.locationAdress = this.userStudent.locationAdress;
-      this.locationPostcode = this.userStudent.locationPostcode;
-      this.locationCity = this.userStudent.locationCity;
-      this.locationCountry = this.userStudent.locationCountry;
-      this.phoneNumber = this.userStudent.phoneNumber;
+      this.birthDate = this.userAlumni.birthDate;
+      this.locationAdress = this.userAlumni.locationAdress;
+      this.locationPostcode = this.userAlumni.locationPostcode;
+      this.locationCity = this.userAlumni.locationCity;
+      this.locationCountry = this.userAlumni.locationCountry;
+      this.phoneNumber = this.userAlumni.phoneNumber;
     },
   },
 };

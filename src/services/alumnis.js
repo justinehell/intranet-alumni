@@ -3,7 +3,7 @@ import queryString from 'query-string';
 
 import alumniApiClient from './alumniApi';
 
-export const getStudents = (query) => {
+export const getAlumnis = (query) => {
   query = snakecaseKeys(query, { deep: true });
   let queryParams = query
     ? `?${queryString.stringify(query, {
@@ -14,28 +14,28 @@ export const getStudents = (query) => {
   return alumniApiClient.get(`students/${queryParams}`);
 };
 
-export const getStudent = (id) => {
+export const getAlumni = (id) => {
   return alumniApiClient.get(`students/${id}`);
 };
 
-export const getCurrentStudent = () => {
+export const getCurrentAlumni = () => {
   return alumniApiClient.get('students/me/');
 };
 
-export const editStudent = (student) => {
-  const id = student.id;
-  return alumniApiClient.patch(`students/${id}/`, student);
+export const editAlumni = (alumni) => {
+  const id = alumni.id;
+  return alumniApiClient.patch(`students/${id}/`, alumni);
 };
 
-export const editStudentJob = (job) => {
+export const editAlumniJob = (job) => {
   const id = job.id;
   return alumniApiClient.patch(`jobs/${id}/`, job);
 };
 
-export const addStudentJob = (job) => {
+export const addAlumniJob = (job) => {
   return alumniApiClient.post(`jobs/`, job);
 };
 
-export const deleteStudentJob = (id) => {
+export const deleteAlumniJob = (id) => {
   return alumniApiClient.delete(`jobs/${id}`);
 };

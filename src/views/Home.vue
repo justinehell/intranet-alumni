@@ -12,15 +12,15 @@
         </h2>
         <p class="text-justify">{{ $t('home.CaMember.description') }}</p>
 
-        <v-row v-if="contributorStudents" class="mt-8 justify-center">
+        <v-row v-if="contributorAlumnis" class="mt-8 justify-center">
           <v-col
             cols="12"
             md="6"
             lg="4"
-            v-for="student in contributorStudents"
-            :key="student.id"
+            v-for="alumni in contributorAlumnis"
+            :key="alumni.id"
           >
-            <AlumniCard :alumni="student" />
+            <AlumniCard :alumni="alumni" />
           </v-col>
         </v-row>
       </v-col>
@@ -31,15 +31,15 @@
         </h2>
         <p class="text-justify">{{ $t('home.contributor.description') }}</p>
 
-        <v-row v-if="caMemberStudents" class="mt-8 justify-center">
+        <v-row v-if="caMemberAlumnis" class="mt-8 justify-center">
           <v-col
             cols="12"
             md="6"
             lg="4"
-            v-for="student in caMemberStudents"
-            :key="student.id"
+            v-for="alumni in caMemberAlumnis"
+            :key="alumni.id"
           >
-            <AlumniCard :alumni="student" />
+            <AlumniCard :alumni="alumni" />
           </v-col>
         </v-row>
       </v-col>
@@ -56,17 +56,14 @@ export default {
     AlumniCard,
   },
   created() {
-    !this.caMemberStudents && this.getCaMemberStudents();
-    !this.contributorStudents && this.getContributorStudents();
+    !this.caMemberAlumnis && this.getCaMemberAlumnis();
+    !this.contributorAlumnis && this.getContributorAlumnis();
   },
   computed: {
-    ...mapState('students', ['caMemberStudents', 'contributorStudents']),
+    ...mapState('alumnis', ['caMemberAlumnis', 'contributorAlumnis']),
   },
   methods: {
-    ...mapActions('students', [
-      'getCaMemberStudents',
-      'getContributorStudents',
-    ]),
+    ...mapActions('alumnis', ['getCaMemberAlumnis', 'getContributorAlumnis']),
   },
 };
 </script>

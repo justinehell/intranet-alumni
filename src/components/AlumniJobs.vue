@@ -4,44 +4,44 @@
       <v-card-title class="text-h6 primary--text">
         {{ $t('profile.jobs.title') }}
       </v-card-title>
-      <JobCardAdd v-if="showDialogButton" />
+      <AlumniJobFormAdd v-if="showDialogButton" />
     </div>
     <v-divider></v-divider>
     <div
-      v-if="!userStudent.jobs.length"
+      v-if="!userAlumni.jobs.length"
       class="text--disabled font-italic pa-4 text-center"
     >
       {{ $t('profile.jobs.noJob') }}
     </div>
-    <JobCard
-      v-for="job in userStudent.jobs"
+    <AlumniJobCard
+      v-for="job in userAlumni.jobs"
       :key="job.id"
       :job="job"
       :showDialogButton="showDialogButton"
       @edit="editingJob = job"
       @delete="deletingJob = job"
     />
-    <JobCardEdit :job="editingJob" @close="editingJob = null" />
-    <JobCardDelete :job="deletingJob" @close="deletingJob = null" />
+    <AlumniJobFormEdit :job="editingJob" @close="editingJob = null" />
+    <AlumniJobFormDelete :job="deletingJob" @close="deletingJob = null" />
   </v-card>
 </template>
 
 <script>
-import JobCard from './JobCard.vue';
-import JobCardAdd from './JobDialogAddForm.vue';
-import JobCardEdit from './JobDialogEditForm.vue';
-import JobCardDelete from './JobDialogDeleteForm.vue';
+import AlumniJobCard from './AlumniJobCard.vue';
+import AlumniJobFormAdd from './AlumniJobFormAdd.vue';
+import AlumniJobFormEdit from './AlumniJobFormEdit.vue';
+import AlumniJobFormDelete from './AlumniJobFormDelete.vue';
 
 export default {
-  name: 'Jobs',
+  name: 'AlumniJobs',
   components: {
-    JobCard,
-    JobCardAdd,
-    JobCardEdit,
-    JobCardDelete,
+    AlumniJobCard,
+    AlumniJobFormAdd,
+    AlumniJobFormEdit,
+    AlumniJobFormDelete,
   },
   props: {
-    userStudent: {
+    userAlumni: {
       type: Object,
       required: true,
     },

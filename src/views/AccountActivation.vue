@@ -58,7 +58,6 @@ export default {
           this.setServerError(error);
         })
         .finally(() => {
-          //this.$router.push({ name: 'Login' });
           this.loading = false;
         });
     },
