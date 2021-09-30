@@ -87,23 +87,7 @@
         v-for="student in studentsList"
         :key="student.id"
       >
-        <v-card
-          class="pa-2"
-          :to="{
-            name: 'AlumniDetail',
-            params: { id: student.id },
-          }"
-        >
-          <v-card-title>
-            {{ `${student.firstName} ${student.lastName}` }}
-          </v-card-title>
-          <v-card-text>
-            {{ $t('alumniList.promo') }} :
-            <span class="text--primary">{{
-              $t(`PROMO.${student.promo}`)
-            }}</span>
-          </v-card-text>
-        </v-card>
+        <AlumniCard :alumni="student" />
       </v-col>
     </v-row>
 
@@ -146,8 +130,13 @@
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { PROMOLIST } from '../utils/promoList';
 
+import AlumniCard from '../components/AlumniCard.vue';
+
 export default {
   name: 'AlumniList',
+  components: {
+    AlumniCard,
+  },
   data() {
     return {
       loading: false,
@@ -160,7 +149,7 @@ export default {
     };
   },
   created() {
-    this.fetchStudents();
+    this.studentsList.length < 1 && this.fetchStudents();
   },
   methods: {
     ...mapActions('students', ['getStudents']),

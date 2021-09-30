@@ -1,11 +1,7 @@
 import snakecaseKeys from 'snakecase-keys';
+import queryString from 'query-string';
+
 import alumniApiClient from './alumniApi';
-
-// export const getStudents = (page) => {
-//   return alumniApiClient.get(`students/?page=${page}`);
-// };
-
-const queryString = require('query-string');
 
 export const getStudents = (query) => {
   query = snakecaseKeys(query, { deep: true });

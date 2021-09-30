@@ -1,70 +1,72 @@
 <template>
   <v-container>
     <v-row>
-      <v-col>
-        <v-card>
-          <v-card-title>
-            {{ $t('home.title') }}
-            <v-spacer></v-spacer>
-            <v-text-field
-              v-model="search"
-              append-icon="mdi-magnify"
-              :placeholder="$t('alumniList.student')"
-              single-line
-              hide-details
-            ></v-text-field>
-          </v-card-title>
-          <v-data-table
-            :headers="headers"
-            :items="studentsList"
-            :search="search"
+      <v-col cols="12" class="text-center mb-16">
+        <h1 class="text-h4 font-weight-medium mb-6">{{ $t('home.title') }}</h1>
+        <p class="text-justify">{{ $t('home.description') }}</p>
+      </v-col>
+
+      <v-col cols="12" class="text-center mb-16">
+        <h2 class="text-h5 font-weight-medium mb-6">
+          {{ $t('home.CaMember.title') }}
+        </h2>
+        <p class="text-justify">{{ $t('home.CaMember.description') }}</p>
+
+        <v-row v-if="contributorStudents" class="mt-8 justify-center">
+          <v-col
+            cols="12"
+            md="6"
+            lg="4"
+            v-for="student in contributorStudents"
+            :key="student.id"
           >
-            <template v-slot:item.promo="{ item }">
-              {{ $t(`PROMO.${item.promo}`) }}
-            </template>
+            <AlumniCard :alumni="student" />
+          </v-col>
+        </v-row>
+      </v-col>
 
-            <template v-slot:item.isCaMember="{ item }">
-              <v-icon v-if="item.isCaMember">mdi-account-tie</v-icon>
-            </template>
+      <v-col cols="12" class="text-center mb-16">
+        <h2 class="text-h5 font-weight-medium mb-6">
+          {{ $t('home.contributor.title') }}
+        </h2>
+        <p class="text-justify">{{ $t('home.contributor.description') }}</p>
 
-            <template v-slot:item.isContributor="{ item }">
-              <v-icon v-if="item.isContributor">mdi-medal</v-icon>
-            </template>
-          </v-data-table>
-        </v-card>
+        <v-row v-if="caMemberStudents" class="mt-8 justify-center">
+          <v-col
+            cols="12"
+            md="6"
+            lg="4"
+            v-for="student in caMemberStudents"
+            :key="student.id"
+          >
+            <AlumniCard :alumni="student" />
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapState } from 'vuex';
+import AlumniCard from '../components/AlumniCard.vue';
 export default {
   name: 'Home',
-  data() {
-    return {
-      search: '',
-      headers: [
-        {
-          text: 'Nom',
-          align: 'start',
-          value: 'lastName',
-        },
-        { text: 'Prénom', value: 'firstName' },
-        { text: 'Promo', value: 'promo' },
-        { text: 'Membre du CA', align: 'center', value: 'isCaMember' },
-        { text: 'Contributeur.rice', align: 'center', value: 'isContributor' },
-      ],
-    };
+  components: {
+    AlumniCard,
   },
   created() {
-    this.getStudents();
-  },
-  methods: {
-    ...mapActions('students', ['getStudents']),
+    !this.caMemberStudents && this.getCaMemberStudents();
+    !this.contributorStudents && this.getContributorStudents();
   },
   computed: {
-    ...mapGetters('students', ['studentsList']),
+    ...mapState('students', ['caMemberStudents', 'contributorStudents']),
+  },
+  methods: {
+    ...mapActions('students', [
+      'getCaMemberStudents',
+      'getContributorStudents',
+    ]),
   },
 };
 </script>

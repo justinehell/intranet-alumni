@@ -1,12 +1,10 @@
 <template>
   <v-app-bar app color="primary">
-    <v-app-bar-title class="text-no-wrap white--text">
-      <router-link
-        class="white--text text-decoration-none"
-        :to="{ name: 'Home' }"
-        >{{ $t('header.title') }}</router-link
-      >
-    </v-app-bar-title>
+    <router-link class="text-decoration-none" :to="{ name: 'Home' }">
+      <v-toolbar-title class="white--text">{{
+        $t('header.title')
+      }}</v-toolbar-title>
+    </router-link>
     <v-spacer></v-spacer>
 
     <v-btn :to="{ name: 'Alumni' }" class="mr-4">

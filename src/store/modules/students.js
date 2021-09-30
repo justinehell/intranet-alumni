@@ -14,6 +14,8 @@ import {
 const state = {
   students: {},
   totalStudents: 0,
+  caMemberStudents: null,
+  contributorStudents: null,
   hasNext: false,
   hasPrevious: false,
 };
@@ -46,7 +48,6 @@ export const actions = {
           commit('SET_MAX_STUDENTS', r.data.count);
           commit('SET_NEXT', r.data.next);
           commit('SET_PREVIOUS', r.data.previous);
-          //r.data.next && dispatch('getStudents', query);
           resolve();
         })
         .catch((error) => {
@@ -55,20 +56,39 @@ export const actions = {
     });
   },
 
-  // getStudents({ commit, dispatch }, page = 1) {
-  //   return new Promise((resolve, reject) => {
-  //     getStudents(page)
-  //       .then((r) => {
-  //         commit('SET_STUDENTS', r.data.results);
-  //         commit('SET_MAX_STUDENTS', r.data.count);
-  //         r.data.next && dispatch('getStudents', page + 1);
-  //         resolve();
-  //       })
-  //       .catch((error) => {
-  //         reject(error);
-  //       });
-  //   });
-  // },
+  getCaMemberStudents({ commit }, query = { isCaMember: true }) {
+    return new Promise((resolve, reject) => {
+      getStudents(query)
+        .then((r) => {
+          commit('SET_CA_MEMBER_STUDENTS', r.data.results);
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
+
+  getContributorStudents(
+    { commit, dispatch },
+    query = { isContributor: true, page: 1 }
+  ) {
+    return new Promise((resolve, reject) => {
+      getStudents(query)
+        .then((r) => {
+          commit('SET_CONTRIBUTOR_STUDENTS', r.data.results);
+          r.data.next &&
+            dispatch('getContributorStudents', {
+              ...query,
+              page: query.page + 1,
+            });
+          resolve();
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
 
   getStudent({ commit }, id) {
     return new Promise((resolve, reject) => {
@@ -178,7 +198,6 @@ export const actions = {
 const mutations = {
   SET_STUDENTS(state, students) {
     let studentsObject = convertArrayToObject(students, 'id');
-    //state.students = { ...state.students, ...studentsObject };
     state.students = studentsObject;
   },
   SET_MAX_STUDENTS(state, totalStudents) {
@@ -195,6 +214,18 @@ const mutations = {
     deletingJobIndex !== -1
       ? state.students[data.studentId].jobs.splice(deletingJobIndex, 1)
       : null;
+  },
+
+  SET_CA_MEMBER_STUDENTS(state, data) {
+    state.caMemberStudents = data;
+  },
+
+  SET_CONTRIBUTOR_STUDENTS(state, data) {
+    if (state.contributorStudents) {
+      state.contributorStudents = [...state.contributorStudents, ...data];
+    } else {
+      state.contributorStudents = data;
+    }
   },
 
   SET_NEXT(state, data) {

@@ -27,13 +27,22 @@
     "add": "Ajouter",
     "delete": "Supprimer",
     "send": "Envoyer",
-    "loadMore": "Voir plus"
+    "seeMore": "Voir plus"
   },
   "header": {
     "title": "[APP] TNFA - Alumni"
   },
   "home": {
-    "title": "Liste des alumni"
+    "title": "Bienvenue sur l'intranet des diplômés de The Nuum Factory",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum quod ex necessitatibus fuga eligendi rem nemo ipsam ipsum, repellat id sint odio! Aperiam eaque laboriosam non, sapiente quasi officiis ipsa! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse ipsa tempora ipsum dolorum rerum nisi neque, numquam voluptates dolores. Magni libero dolor esse ex minima eaque vero odit officiis possimus. Atque dolorem sunt numquam sequi neque molestias fugit esse reprehenderit officiis odit earum repellat ea iste voluptatem accusamus amet tenetur, doloribus sint iure similique corrupti repellendus blanditiis quisquam. Non, delectus. Doloribus veritatis possimus rem recusandae! Enim error reprehenderit consequatur aperiam modi aliquam nisi quo distinctio, doloribus excepturi fugiat soluta, pariatur molestiae nesciunt quasi magni quos blanditiis earum facilis expedita cumque? ",
+    "contributor": {
+      "title": "Les contributeurs",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, itaque dolorum? Nostrum nam reiciendis, non voluptate enim veritatis nesciunt ad consectetur eligendi iste quasi eos eveniet sed natus, ipsa debitis? "
+    },
+    "CaMember": {
+      "title": "Le conseil d'administration",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque voluptas voluptatibus impedit eum ut, quod totam fugiat quas repudiandae! Soluta consectetur est magnam in reiciendis animi facilis ipsam consequuntur voluptatem? "
+    }
   },
   "profile": {
     "title": "Mon profil",
