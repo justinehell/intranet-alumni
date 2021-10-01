@@ -8,19 +8,22 @@
     </div>
     <v-divider></v-divider>
     <div
-      v-if="!userAlumni.jobs.length"
+      v-if="!alumni.jobs.length"
       class="text--disabled font-italic pa-4 text-center"
     >
       {{ $t('profile.jobs.noJob') }}
     </div>
-    <AlumniJobCard
-      v-for="job in userAlumni.jobs"
-      :key="job.id"
-      :job="job"
-      :showDialogButton="showDialogButton"
-      @edit="editingJob = job"
-      @delete="deletingJob = job"
-    />
+    <v-card-text>
+      <AlumniJobCard
+        v-for="(job, index) in alumni.jobs"
+        :class="{ 'mb-8': index !== alumni.jobs.length - 1 }"
+        :key="job.id"
+        :job="job"
+        :showDialogButton="showDialogButton"
+        @edit="editingJob = job"
+        @delete="deletingJob = job"
+      />
+    </v-card-text>
     <AlumniJobFormEdit :job="editingJob" @close="editingJob = null" />
     <AlumniJobFormDelete :job="deletingJob" @close="deletingJob = null" />
   </v-card>
@@ -41,7 +44,7 @@ export default {
     AlumniJobFormDelete,
   },
   props: {
-    userAlumni: {
+    alumni: {
       type: Object,
       required: true,
     },

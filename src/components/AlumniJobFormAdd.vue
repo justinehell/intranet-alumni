@@ -203,7 +203,6 @@ import {
 } from 'vuelidate/lib/validators';
 
 import formFieldMixinVue from '../mixins/formFieldMixin.vue';
-import { formatDate } from '../utils/index';
 import { COUNTRIES } from '../utils/countriesCode';
 import { CONTRACTS } from '../utils/contractsType';
 import BaseDialog from './Base/BaseDialog.vue';
@@ -271,10 +270,12 @@ export default {
   },
   computed: {
     dateStartFormatted() {
-      return this.formatDate(this.dateStart);
+      return this.dateStart
+        ? this.$d(new Date(this.dateStart), 'numeric')
+        : null;
     },
     dateEndFormatted() {
-      return this.formatDate(this.dateEnd);
+      return this.dateEnd ? this.$d(new Date(this.dateEnd), 'numeric') : null;
     },
     countries() {
       return COUNTRIES.map((countryCode) => {
@@ -289,7 +290,6 @@ export default {
   },
   methods: {
     ...mapActions('alumnis', ['addJob']),
-    formatDate,
     submit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {

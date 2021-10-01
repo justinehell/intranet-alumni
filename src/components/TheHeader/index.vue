@@ -6,7 +6,7 @@
     <v-spacer></v-spacer>
 
     <v-btn :to="{ name: 'Alumni' }" class="mr-4">
-      {{ $t('alumniList.title') }}
+      {{ $t('alumni.title') }}
     </v-btn>
     <v-btn :to="{ name: 'Profile' }" dark color="tertiary">
       {{ $t('profile.title') }}

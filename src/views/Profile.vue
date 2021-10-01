@@ -2,11 +2,11 @@
   <v-container>
     <v-row class="justify-center">
       <v-col cols="12" md="7" v-if="userAlumni">
-        <AlumniCardDetail :userAlumni="userAlumni" showEditDialog />
+        <AlumniCardDetail :alumni="userAlumni" showEditDialog />
       </v-col>
 
       <v-col cols="12" md="7" v-if="userAlumni">
-        <AlumniJobs :userAlumni="userAlumni" showDialogButton />
+        <AlumniJobs :alumni="userAlumni" showDialogButton />
       </v-col>
 
       <v-col cols="12" v-if="userAlumni" class="text-center">

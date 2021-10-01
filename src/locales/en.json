@@ -30,8 +30,6 @@
     "seeMore": "Voir plus"
   },
   "title": "[APP] TNFA - Alumni",
-  "isCaMember": "est membre du conseil d'administration",
-  "isContributor": "est contributeur.ice",
   "home": {
     "title": "Bienvenue sur l'intranet des diplômés de The Nuum Factory",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum quod ex necessitatibus fuga eligendi rem nemo ipsam ipsum, repellat id sint odio! Aperiam eaque laboriosam non, sapiente quasi officiis ipsa! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse ipsa tempora ipsum dolorum rerum nisi neque, numquam voluptates dolores. Magni libero dolor esse ex minima eaque vero odit officiis possimus. Atque dolorem sunt numquam sequi neque molestias fugit esse reprehenderit officiis odit earum repellat ea iste voluptatem accusamus amet tenetur, doloribus sint iure similique corrupti repellendus blanditiis quisquam. Non, delectus. Doloribus veritatis possimus rem recusandae! Enim error reprehenderit consequatur aperiam modi aliquam nisi quo distinctio, doloribus excepturi fugiat soluta, pariatur molestiae nesciunt quasi magni quos blanditiis earum facilis expedita cumque? ",
@@ -59,10 +57,12 @@
       "deleteJob": "Supprimer cette expérience"
     }
   },
-  "alumniList": {
+  "alumni": {
     "title": "Alumni",
     "promo": "Promo",
-    "search": "Rechercher un élève"
+    "search": "Rechercher un élève",
+    "isCaMember": "est membre du conseil d'administration",
+    "isContributor": "est contributeur.ice"
   },
   "notFound": {
     "title": "Cette page n'existe pas",

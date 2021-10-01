@@ -7,7 +7,7 @@
           type="text"
           clearable
           outlined
-          :placeholder="$t('alumniList.search')"
+          :placeholder="$t('alumni.search')"
           prepend-inner-icon="mdi-account"
           @input="
             $router.push({

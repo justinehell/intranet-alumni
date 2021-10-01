@@ -2,11 +2,11 @@
   <v-card>
     <div class="d-flex justify-space-between align-center">
       <v-card-title class="text-h6 primary--text">
-        {{ userAlumni.fullName }}
+        {{ alumni.fullName }}
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-icon
-              v-if="userAlumni.isCaMember"
+              v-if="alumni.isCaMember"
               right
               color="primary"
               v-bind="attrs"
@@ -14,13 +14,13 @@
               >mdi-account-tie</v-icon
             >
           </template>
-          <span>{{ $t('isCaMember') }}</span>
+          <span>{{ $t('alumni.isCaMember') }}</span>
         </v-tooltip>
 
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-icon
-              v-if="userAlumni.isContributor"
+              v-if="alumni.isContributor"
               right
               color="primary"
               v-bind="attrs"
@@ -28,61 +28,62 @@
               >mdi-seal-variant</v-icon
             >
           </template>
-          <span>{{ $t('isContributor') }}</span>
+          <span>{{ $t('alumni.isContributor') }}</span>
         </v-tooltip>
       </v-card-title>
-      <AlumniFormEdit v-if="showEditDialog" :userAlumni="userAlumni" />
+      <AlumniFormEdit v-if="showEditDialog" :alumni="alumni" />
     </div>
     <v-divider></v-divider>
     <v-img contain height="200px" src="@/assets/images/alumni/alumni-2.png">
     </v-img>
     <v-card-text>
       <v-row>
-        <v-col cols="12" md="6">
+        <v-col cols="12">
+          <div class="mb-4" v-if="alumni.birthDate">
+            <v-icon class="mr-2" color="secondary">mdi-calendar</v-icon>
+            <span>
+              {{ $d(new Date(alumni.birthDate), 'numeric') }}
+            </span>
+          </div>
+
           <div class="mb-4">
             <v-icon class="mr-2" color="secondary">mdi-school</v-icon>
-            <span class="text--primary">
-              {{ $t(`PROMO.${userAlumni.promo}`) }}
-            </span>
-          </div>
-          <div class="mb-4" v-if="userAlumni.email">
-            <v-icon class="mr-2" color="secondary">mdi-email</v-icon>
-            <span class="text--primary">
-              {{ userAlumni.email }}
+            <span class="secondary--text">{{ $t('alumni.promo') }} :</span>
+            <span>
+              {{ $t(`PROMO.${alumni.promo}`) }}
             </span>
           </div>
 
-          <div class="mb-4" v-if="userAlumni.birthDate">
-            <v-icon class="mr-2" color="secondary">mdi-calendar</v-icon>
-            <span class="text--primary">
-              {{ formatDate(userAlumni.birthDate) }}
-            </span>
-          </div>
-
-          <div
-            class="mb-4"
-            v-if="
-              userAlumni.locationAdress ||
-                userAlumni.locationPostcode ||
-                userAlumni.locationCity ||
-                userAlumni.locationCountry
-            "
-          >
+          <div class="mb-4" v-if="isAlumniAdressValid">
             <v-icon class="mr-2" color="secondary">mdi-map-marker</v-icon>
-            <span class="text--primary">
-              {{ displayAdress(userAlumni.locationAdress) }}
-              {{ displayAdress(userAlumni.locationPostcode) }}
-              {{ displayAdress(userAlumni.locationCity) }}
-              {{ displayCountry(displayAdress(userAlumni.locationCountry)) }}
+            <span v-if="alumni.locationCity">
+              {{ alumni.locationCity }}
+            </span>
+            <span v-if="alumni.locationCountry">
+              {{ $t(`COUNTRY.${alumni.locationCountry}`) }}
             </span>
           </div>
 
-          <div class="mb-4" v-if="userAlumni.phoneNumber">
-            <v-icon class="mr-2" color="secondary">mdi-phone</v-icon>
-            <span class="text--primary">
-              {{ userAlumni.phoneNumber }}
-            </span>
-          </div>
+          <v-row>
+            <v-col class="mb-4" v-if="alumni.email">
+              <v-icon class="mr-2" color="secondary">mdi-email</v-icon>
+              <a
+                :href="`mailto:${alumni.email}`"
+                class="text--secondary text-decoration-none"
+              >
+                {{ alumni.email }}
+              </a>
+            </v-col>
+            <v-col class="mb-4" v-if="alumni.phoneNumber">
+              <v-icon class="mr-2" color="secondary">mdi-phone</v-icon>
+              <a
+                :href="`tel:+33${alumni.phoneNumber}`"
+                class="text--secondary text-decoration-none"
+              >
+                {{ alumni.phoneNumber.replace(/(.{2})/g, '$1 ') }}
+              </a>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-card-text>
@@ -90,7 +91,6 @@
 </template>
 
 <script>
-import { formatDate } from '../utils/index';
 import AlumniFormEdit from './AlumniFormEdit.vue';
 
 export default {
@@ -99,7 +99,7 @@ export default {
     AlumniFormEdit,
   },
   props: {
-    userAlumni: {
+    alumni: {
       type: Object,
       required: true,
     },
@@ -107,13 +107,9 @@ export default {
       type: Boolean,
     },
   },
-  methods: {
-    formatDate,
-    displayAdress(string) {
-      return string ? string : '';
-    },
-    displayCountry(country) {
-      return country ? `(${this.$t(`COUNTRY.${country}`)})` : '';
+  computed: {
+    isAlumniAdressValid() {
+      return Boolean(this.alumni.locationCity || this.alumni.locationCity);
     },
   },
 };

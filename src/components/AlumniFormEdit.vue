@@ -100,7 +100,6 @@ import { mapActions } from 'vuex';
 
 import formFieldMixinVue from '../mixins/formFieldMixin.vue';
 import { COUNTRIES } from '../utils/countriesCode';
-import { formatDate } from '../utils/index';
 
 import BaseDialog from './Base/BaseDialog.vue';
 
@@ -110,7 +109,7 @@ export default {
     BaseDialog,
   },
   props: {
-    userAlumni: {
+    alumni: {
       type: Object,
       required: true,
     },
@@ -143,7 +142,9 @@ export default {
       }).sort((a, b) => a.text.localeCompare(b.text));
     },
     dateFormatted() {
-      return this.formatDate(this.birthDate);
+      return this.birthDate
+        ? this.$d(new Date(this.birthDate), 'numeric')
+        : null;
     },
   },
   watch: {
@@ -153,7 +154,6 @@ export default {
   },
   methods: {
     ...mapActions('alumnis', ['edit']),
-    formatDate,
     submit() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
@@ -165,7 +165,7 @@ export default {
           locationCity: this.locationCity,
           locationCountry: this.locationCountry,
           phoneNumber: this.phoneNumber,
-          id: this.userAlumni.id,
+          id: this.alumni.id,
         };
         this.edit(updatedAlumni)
           .then(() => {
@@ -189,12 +189,12 @@ export default {
       this.$emit('close');
     },
     setFormData() {
-      this.birthDate = this.userAlumni.birthDate;
-      this.locationAdress = this.userAlumni.locationAdress;
-      this.locationPostcode = this.userAlumni.locationPostcode;
-      this.locationCity = this.userAlumni.locationCity;
-      this.locationCountry = this.userAlumni.locationCountry;
-      this.phoneNumber = this.userAlumni.phoneNumber;
+      this.birthDate = this.alumni.birthDate;
+      this.locationAdress = this.alumni.locationAdress;
+      this.locationPostcode = this.alumni.locationPostcode;
+      this.locationCity = this.alumni.locationCity;
+      this.locationCountry = this.alumni.locationCountry;
+      this.phoneNumber = this.alumni.phoneNumber;
     },
   },
 };

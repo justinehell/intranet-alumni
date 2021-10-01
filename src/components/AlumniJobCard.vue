@@ -1,8 +1,27 @@
 <template>
-  <div class="d-flex justify-space-between">
-    <div class="ma-4">
+  <div class="d-flex justify-space-between align-baseline">
+    <div>
       <span class="font-weight-medium secondary--text">
         {{ job.function }} </span
+      >&nbsp;
+      <span v-if="job.contractType" class="text--secondary">
+        {{ $t(`CONTRACT.${job.contractType}`) }}</span
+      >
+      <br />
+
+      <span v-if="job.isCurrentJob" class="text--disabled">
+        {{
+          $t('profile.jobs.currentJob', {
+            start: $d(new Date(job.dateStart), 'numeric'),
+          })
+        }}</span
+      >
+      <span v-else class="text--disabled">{{
+        $t('profile.jobs.finishedJob', {
+          start: $d(new Date(job.dateStart), 'numeric'),
+          end: $d(new Date(job.dateEnd), 'numeric'),
+        })
+      }}</span
       ><br />
 
       <span v-if="job.company" class="text--secondary">
@@ -10,24 +29,9 @@
           mdi-domain
         </v-icon>
         {{ job.company }}</span
-      >&nbsp;
-
-      <span v-if="job.isCurrentJob" class="text--disabled">
-        {{
-          $t('profile.jobs.currentJob', { start: formatDate(job.dateStart) })
-        }}</span
       >
-      <span v-if="!job.isCurrentJob" class="text--disabled">{{
-        $t('profile.jobs.finishedJob', {
-          start: formatDate(job.dateStart),
-          end: formatDate(job.dateEnd),
-        })
-      }}</span
-      ><br />
-      <span v-if="job.contractType" class="text--secondary">{{
-        $t(`CONTRACT.${job.contractType}`)
-      }}</span
-      >&nbsp; <span v-if="job.department">{{ job.department }}</span
+
+      &nbsp; <span v-if="job.department">{{ job.department }}</span
       >&nbsp; <span v-if="job.fixedPhoneNumber">{{ job.fixedPhoneNumber }}</span
       >&nbsp;
       <span v-if="job.mobilePhoneNumber">{{ job.mobilePhoneNumber }}</span
@@ -58,7 +62,6 @@
 </template>
 
 <script>
-import { formatDate } from '../utils/index';
 export default {
   name: 'AlumniJobCard',
   props: {
@@ -69,9 +72,6 @@ export default {
     showDialogButton: {
       type: Boolean,
     },
-  },
-  methods: {
-    formatDate,
   },
 };
 </script>

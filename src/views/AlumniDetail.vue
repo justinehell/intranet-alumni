@@ -4,11 +4,11 @@
 
     <v-row v-if="alumni" class="justify-center">
       <v-col cols="12" md="7">
-        <AlumniCardDetail :userAlumni="alumni" />
+        <AlumniCardDetail :alumni="alumni" />
       </v-col>
 
       <v-col cols="12" md="7">
-        <AlumniJobs :userAlumni="alumni" />
+        <AlumniJobs :alumni="alumni" />
       </v-col>
     </v-row>
   </v-container>
@@ -46,7 +46,7 @@ export default {
     breadcrumbsItems() {
       return [
         {
-          text: this.$t('alumniList.title'),
+          text: this.$t('alumni.title'),
           to: { name: 'Alumni' },
           disabled: false,
           exact: true,
