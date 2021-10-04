@@ -62,7 +62,8 @@
     "promo": "Promo",
     "search": "Rechercher un élève",
     "isCaMember": "est membre du conseil d'administration",
-    "isContributor": "est contributeur.ice"
+    "isContributor": "est contributeur.ice",
+    "years": "{years} ans"
   },
   "notFound": {
     "title": "Cette page n'existe pas",

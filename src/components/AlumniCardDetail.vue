@@ -41,9 +41,7 @@
         <v-col cols="12">
           <div class="mb-4" v-if="alumni.birthDate">
             <v-icon class="mr-2" color="secondary">mdi-calendar</v-icon>
-            <span>
-              {{ $d(new Date(alumni.birthDate), 'numeric') }}
-            </span>
+            <span>{{ $t('alumni.years', { years: alumniAge }) }} </span>
           </div>
 
           <div class="mb-4">
@@ -110,6 +108,14 @@ export default {
   computed: {
     isAlumniAdressValid() {
       return Boolean(this.alumni.locationCity || this.alumni.locationCity);
+    },
+    alumniAge() {
+      if (!this.alumni.birthDate) return null;
+      let timeDifferenceInMs =
+        Date.now() - new Date(this.alumni.birthDate).getTime();
+      let ageDeltaTime = new Date(timeDifferenceInMs);
+      // Date objects contain a Number that represents milliseconds since 1 January 1970 UTC.
+      return Math.abs(ageDeltaTime.getUTCFullYear() - 1970);
     },
   },
 };
