@@ -1,5 +1,5 @@
 <template>
-  <div id="container" class="flex">
+  <div id="container" class="d-flex">
     <div>
       <label :for="option" v-for="(option, i) in options" :key="i">
         <input
@@ -27,8 +27,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-.flex {
-  display: flex;
-}
-</style>

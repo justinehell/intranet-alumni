@@ -5,10 +5,13 @@ import store from './store';
 import i18n from './i18n';
 import vuetify from './plugins/vuetify';
 import Vuelidate from 'vuelidate';
-import { getLocalStorageItem } from './services/localStorage';
 import { mapActions } from 'vuex';
+import { getLocalStorageItem } from './services/localStorage';
+
 import PublicLayout from './layouts/PublicLayout.vue';
 import AppLayout from './layouts/AppLayout.vue';
+
+import './components/globalComponents';
 
 Vue.component('public-layout', PublicLayout);
 Vue.component('app-layout', AppLayout);

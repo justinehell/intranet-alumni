@@ -8,33 +8,17 @@
     <v-card-title class="text-h6 primary--text">
       {{ `${alumni.firstName} ${alumni.lastName}` }}
 
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-icon
-            v-if="alumni.isCaMember"
-            right
-            color="primary"
-            v-bind="attrs"
-            v-on="on"
-            >mdi-account-tie</v-icon
-          >
-        </template>
-        <span>{{ $t('alumni.isCaMember.tag') }}</span>
-      </v-tooltip>
+      <BaseIconTooltip
+        v-if="alumni.isCaMember"
+        icon="mdi-account-tie"
+        :text="$t('alumni.isCaMember.tag')"
+      />
 
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-icon
-            v-if="alumni.isContributor"
-            right
-            color="primary"
-            v-bind="attrs"
-            v-on="on"
-            >mdi-seal-variant</v-icon
-          >
-        </template>
-        <span>{{ $t('alumni.isContributor.tag') }}</span>
-      </v-tooltip>
+      <BaseIconTooltip
+        v-if="alumni.isContributor"
+        icon="mdi-seal-variant"
+        :text="$t('alumni.isContributor.tag')"
+      />
     </v-card-title>
     <v-img contain height="200px" src="@/assets/images/alumni/alumni-2.png">
     </v-img>

@@ -1,5 +1,5 @@
 <script>
-import { camelCase } from 'lodash';
+import camelCase from 'lodash/camelCase';
 export default {
   data() {
     return {

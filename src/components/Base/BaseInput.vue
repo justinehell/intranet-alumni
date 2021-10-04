@@ -1,15 +1,15 @@
 <template>
-  <div class="box flex">
+  <div class="box d-flex">
     <div v-if="prependIcon" class="mr-2 mt-4">
       <i class="fas fa-clock icon"></i>
     </div>
     <div id="input-error-container">
       <div
         id="input-container"
-        :class="[`flex`, inputContainerClass]"
+        :class="[`d-flex`, inputContainerClass]"
         @click="focusInput"
       >
-        <div class="flex relative min-h-14">
+        <div class="d-flex relative min-h-14">
           <input
             :id="`input${id}`"
             class="input max-h-8"
@@ -139,9 +139,6 @@ export default {
   overflow-x: auto;
   max-width: 400px;
 }
-.flex {
-  display: flex;
-}
 .font-size-24 {
   font-size: 24px;
 }
@@ -218,7 +215,6 @@ select:focus {
 .input:focus + .label--filled {
   font-size: 12px;
   color: royalblue;
-  /* top: 6px; */
   top: 11px;
 }
 
@@ -226,7 +222,6 @@ select:focus {
   position: absolute;
   color: royalblue;
   top: -10px;
-  /* left: -4px; */
   font-size: 12px;
   background: white;
   padding: 0 4px;
@@ -243,7 +238,6 @@ select:focus {
 .smallLabel--filled {
   font-size: 12px;
   color: royalblue;
-  /* top: 6px; */
   top: 11px;
 }
 </style>
