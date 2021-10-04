@@ -14,7 +14,7 @@
               >mdi-account-tie</v-icon
             >
           </template>
-          <span>{{ $t('alumni.isCaMember') }}</span>
+          <span>{{ $t('alumni.isCaMember.tag') }}</span>
         </v-tooltip>
 
         <v-tooltip bottom>
@@ -28,7 +28,7 @@
               >mdi-seal-variant</v-icon
             >
           </template>
-          <span>{{ $t('alumni.isContributor') }}</span>
+          <span>{{ $t('alumni.isContributor.tag') }}</span>
         </v-tooltip>
       </v-card-title>
       <AlumniFormEdit v-if="showEditDialog" :alumni="alumni" />

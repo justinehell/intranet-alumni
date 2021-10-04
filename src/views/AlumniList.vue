@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-row justify="center">
-      <v-col cols="6">
+    <v-row justify="center" :no-gutters="$vuetify.breakpoint.smAndDown">
+      <v-col cols="12" md="4">
         <v-text-field
           :value="fullName"
           type="text"
@@ -20,9 +20,7 @@
           "
         ></v-text-field>
       </v-col>
-    </v-row>
-    <v-row>
-      <v-col>
+      <v-col cols="12" md="4">
         <v-select
           :value="promo"
           :items="promoListItems"
@@ -41,8 +39,9 @@
           "
         ></v-select>
       </v-col>
-
-      <v-col>
+    </v-row>
+    <v-row justify="center" class="mt-0">
+      <v-col cols="12" sm="6" md="4">
         <v-select
           :value="ordering"
           :items="items"
@@ -61,16 +60,32 @@
         ></v-select>
       </v-col>
 
-      <v-col>
+      <v-col cols="6" sm="3" md="2">
         <v-checkbox
           :input-value="isCaMember"
-          label="Membre du CA"
+          :label="$t('alumni.isCaMember.filter')"
           @change="
             $router.push({
               query: {
                 ...$route.query,
                 page: 1,
                 isCaMember: $event || null,
+              },
+            })
+          "
+        ></v-checkbox>
+      </v-col>
+
+      <v-col cols="6" sm="3" md="2">
+        <v-checkbox
+          :input-value="isContributor"
+          :label="$t('alumni.isContributor.filter')"
+          @change="
+            $router.push({
+              query: {
+                ...$route.query,
+                page: 1,
+                isContributor: $event || null,
               },
             })
           "
@@ -132,6 +147,8 @@ import { PROMOLIST } from '../utils/promoList';
 
 import AlumniCard from '../components/AlumniCard.vue';
 
+const ALUMNIS_PER_PAGE = 20;
+
 export default {
   name: 'AlumniList',
   components: {
@@ -149,7 +166,7 @@ export default {
     };
   },
   created() {
-    this.alumniList.length < 2 && this.fetchAlumnis();
+    this.alumniList.length < ALUMNIS_PER_PAGE && this.fetchAlumnis();
   },
   methods: {
     ...mapActions('alumnis', ['getAlumnis']),
@@ -180,6 +197,9 @@ export default {
     },
     isCaMember() {
       return !!this.routeQuery.isCaMember || false;
+    },
+    isContributor() {
+      return !!this.routeQuery.isContributor || false;
     },
     ordering() {
       return this.routeQuery.ordering || null;

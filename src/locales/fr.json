@@ -61,8 +61,14 @@
     "title": "Alumni",
     "promo": "Promo",
     "search": "Rechercher un élève",
-    "isCaMember": "est membre du conseil d'administration",
-    "isContributor": "est contributeur.ice",
+    "isCaMember": {
+      "tag": "est membre du conseil d'administration",
+      "filter": "Membre du CA"
+    },
+    "isContributor": {
+      "tag": "est contributeur.ice",
+      "filter": "Contrubiteur.ice"
+    },
     "years": "{years} ans"
   },
   "notFound": {
