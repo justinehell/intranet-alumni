@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { getLocalStorageItem } from '../services/localStorage';
+import AlumniRoutes from './modules/alumni';
+import ProfileRoutes from './modules/profile';
 
 Vue.use(VueRouter);
 
@@ -15,28 +17,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "Home" */ '../views/Home.vue'),
   },
   {
-    path: '/me',
-    name: 'Profile',
-    meta: { requiresAuth: true, layout: 'app' },
-    component: () =>
-      import(/* webpackChunkName: "Profile" */ '../views/Profile.vue'),
-  },
-  {
-    path: '/alumni',
-    name: 'Alumni',
-    meta: { requiresAuth: true, layout: 'app' },
-    component: () =>
-      import(/* webpackChunkName: "Alumni" */ '../views/AlumniList.vue'),
-  },
-  {
-    path: '/alumni/:id',
-    name: 'AlumniDetail',
-    meta: { requiresAuth: true, layout: 'app' },
-    props: true,
-    component: () =>
-      import(/* webpackChunkName: "Alumni" */ '../views/AlumniDetail.vue'),
-  },
-  {
     path: '/dashboard',
     name: 'Dashboard',
     meta: { requiresAuth: true, layout: 'app' },
@@ -46,7 +26,6 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-
     component: () =>
       import(/* webpackChunkName: "Login" */ '../views/Login.vue'),
   },
@@ -61,7 +40,6 @@ const routes = [
     path: '/password/forgotten',
     name: 'PasswordForgotten',
     props: true,
-
     component: () =>
       import(
         /* webpackChunkName: "PasswordForgotten" */ '../views/PasswordForgotten.vue'
@@ -71,7 +49,6 @@ const routes = [
     path: '/password/reset',
     name: 'ResetPassword',
     props: true,
-
     component: () =>
       import(
         /* webpackChunkName: "ResetPassword" */ '../views/ResetPassword.vue'
@@ -81,7 +58,6 @@ const routes = [
     path: '/account/password/new/:uid/:token',
     name: 'ResetPasswordConfirmation',
     props: true,
-
     component: () =>
       import(
         /* webpackChunkName: "ResetPasswordConfirmation" */ '../views/ResetPasswordConfirmation.vue'
@@ -112,6 +88,8 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "NotFound" */ '../views/NotFound.vue'),
   },
+  ...AlumniRoutes,
+  ...ProfileRoutes,
 ];
 
 const router = new VueRouter({

@@ -5,7 +5,7 @@
     </router-link>
     <v-spacer></v-spacer>
 
-    <v-btn :to="{ name: 'Alumni' }" class="mr-4">
+    <v-btn :to="{ name: 'AlumniList' }" class="mr-4">
       {{ $t('alumni.title') }}
     </v-btn>
     <v-btn :to="{ name: 'Profile' }" dark color="tertiary">

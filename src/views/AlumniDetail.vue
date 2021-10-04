@@ -47,7 +47,7 @@ export default {
       return [
         {
           text: this.$t('alumni.title'),
-          to: { name: 'Alumni' },
+          to: { name: 'AlumniList' },
           disabled: false,
           exact: true,
         },
