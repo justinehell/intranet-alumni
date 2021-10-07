@@ -1,7 +1,7 @@
 <template>
   <div class="box d-flex">
     <div v-if="prependIcon" class="mr-2 mt-4">
-      <i class="fas fa-clock icon"></i>
+      <i class="fas fa-clock icon" title="prepend-icon"></i>
     </div>
     <div id="input-error-container">
       <div
@@ -16,17 +16,18 @@
             :style="inputStyle"
             type="text"
             :name="name"
-            :value="value"
+            :value="internalValue"
+            role="input"
             @input="$emit('input', $event.target.value)"
           />
-          <label :class="labelClass">
+          <label :class="labelClass" :for="`input${id}`">
             {{ label || '' }}
           </label>
           <div class="w-6" :style="clearInputButtonContainerStyle">
             <button
               v-if="clearable && value"
-              @click="$emit('input', '')"
-              style=""
+              @click="internalValue = ''"
+              role="clear-input"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +51,7 @@
       </div>
     </div>
     <div v-if="appendIcon" class="mt-4 ml-2">
-      <i class="fas fa-clock icon"></i>
+      <i class="fas fa-clock icon" title="append-icon"></i>
     </div>
   </div>
 </template>
@@ -87,6 +88,18 @@ export default {
     },
     error: {
       type: [String, Boolean],
+    },
+  },
+  data() {
+    return {
+      internalValue: this.value,
+    };
+  },
+  watch: {
+    internalValue(val) {
+      if (val !== this.value) {
+        this.$emit('input', val);
+      }
     },
   },
   computed: {

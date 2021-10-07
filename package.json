@@ -27,6 +27,8 @@
   "devDependencies": {
     "@intlify/vue-i18n-loader": "^1.0.0",
     "@mdi/font": "^5.9.55",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/vue": "^5.8.2",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "^4.5.13",
@@ -60,7 +62,7 @@
       {
         "files": [
           "**/__tests__/*.{j,t}s?(x)",
-          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+          "**/tests/**/*.spec.{j,t}s?(x)"
         ],
         "env": {
           "jest": true
