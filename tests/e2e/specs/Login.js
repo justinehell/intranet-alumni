@@ -1,20 +1,7 @@
 // https://docs.cypress.io/api/introduction/api.html
-const getVInput = (input) => {
-  return cy.get(input).closest('.v-input');
-};
-
-const getVInputMessage = (input) => {
-  return getVInput(input).find('.v-messages__message');
-};
-
-const getVInputButton = (input) => {
-  return getVInput(input).find('button');
-};
+import Form from '../pageObject/form';
 
 describe('Login', () => {
-  const emailInput = "[type='email']";
-  const passwordInput = "[name='password']";
-
   beforeEach(() => {
     cy.visit('/');
     cy.contains('Se connecter');
@@ -22,59 +9,72 @@ describe('Login', () => {
 
   describe('email field', () => {
     it('should have a correct email input', () => {
-      cy.get(emailInput)
+      cy.get(Form.field.emailInput)
         .type('example@gmail.com')
         .should('have.value', 'example@gmail.com')
         .clear();
     });
 
     it('should show a message with invalid email input', () => {
-      getVInput(emailInput).type('exampleagmail.com');
+      Form.getVInput(Form.field.emailInput).type('exampleagmail.com');
 
-      getVInputMessage(emailInput).contains(
+      Form.getVInputMessage(Form.field.emailInput).contains(
         'Veuillez renseigner une adresse e-mail valide'
       );
     });
 
     it('should show a required message with empty email input', () => {
-      getVInput(emailInput)
+      Form.getVInput(Form.field.emailInput)
         .type(' ')
         .clear();
 
-      getVInputMessage(emailInput).contains("L'adresse e-mail est requise.");
+      Form.getVInputMessage(Form.field.emailInput).contains(
+        "L'adresse e-mail est requise."
+      );
     });
   });
 
   describe('password field', () => {
     it('should show a message with invalid password input', () => {
-      getVInput(passwordInput).type('123password');
+      Form.getVInput(Form.field.passwordInput).type('123password');
 
-      getVInputMessage(passwordInput).contains(
+      Form.getVInputMessage(Form.field.passwordInput).contains(
         'Le mot de passe doit posséder au moins 8 caractères.'
       );
     });
 
     it('should show a required message with empty email input', () => {
-      getVInput(passwordInput)
+      Form.getVInput(Form.field.passwordInput)
         .type(' ')
         .clear();
 
-      getVInputMessage(passwordInput).contains('Le mot de passe est requis.');
+      Form.getVInputMessage(Form.field.passwordInput).contains(
+        'Le mot de passe est requis.'
+      );
     });
 
     it('should toggle password', () => {
-      getVInputButton(passwordInput).should('have.class', 'mdi-eye-off');
-      cy.get(passwordInput).should('have.attr', 'type', 'password');
+      Form.getVInputButton(Form.field.passwordInput).should(
+        'have.class',
+        'mdi-eye-off'
+      );
+      cy.get(Form.field.passwordInput).should('have.attr', 'type', 'password');
 
-      getVInputButton(passwordInput).click();
+      Form.getVInputButton(Form.field.passwordInput).click();
 
-      getVInputButton(passwordInput).should('have.class', 'mdi-eye');
-      cy.get(passwordInput).should('have.attr', 'type', 'text');
+      Form.getVInputButton(Form.field.passwordInput).should(
+        'have.class',
+        'mdi-eye'
+      );
+      cy.get(Form.field.passwordInput).should('have.attr', 'type', 'text');
 
-      getVInputButton(passwordInput).click();
+      Form.getVInputButton(Form.field.passwordInput).click();
 
-      getVInputButton(passwordInput).should('have.class', 'mdi-eye-off');
-      cy.get(passwordInput).should('have.attr', 'type', 'password');
+      Form.getVInputButton(Form.field.passwordInput).should(
+        'have.class',
+        'mdi-eye-off'
+      );
+      cy.get(Form.field.passwordInput).should('have.attr', 'type', 'password');
     });
   });
 
@@ -99,10 +99,10 @@ describe('Login', () => {
         statusCode: 401,
       });
 
-      cy.get(emailInput).type('example@gmail.com');
-      getVInput(passwordInput).type('123password');
+      cy.get(Form.field.emailInput).type('example@gmail.com');
+      Form.getVInput(Form.field.passwordInput).type('123password');
 
-      cy.get("button[type='submit']").click();
+      cy.get(Form.action.submitButton).click();
     });
 
     it('should succeed and redirect to home page', () => {
@@ -125,10 +125,10 @@ describe('Login', () => {
         statusCode: 200,
       });
 
-      cy.get(emailInput).type('example@gmail.com');
-      getVInput(passwordInput).type('123password');
+      cy.get(Form.field.emailInput).type('example@gmail.com');
+      Form.getVInput(Form.field.passwordInput).type('123password');
 
-      cy.get("button[type='submit']").click();
+      cy.get(Form.action.submitButton).click();
     });
   });
 });
