@@ -12,23 +12,24 @@ const getVInputButton = (input) => {
 };
 
 describe('Login', () => {
+  const emailInput = "[type='email']";
+  const passwordInput = "[name='password']";
+
   beforeEach(() => {
     cy.visit('/');
     cy.contains('Se connecter');
   });
 
   describe('email field', () => {
-    const emailInput = "[type='email']";
-
     it('should have a correct email input', () => {
       cy.get(emailInput)
-        .type('hell.justine@gmail.com')
-        .should('have.value', 'hell.justine@gmail.com')
+        .type('example@gmail.com')
+        .should('have.value', 'example@gmail.com')
         .clear();
     });
 
     it('should show a message with invalid email input', () => {
-      getVInput(emailInput).type('hell.justineagmail.com');
+      getVInput(emailInput).type('exampleagmail.com');
 
       getVInputMessage(emailInput).contains(
         'Veuillez renseigner une adresse e-mail valide'
@@ -45,10 +46,8 @@ describe('Login', () => {
   });
 
   describe('password field', () => {
-    const passwordInput = "[name='password']";
-
     it('should show a message with invalid password input', () => {
-      getVInput(passwordInput).type('123456');
+      getVInput(passwordInput).type('123password');
 
       getVInputMessage(passwordInput).contains(
         'Le mot de passe doit posséder au moins 8 caractères.'
@@ -76,6 +75,60 @@ describe('Login', () => {
 
       getVInputButton(passwordInput).should('have.class', 'mdi-eye-off');
       cy.get(passwordInput).should('have.attr', 'type', 'password');
+    });
+  });
+
+  describe('click link', () => {
+    it('should go to register page', () => {
+      cy.get('a[href*="/register"]').click();
+
+      cy.location('pathname').should('eq', '/register');
+    });
+
+    it('should go to forgotten password page', () => {
+      cy.get('a[href*="/password/forgotten"]').click();
+
+      cy.location('pathname').should('eq', '/password/forgotten');
+    });
+  });
+
+  describe('submit form', () => {
+    it('should fail and show no active account error message', () => {
+      cy.intercept('POST', '/auth/jwt/create', {
+        fixture: 'errors/noActiveAccount',
+        statusCode: 401,
+      });
+
+      cy.get(emailInput).type('example@gmail.com');
+      getVInput(passwordInput).type('123password');
+
+      cy.get("button[type='submit']").click();
+    });
+
+    it('should succeed and redirect to home page', () => {
+      cy.intercept('POST', '/auth/jwt/create', {
+        fixture: 'tokens',
+        statusCode: 200,
+      });
+
+      cy.intercept('GET', '/auth/users/me', {
+        fixture: 'user/me',
+        statusCode: 200,
+      });
+
+      cy.intercept('GET', '/students/*', {
+        fixture: 'student/isCaMember',
+        statusCode: 200,
+      });
+      cy.intercept('GET', '/students/*', {
+        fixture: 'student/isContributor',
+        statusCode: 200,
+      });
+
+      cy.get(emailInput).type('example@gmail.com');
+      getVInput(passwordInput).type('123password');
+
+      cy.get("button[type='submit']").click();
     });
   });
 });

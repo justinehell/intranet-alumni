@@ -31,7 +31,13 @@
                 @input="$v.password.$touch()"
                 @blur="$v.password.$touch()"
               ></v-text-field>
-              <v-btn block color="purple" class="white--text" @click="submit">
+              <v-btn
+                type="submit"
+                block
+                color="purple"
+                class="white--text"
+                @click.prevent="submit"
+              >
                 {{ $t('action.login') }}
               </v-btn>
 
