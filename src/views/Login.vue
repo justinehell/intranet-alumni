@@ -24,6 +24,7 @@
                 :error-messages="passwordErrors"
                 :label="$t('form.password.label')"
                 :type="show ? 'text' : 'password'"
+                name="password"
                 outlined
                 required
                 @click:append="show = !show"
