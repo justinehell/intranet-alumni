@@ -12,12 +12,12 @@
         </h2>
         <p class="text-justify">{{ $t('home.CaMember.description') }}</p>
 
-        <v-row v-if="contributorAlumnis" class="mt-8 justify-center">
+        <v-row v-if="caMemberAlumnis" class="mt-8 justify-center">
           <v-col
             cols="12"
             md="6"
             lg="4"
-            v-for="alumni in contributorAlumnis"
+            v-for="alumni in caMemberAlumnis"
             :key="alumni.id"
           >
             <AlumniCard :alumni="alumni" />
@@ -31,12 +31,12 @@
         </h2>
         <p class="text-justify">{{ $t('home.contributor.description') }}</p>
 
-        <v-row v-if="caMemberAlumnis" class="mt-8 justify-center">
+        <v-row v-if="contributorAlumnis" class="mt-8 justify-center">
           <v-col
             cols="12"
             md="6"
             lg="4"
-            v-for="alumni in caMemberAlumnis"
+            v-for="alumni in contributorAlumnis"
             :key="alumni.id"
           >
             <AlumniCard :alumni="alumni" />
