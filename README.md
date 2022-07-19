@@ -19,9 +19,6 @@ This project was carried out with the help of a back-end developer (use of the D
 - display and edit data (search for a student, modification of profile, creation / deletion / modification of professional experiences)
 
 
-If you would like to test the functionality yourself, credentials can be provided upon request by email to hell.justine@gmail.com
-
-
 ## 🛠 Project Setup
 
 ```bash
@@ -45,7 +42,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## What I used
 - [VSCode](https://code.visualstudio.com/)
 - Vue2 with [Vue CLI](https://cli.vuejs.org/guide/)
-- VueX for state management
+- Vuex for state management
 - [Vuetify](https://vuetifyjs.com/en/) for UI library
 - [Vuelidate](https://vuelidate.js.org/#getting-started) for Form validation
 - [Vue i18n](https://kazupon.github.io/vue-i18n/started.html) for content internationalization
